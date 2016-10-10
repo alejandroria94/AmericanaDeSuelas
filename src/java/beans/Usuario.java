@@ -13,6 +13,7 @@ public class Usuario {
 
     private String login = "admin";
     private String pass = "admin-ads";
+    private String nombre;
 
     public Usuario() {
     }
