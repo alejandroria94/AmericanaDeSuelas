@@ -42,7 +42,7 @@ Author     : Sammy Guergachi <sguergachi at gmail.com>
                     </button>
                 </div>
             </div>
-            <!-- Modal -->
+            <!-- Modal cambio prueba-->
             <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                 <div class="modal-dialog modal-sm" role="document">
                     <div class="modal-content col-lg-10 col-lg-offset-1 col-md-10 col-sm-10 col-md-offset-1 col-sm-offset-1">
