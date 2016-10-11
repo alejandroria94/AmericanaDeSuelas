@@ -103,9 +103,9 @@
                     </div>
                 </div>
             </div>
-              <button type="button" class="btn btn-lg btn-warning salir" style="font-size: 40px; position: relative; float: right; margin-top: 30px; margin-right: 30px; padding: 20px">
-                        Salir
-                    </button>
+            <button type="button" class="btn btn-lg btn-warning volver" style="font-size: 40px; position: relative; float: right; margin-top: 30px; margin-right: 30px; padding: 20px">
+                Volver
+            </button>
         </div>
         <script src="js/jquery-3.1.1.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -113,8 +113,11 @@
 
             var app = {
                 init: function () {
-                    $('.agregarmaquina').off('click').on('click', function (){
-                        app.popup("FichaTecnica.jsp",680,1280);
+                    $('.agregarmaquina').off('click').on('click', function () {
+                        app.popup("FichaTecnica.jsp", 680, 1280);
+                    });
+                    $('.volver').off('click').on('click', function () {
+                        document.location.href = "inicio.jsp";
                     });
                 },
                 popup: function (URL, alto, ancho) {
@@ -122,7 +125,7 @@
                     var posicion_y;
                     posicion_x = (screen.width / 2) - (ancho / 2);
                     posicion_y = 0;
-                    window.open(URL, 'popup', 'width=' + 100% + ', height=' + 100% + ', resizable=no, menubar=no, scrollbars=no, status=no, location=no, toolbar=0, left=' + posicion_x + ', top=' + posicion_y + '');
+                    window.open(URL, 'popup', 'width=' + 100 % +', height=' + 100 % +', resizable=no, menubar=no, scrollbars=no, status=no, location=no, toolbar=0, left=' + posicion_x + ', top=' + posicion_y + '');
                 }
             };
             $(document).ready(function () {

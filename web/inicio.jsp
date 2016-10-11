@@ -35,9 +35,10 @@
         <style>
             .fondo{
                 position: absolute;
-                background-image: url(images/fondo.png);
+                background-image: url(images/fondoinicio.jpg);
                 background-repeat: no-repeat;
                 background-size: cover;
+                background-position-y: -30px;
             }
             .cajamenu{
                 border-radius: 100%;

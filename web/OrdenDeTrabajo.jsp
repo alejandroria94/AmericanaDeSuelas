@@ -21,21 +21,20 @@
         <link href="css/select2.min.css" rel="stylesheet">
     </head>
     <body>
-         <%
-                Usuario u = (Usuario)session.getAttribute("usr");
-                if(u==null){
-                    out.print("<h1>Debes <strong><a href='index.jsp'>INICIAR SESION</a></strong> para acceder a este servicio</h1>");
-                }else{
-                
-                
+        <%
+            Usuario u = (Usuario) session.getAttribute("usr");
+            if (u == null) {
+                out.print("<h1>Debes <strong><a href='index.jsp'>INICIAR SESION</a></strong> para acceder a este servicio</h1>");
+            } else {
+
         %>
         <style>
             .border{
                 border: 1px solid #269abc;
                 border-radius: 10px;
-/*                background-image: url("../images/fondo-estrellas.jpg");
-                background-repeat: no-repeat;
-                background-size: cover;*/
+                /*                background-image: url("../images/fondo-estrellas.jpg");
+                                background-repeat: no-repeat;
+                                background-size: cover;*/
             }
             .imagen{
                 width: 20%;
@@ -73,7 +72,7 @@
                         <label for="fechafinal">Fecha de Finalizacion:</label>
                         <input type="text" class="form-control" id="fechafinal" placeholder="">
                     </div>
-                    
+
                 </div>
                 <div class="row">
                     <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 colsm-10 col-sm-offset-1 ">
@@ -229,6 +228,28 @@
                                         <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>
+                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control fechainicio-durtar" id="fechainicio-durtar" placeholder="Fecha Inicio">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control fechafinal-durtar" id="fechafinal-durtar" placeholder="Fecha Finalizacion">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                    </td>
+                                    <td>
+                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                    </td>
+                                    <td>
+                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -255,19 +276,19 @@
         <script>
             $('#fechafinal').datetimepicker({
                 timepicker: false,
-                 format:'d/m/Y'
+                format: 'd/m/Y'
             });
             $('#fechainicio').datetimepicker({
                 timepicker: false,
-                format:'d/m/Y'
+                format: 'd/m/Y'
             });
             $('.fechafinal-durtar').datetimepicker({
                 timepicker: false,
-                format:'d/m/Y'
+                format: 'd/m/Y'
             });
             $('.fechainicio-durtar').datetimepicker({
                 timepicker: false,
-                format:'d/m/Y'
+                format: 'd/m/Y'
             });
             $('#select2-equipos').select2({
                 placeholder: 'Selecciona...'
