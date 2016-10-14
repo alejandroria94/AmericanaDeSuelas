@@ -95,7 +95,7 @@
 
             </div>
         </div>
-        <input type="button" value="Imprimir" onclick="javascript:window.print()" />
+        <!--<input type="button" value="Imprimir" onclick="javascript:window.print()" />-->
         <script src="js/jquery-3.1.1.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jasny-bootstrap.min.js"></script>

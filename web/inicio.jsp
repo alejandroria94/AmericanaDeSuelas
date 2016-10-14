@@ -112,8 +112,8 @@
                                 <ul class="dropdown-menu" style="font-size: 25px">
                                     <li><a href="#">Proveedores</a></li>
                                     <li><a href="#">Producción</a></li>
-                                    <li><a href="#">Repuestos</a></li>
-                                    <li><a href="#">Herramientas</a></li>
+                                    <li class="repuestos"><a href="#">Repuestos</a></li>
+                                    <li class="herramientas"><a href="">Herramientas</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="#">Informes</a></li>
                                 </ul>
@@ -157,6 +157,12 @@
                     });
                     $('.alarma').off('click').on('click', function () {
                         app.popup("Alertas.jsp", 650, 1300);
+                    });
+                    $('.herramientas').off('click').on('click', function () {
+                        app.popup("Herramientas.jsp", 500, 900);
+                    });
+                    $('.repuestos').off('click').on('click', function () {
+                        app.popup("Repuestos.jsp", 500, 900);
                     });
                 },
                 nobackbutton: function () {
