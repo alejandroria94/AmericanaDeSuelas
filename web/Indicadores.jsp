@@ -86,8 +86,8 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-10 col-md-10 col-sm-10 col-lg-offset-1 col-md-offset-1 col-sm-offset-1">
-                        <button type="button" class="btn  btn-danger pull-right">
-                            Cancelar
+                        <button type="button" class="btn btn-lg btn-warning pull-right volver" >
+                            Volver
                         </button>
                     </div>
 
@@ -104,6 +104,9 @@
 
             var app = {
                 init: function () {
+                    $('.volver').off('click').on('click', function () {
+                        document.location.href = "inicio.jsp";
+                    });
                     $('#fallasaño').highcharts({
                         title: {
                             text: 'Indicador de maquinas',
@@ -129,12 +132,6 @@
                         },
                         tooltip: {
                             valueSuffix: ' Fallas'
-                        },
-                        legend: {
-                            layout: 'vertical',
-                            align: 'right',
-                            verticalAlign: 'middle',
-                            borderWidth: 0
                         },
                         series: [{
                                 name: 'Máquina 1',
@@ -177,6 +174,7 @@
                             pointFormat: '<span><strong>Dia {point.name}</strong></span>-> <strong><b style="color:red; font-size:16px;">{point.y}</b> </strong> Fallas<br/>'
                         },
                         series: [{
+//                                colorByPoint: true, 
                                 name: 'Fallas',
                                 data: [
                                     ['1', 23],
@@ -219,7 +217,7 @@
                                     align: 'right',
                                     y: 10, // 10 pixels down from the top
                                     style: {
-                                        fontSize: '14px',
+                                        fontSize: '12px',
                                         fontFamily: 'Verdana, sans-serif'
                                     }
                                 }

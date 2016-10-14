@@ -93,7 +93,7 @@
                                 </button>
                                 <ul class="dropdown-menu" style="font-size: 25px">
                                     <li><a href="AdministrarFichasTecnicas.jsp">Máquina</a></li>
-                                    <li><a href="#">Indicador de Gestión</a></li>
+                                    <li><a href="Indicadores.jsp">Indicador de Gestión</a></li>
                                     <li><a href="#">Tiempo de Operación</a></li>
                                     <li class="ordentrabajo"><a href="#">Orden de Trabajo</a></li>
                                     <li role="separator" class="divider"></li>
