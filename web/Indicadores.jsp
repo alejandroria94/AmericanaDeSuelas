@@ -72,14 +72,28 @@
                         <input type="text" class="form-control" id="fechainicio" placeholder="">
                     </div>
                 </div>
+                <!--                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        <div id="fallasaño">
+                
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6 col-sm-6 ">
+                                        <div id="fallasmes">
+                
+                                        </div>
+                                    </div>
+                                </div>-->
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div id="fallasaño">
+                    <div class="col-lg-11 col-md-11 col-sm-11">
+                        <div id="fallasmes">
 
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6 ">
-                        <div id="fallasmes">
+                </div>
+                <div class="row">
+                    <div class="col-lg-11 col-md-11 col-sm-11">
+                        <div id="fallasaño">
 
                         </div>
                     </div>
@@ -100,10 +114,64 @@
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jasny-bootstrap.min.js"></script>
         <script src="js/highcharts.js"></script>
+        <script src="js/highcharts3d.js"></script>
         <script>
 
             var app = {
+                datosmes: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 0, 3, 8],
+                datosaño: [2, 3, 4, 3, 1, 3, 5, 6, 5, 4, 3, 8],
                 init: function () {
+
+                    var chart = new Highcharts.Chart({
+                        chart: {
+                            renderTo: 'fallasmes',
+                            type: 'column',
+                            options3d: {
+                                enabled: true,
+                                alpha: 10,
+                                beta: 6,
+                                depth: 100,
+                                viewDistance: 30
+                            }
+                        },
+                        title: {
+                            text: 'Indicador de maquinas'
+                        },
+                        subtitle: {
+                            text: 'Indicador'
+                        },
+                        tooltip: {
+                            pointFormat: '<span><strong>Dia {point.name}</strong></span>-> <strong><b style="color:red; font-size:16px;">{point.y}</b> </strong> Fallas<br/>'
+                        },
+                        xAxis: {
+                            title:{
+                                text:'Día del Mes'
+                            },
+                            categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Número de Fallas'
+                            },
+                            plotLines: [{
+                                    value: 0,
+                                    width: 1,
+                                    color: '#808080'
+                                }]
+                        },
+                        plotOptions: {
+                            column: {
+                                depth: 30
+                            }
+                        },
+                        series: [{
+                                name: 'Máquina 1',
+                                data: app.datosmes
+                            }]
+                    });
+
+
+
                     $('.volver').off('click').on('click', function () {
                         document.location.href = "inicio.jsp";
                     });
@@ -122,7 +190,7 @@
                         },
                         yAxis: {
                             title: {
-                                text: '# Fallas'
+                                text: 'Número de Fallas'
                             },
                             plotLines: [{
                                     value: 0,
@@ -135,94 +203,94 @@
                         },
                         series: [{
                                 name: 'Máquina 1',
-                                data: [7, 6, 9, 14, 18, 21, 25, 26, 23, 18, 13, 9]
+                                data: app.datosaño
                             }]
                     });
-                    $('#fallasmes').highcharts({
-                        chart: {
-                            type: 'column'
-                        },
-                        title: {
-                            text: 'Indicador de maquinas'
-                        },
-                        subtitle: {
-                            text: 'Indicadores'
-                        },
-                        xAxis: {
-                            type: 'category',
-                            title: {
-                                text: 'Dias del mes'
-                            },
-                            labels: {
-                                rotation: -45,
-                                style: {
-                                    fontSize: '13px',
-                                    fontFamily: 'Verdana, sans-serif'
-                                }
-                            }
-                        },
-                        yAxis: {
-                            min: 0,
-                            title: {
-                                text: '# Fallas'
-                            }
-                        },
-                        legend: {
-                            enabled: false
-                        },
-                        tooltip: {
-                            pointFormat: '<span><strong>Dia {point.name}</strong></span>-> <strong><b style="color:red; font-size:16px;">{point.y}</b> </strong> Fallas<br/>'
-                        },
-                        series: [{
-//                                colorByPoint: true, 
-                                name: 'Fallas',
-                                data: [
-                                    ['1', 23],
-                                    ['2', 16],
-                                    ['3', 14],
-                                    ['4', 14],
-                                    ['5', 12],
-                                    ['6', 12],
-                                    ['7', 11],
-                                    ['8', 11],
-                                    ['9', 1],
-                                    ['10', 6],
-                                    ['11', 8],
-                                    ['12', 0],
-                                    ['13', 1],
-                                    ['14', 4],
-                                    ['15', 5],
-                                    ['16', 9],
-                                    ['17', 11],
-                                    ['18', 23],
-                                    ['19', 5],
-                                    ['20', 7],
-                                    ['21', 3],
-                                    ['22', 4],
-                                    ['23', 7],
-                                    ['24', 1],
-                                    ['25', 9],
-                                    ['26', 10],
-                                    ['27', 6],
-                                    ['28', 0],
-                                    ['29', 3],
-                                    ['30', 8],
-                                    ['31', 12]
-
-                                ],
-                                dataLabels: {
-                                    enabled: true,
-                                    rotation: -90,
-                                    color: '#FFFFFF',
-                                    align: 'right',
-                                    y: 10, // 10 pixels down from the top
-                                    style: {
-                                        fontSize: '12px',
-                                        fontFamily: 'Verdana, sans-serif'
-                                    }
-                                }
-                            }]
-                    });
+//                    $('#').highcharts({
+//                        chart: {
+//                            type: 'column'
+//                        },
+//                        title: {
+//                            text: 'Indicador de maquinas'
+//                        },
+//                        subtitle: {
+//                            text: 'Indicadores'
+//                        },
+//                        xAxis: {
+//                            type: 'category',
+//                            title: {
+//                                text: 'Dias del mes'
+//                            },
+//                            labels: {
+//                                rotation: -45,
+//                                style: {
+//                                    fontSize: '13px',
+//                                    fontFamily: 'Verdana, sans-serif'
+//                                }
+//                            }
+//                        },
+//                        yAxis: {
+//                            min: 0,
+//                            title: {
+//                                text: '# Fallas'
+//                            }
+//                        },
+//                        legend: {
+//                            enabled: false
+//                        },
+//                        tooltip: {
+//                            pointFormat: '<span><strong>Dia {point.name}</strong></span>-> <strong><b style="color:red; font-size:16px;">{point.y}</b> </strong> Fallas<br/>'
+//                        },
+//                        series: [{
+////                                colorByPoint: true, 
+//                                name: 'Fallas',
+//                                data: [
+//                                    ['1', 23],
+//                                    ['2', 16],
+//                                    ['3', 14],
+//                                    ['4', 14],
+//                                    ['5', 12],
+//                                    ['6', 12],
+//                                    ['7', 11],
+//                                    ['8', 11],
+//                                    ['9', 1],
+//                                    ['10', 6],
+//                                    ['11', 8],
+//                                    ['12', 0],
+//                                    ['13', 1],
+//                                    ['14', 4],
+//                                    ['15', 5],
+//                                    ['16', 9],
+//                                    ['17', 11],
+//                                    ['18', 23],
+//                                    ['19', 5],
+//                                    ['20', 7],
+//                                    ['21', 3],
+//                                    ['22', 4],
+//                                    ['23', 7],
+//                                    ['24', 1],
+//                                    ['25', 9],
+//                                    ['26', 10],
+//                                    ['27', 6],
+//                                    ['28', 0],
+//                                    ['29', 3],
+//                                    ['30', 8],
+//                                    ['31', 12]
+//
+//                                ],
+//                                dataLabels: {
+//                                    enabled: true,
+//                                    rotation: -90,
+//                                    color: '#FFFFFF',
+//                                    align: 'right',
+//                                    y: 10, // 10 pixels down from the top
+//                                    style: {
+//                                        fontSize: '12px',
+//                                        fontFamily: 'Verdana, sans-serif'
+//                                    }
+//                                }
+//                            }]
+//                    });
                 },
                 popup: function (URL, alto, ancho) {
                     var posicion_x;
