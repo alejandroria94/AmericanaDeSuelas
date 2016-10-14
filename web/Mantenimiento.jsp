@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title> Hoja De Vida</title>
+        <title> Mantenimiento</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
         <%
@@ -48,7 +48,7 @@
                 <div class="row">
                     <div class="col-lg-10 col-lg-offset-1 text-center">
                         <h1 class="text-info bg-primary">
-                            Hoja De Vida
+                            Mantenimiento
                             <img src="images/logotipo3.png" class="imagen"/>
                         </h1>
                     </div>
@@ -64,36 +64,27 @@
                                     <td >DMR1PTC01</td>
                                 </tr>
                                 <tr>
-                                    <th colspan="2" class="bg-info"> Operario</th>
+                                    <th colspan="2" class="bg-info"> Ubicacion</th>
                                     <td colspan="2">Alexis F. Rodriguez</td>
                                     <th class="bg-info">Departamento</th>
                                     <td> Mecanizado</td>
                                 </tr>
                                 <tr class="bg-info">
-                                    <th style="width: 100px;">Fecha</th>
-                                    <th>Orden De Trabajo</th>
-                                    <th style="width: 300px">Actividad</th>
-                                    <th>Responsable</th>
-                                    <th>Repuestos</th>
-                                    <th>Costo</th>
+                                    <th style="width: 100px;" colspan="2">Fecha</th>
+                                    <th style="width: 300px" colspan="2">Actividad</th>
+                                    <th colspan="2">Repuestos</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>23/01/2017</td>
-                                    <td>0095</td>
-                                    <td>Verificar tolerancia de las manijas</td>
-                                    <td>Digney Agudelo</td>
-                                    <td>-----------</td>
-                                    <td>-----------</td>
+                                    <td colspan="2">23/01/2017</td>
+                                    <td colspan="2">0095</td>
+                                    <td colspan="2">Verificar tolerancia de las manijas</td>
                                 </tr>
                                 <tr>
-                                    <td>27/01/2017</td>
-                                    <td>0096</td>
-                                    <td>Cambio de correas</td>
-                                    <td>Digney Agudelo</td>
-                                    <td>Correas</td>
-                                    <td>30.000</td>
+                                     <td colspan="2">23/01/2017</td>
+                                    <td colspan="2">0095</td>
+                                    <td colspan="2">Verificar tolerancia de las manijas</td>
                                 </tr>
                                 
                             </tbody>

@@ -74,7 +74,7 @@
                                                 <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver</a></li>
                                                 <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</a></li>
                                                 <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Elimiar</a></li>
-                                                <li style="font-size: 20px" class="tiempoosio"><a href="#"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Tiempo de osio</a></li>
+                                                <li style="font-size: 20px" class="tiempoosio"><a href="#"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Tiempo de ocio</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -94,7 +94,7 @@
                                                 <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver</a></li>
                                                 <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</a></li>
                                                 <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Elimiar</a></li>
-                                                <li style="font-size: 20px" class="tiempoosio"><a href="#"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Tiempo de osio</a></li>
+                                                <li style="font-size: 20px" class="tiempoosio"><a href="#"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Tiempo de ocio</a></li>
 
                                             </ul>
                                         </div>
@@ -121,7 +121,7 @@
                                         </div>-->
                     <div class="modal-body">
                         <fieldset>
-                                <legend class="text-primary text-center"><strong>Tiempo de Osio</strong></legend>
+                                <legend class="text-primary text-center"><strong>Tiempo de Ocio</strong></legend>
                         <div class="row">
                             <div class="form-group col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
                                 <label for="solicita">Tiempo</label>

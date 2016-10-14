@@ -118,8 +118,8 @@
         <script>
 
             var app = {
-                datosmes: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 0, 3, 8],
-                datosaño: [2, 3, 4, 3, 1, 3, 5, 6, 5, 4, 3, 8],
+                datosmes: [9,8,7,6,5,6,7,5,6,9,8,7,6,7,8,7,6,5,9,8,7,6,5,7,9,8,7,9,10,8,6],
+                datosaño: [7,8,6,5,9,8,7,9,5,6,7,8],
                 init: function () {
 
                     var chart = new Highcharts.Chart({
@@ -135,7 +135,7 @@
                             }
                         },
                         title: {
-                            text: 'Indicador de maquinas'
+                            text: 'Indicador de disponibilidad'
                         },
                         subtitle: {
                             text: 'Indicador'
@@ -151,7 +151,7 @@
                         },
                         yAxis: {
                             title: {
-                                text: 'Número de Fallas'
+                                text: 'Porcentaje'
                             },
                             plotLines: [{
                                     value: 0,
@@ -177,7 +177,7 @@
                     });
                     $('#fallasaño').highcharts({
                         title: {
-                            text: 'Indicador de maquinas',
+                            text: 'Indicador de disponibilidad',
                             x: -20 //center
                         },
                         subtitle: {
@@ -190,7 +190,7 @@
                         },
                         yAxis: {
                             title: {
-                                text: 'Número de Fallas'
+                                text: 'Porcentaje'
                             },
                             plotLines: [{
                                     value: 0,
