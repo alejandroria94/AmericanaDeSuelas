@@ -5,18 +5,24 @@
  */
 package beans;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /**
  *
  * @author Sammy Guergachi <sguergachi at gmail.com>
  */
 public class Usuario {
 
-    private String login = "admin";
-    private String pass = "admin-ads";
+    private String login = "";
+    private String pass = "";
     private String nombre;
+    private final ConexionBD cDB = new ConexionBD();
 
     public Usuario() {
     }
+
+   
 
     public String getLogin() {
         return login;
@@ -34,10 +40,15 @@ public class Usuario {
         this.pass = pass;
     }
 
-    public boolean validarLogin(String login, String pass) {
+    public boolean validarLogin(String login, String pass) throws SQLException {
+        ResultSet datos;
         boolean rs = false;
-        if (this.login.equals(login) && this.pass.equals(pass)) {
-            rs = true;
+        String sql = "SELECT * FROM Usuarios WHERE login='" + login + "' AND pass='" + pass + "';";
+        datos = cDB.consultarBD(sql);
+        if (datos.next()) {
+            this.login = datos.getString(2);
+            this.pass = datos.getString(3);
+             rs = true;
         }
         return rs;
     }
