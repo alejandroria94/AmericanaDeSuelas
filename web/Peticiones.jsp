@@ -36,6 +36,7 @@
             String pass = "" + request.getParameter("pass");
             Usuario u = new Usuario();
             if (u.validarLogin(login, pass)) {
+                session.setAttribute("usr", u);
                 respuesta += ",\"" + proceso + "\": true";
             } else {
                 respuesta += ",\"" + proceso + "\": false";
