@@ -39,6 +39,8 @@
                 session.setAttribute("usr", u);
                 respuesta += ",\"" + proceso + "\": true";
             } else {
+                u=null;
+                session.setAttribute("usr", u);
                 respuesta += ",\"" + proceso + "\": false";
             }
         } else if (proceso.equals("clientefactura")) {

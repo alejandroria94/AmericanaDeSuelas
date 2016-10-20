@@ -23,12 +23,11 @@
     <body>
         <%
             String logeo = "" + request.getParameter("logeo");
-            Usuario u = null;
+            Usuario u = (Usuario) session.getAttribute("usr");
             if (logeo.equals("true")) {
-                u = (Usuario) session.getAttribute("usr");
+               
             }
-
-            if (u == null) {
+            if (u==null) {
                 out.print("<h1>Debes <strong><a href='index.jsp'>INICIAR SESION</a></strong> para acceder a este servicio</h1>");
             } else {
         %>
