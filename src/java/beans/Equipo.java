@@ -17,6 +17,7 @@ public class Equipo {
 
     private int idEquipos;
     private String nombre;
+    private String codigo;
     private String tipoEquipo;
     private String marca;
     private String modelo;
@@ -75,10 +76,10 @@ public class Equipo {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
         if (conexion.setAutoCommitBD(false)) {
-            boolean inserto = conexion.insertarBD("INSERT INTO Equipos(nombre, tipoEquipo, marca, modelo, ubicacion, estado, serie, peso, altura, largo, ancho, potencia, tipoPotencia, frecuencia, alimentación, ambienteCorrosivo, tiempoDeFuncionamiento, horasDeUso, funciones, caracteristicasEspecificas, observaciones, control, estadoPintura, imagen) "
+            boolean inserto = conexion.insertarBD("INSERT INTO Equipos(nombre, tipoEquipo, marca, modelo, ubicacion, estado, serie, peso, altura, largo, ancho, potencia, tipoPotencia, frecuencia, alimentación, ambienteCorrosivo, tiempoDeFuncionamiento, horasDeUso, funciones, caracteristicasEspecificas, observaciones, control, estadoPintura, imagen,codigo) "
                     + " VALUES ( '" + this.nombre + "','" + this.tipoEquipo + "','" + this.marca + "','" + this.modelo + "','" + this.ubicación + "','" + this.estado + "','" + this.serie + "','" + this.peso + "','" + this.altura + "','" + this.largo + "','"
                     + this.ancho + "','" + this.potencia + "','" + this.tipoPotencia + "','" + this.frecuencia + "','" + this.alimentacion + "','" + this.ambienteCorrosivo + "','" + this.tiempoDeFuncionamiento + "','" + this.horasDeUso + "','" + this.funciones + "','"
-                    + this.caracteristicasEspecificas + "','" + this.observaciones + "','" + this.control + "','" + this.estadoPintura + "','" + this.imagen + "');  ");
+                    + this.caracteristicasEspecificas + "','" + this.observaciones + "','" + this.control + "','" + this.estadoPintura + "','" + this.imagen + "','"+ this.codigo + "');  ");
             if (inserto) {
                 conexion.commitBD();
                 exito = true;
@@ -99,6 +100,7 @@ public class Equipo {
             e = new Equipo();
             e.setIdEquipos(Integer.parseInt(rs.getString("idEquipos")));
             e.setNombre(rs.getString("nombre"));
+            e.setNombre(rs.getString("codigo"));
             e.setTipoEquipo(rs.getString("tipoEquipo"));
             e.setMarca(rs.getString("marca"));
             e.setModelo(rs.getString("modelo"));
@@ -143,6 +145,15 @@ public class Equipo {
         this.nombre = nombre;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    
     public String getTipoEquipo() {
         return tipoEquipo;
     }
