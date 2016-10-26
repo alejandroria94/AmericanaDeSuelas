@@ -104,6 +104,15 @@
 
             </div>
         </div>
+    <p>
+            dfkjhgdfkjghdfkjgh
+    </p>
+    <p>
+            fffffff
+    </p>
+    <p>
+            fffffff
+    </p>
         <input type="button" value="Imprimir" onclick="javascript:window.print()"  class="btn btn-warning pull-right" style="margin-right: 20px;"/>
         <script src="js/jquery-3.1.1.js"></script>
         <script src="js/bootstrap.min.js"></script>

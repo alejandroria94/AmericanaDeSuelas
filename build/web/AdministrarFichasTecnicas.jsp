@@ -4,6 +4,9 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="beans.Equipo"%>
+<%@page import="beans.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -16,6 +19,13 @@
         <link href="css/bootstrap-radio.css" rel="stylesheet">
     </head>
     <body>
+        <%
+            Usuario u = (Usuario) session.getAttribute("usr");
+            if (u == null) {
+                out.print("<h1>Debes <strong><a href='index.jsp'>INICIAR SESION</a></strong> para acceder a este servicio</h1>");
+            } else {
+
+        %>
         <style>
             .border{
                 border: 1px solid #269abc;
@@ -51,20 +61,25 @@
                             <thead class="bg-info" style="font-size: 15px">
                                 <tr>
                                     <th style="width: 180px">Codigo</th>
+                                    <th>Nombre</th>
                                     <th>Ubicación</th>
-                                    <th>Marca</th>
                                     <th>Modelo</th>
                                     <th>Serie</th>
                                     <th style="width: 120px">Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <%
+                                Equipo e = new Equipo();
+                                List<Equipo> lista = e.listarEquipos();
+                                for(Equipo eq: lista){
+                                %>
                                 <tr>
-                                    <td class="id" data-id="1234">1234</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class="id" data-id="<%=eq.getIdEquipos()%>"><%=eq.getCodigo()%></td>
+                                    <td><%=eq.getNombre()%></td>
+                                    <td><%=eq.getUbicacion()%></td>
+                                    <td><%=eq.getModelo()%></td>
+                                    <td ><%=eq.getSerie()%></td>
                                     <td class="text-center">
                                         <div class="btn-group">
                                             <button  style="font-size: 12px" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -79,27 +94,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="id" data-id="32234">32234</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-center">
-                                        <div class="btn-group">
-                                            <button  style="font-size: 12px" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp;&nbsp;<span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver</a></li>
-                                                <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</a></li>
-                                                <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Elimiar</a></li>
-                                                <li style="font-size: 20px" class="tiempoosio"><a href="#"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Tiempo de ocio</a></li>
-
-                                            </ul>
-                                        </div>
-                                    </td>
-                                </tr>
+                             <%}%>
                             </tbody>
                         </table>
                     </div>
@@ -187,5 +182,6 @@
                 app.init();
             });
         </script>
+        <%}%>
     </body>
 </html>

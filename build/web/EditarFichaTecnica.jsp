@@ -23,7 +23,7 @@
             if (u == null) {
                 out.print("<h1>Debes <strong><a href='index.jsp'>INICIAR SESION</a></strong> para acceder a este servicio</h1>");
             } else {
-
+                
         %>
         <style>
             .border{
