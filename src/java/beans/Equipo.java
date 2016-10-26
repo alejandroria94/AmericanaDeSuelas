@@ -8,6 +8,8 @@ package beans;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -75,10 +77,10 @@ public class Equipo {
     public boolean guardarEquipo() {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
-        String sentencia="INSERT INTO Equipos(nombre, tipoEquipo, marca, modelo, ubicacion, estado, serie, peso, altura, largo, ancho, potencia, tipoPotencia, frecuencia, alimentacion, ambienteCorrosivo, tiempoDeFuncionamiento, horasDeUso, funciones, caracteristicasEspecificas, observaciones, control, estadoPintura, imagen,codigo) "
-                    + " VALUES ( '" + this.nombre + "','" + this.tipoEquipo + "','" + this.marca + "','" + this.modelo + "','" + this.ubicacion + "','" + this.estado + "','" + this.serie + "','" + this.peso + "','" + this.altura + "','" + this.largo + "','"
-                    + this.ancho + "','" + this.potencia + "','" + this.tipoPotencia + "','" + this.frecuencia + "','" + this.alimentacion + "','" + this.ambienteCorrosivo + "','" + this.tiempoDeFuncionamiento + "','" + this.horasDeUso + "','" + this.funciones + "','"
-                    + this.caracteristicasEspecificas + "','" + this.observaciones + "','" + this.control + "','" + this.estadoPintura + "','" + this.imagen + "','"+ this.codigo + "');  ";
+        String sentencia = "INSERT INTO Equipos(nombre, tipoEquipo, marca, modelo, ubicacion, estado, serie, peso, altura, largo, ancho, potencia, tipoPotencia, frecuencia, alimentacion, ambienteCorrosivo, tiempoDeFuncionamiento, horasDeUso, funciones, caracteristicasEspecificas, observaciones, control, estadoPintura, imagen,codigo) "
+                + " VALUES ( '" + this.nombre + "','" + this.tipoEquipo + "','" + this.marca + "','" + this.modelo + "','" + this.ubicacion + "','" + this.estado + "','" + this.serie + "','" + this.peso + "','" + this.altura + "','" + this.largo + "','"
+                + this.ancho + "','" + this.potencia + "','" + this.tipoPotencia + "','" + this.frecuencia + "','" + this.alimentacion + "','" + this.ambienteCorrosivo + "','" + this.tiempoDeFuncionamiento + "','" + this.horasDeUso + "','" + this.funciones + "','"
+                + this.caracteristicasEspecificas + "','" + this.observaciones + "','" + this.control + "','" + this.estadoPintura + "','" + this.imagen + "','" + this.codigo + "');  ";
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
             if (inserto) {
@@ -89,6 +91,42 @@ public class Equipo {
             }
         }
         return exito;
+    }
+
+    public Equipo llenarDatosObjetoEquipo(ResultSet rs) throws SQLException {
+        Equipo e = null;
+
+        if (rs.next()) {
+            e = new Equipo();
+            e.setIdEquipos(Integer.parseInt(rs.getString("idEquipos")));
+            e.setNombre(rs.getString("nombre"));
+            e.setCodigo(rs.getString("codigo"));
+            e.setTipoEquipo(rs.getString("tipoEquipo"));
+            e.setMarca(rs.getString("marca"));
+            e.setModelo(rs.getString("modelo"));
+            e.setUbicacion(rs.getString("ubicacion"));
+            e.setEstado(rs.getString("estado"));
+            e.setSerie(rs.getString("serie"));
+            e.setPeso(rs.getString("peso"));
+            e.setAltura(rs.getString("altura"));
+            e.setLargo(rs.getString("largo"));
+            e.setAncho(rs.getString("ancho"));
+            e.setPotencia(rs.getString("potencia"));
+            e.setTipoPotencia(rs.getString("tipoPotencia"));
+            e.setFrecuencia(rs.getString("frecuencia"));
+            e.setAlimentacion(rs.getString("alimentacion"));
+            e.setAmbienteCorrosivo(rs.getBoolean("ambienteCorrosivo"));
+            e.setTiempoDeFuncionamiento(rs.getFloat("tiempoDeFuncionamiento"));
+            e.setHorasDeUso(rs.getFloat("horasDeUso"));
+            e.setFunciones(rs.getString("funciones"));
+            e.setCaracteristicasEspecificas(rs.getString("caracteristicasEspecificas"));
+            e.setObservaciones(rs.getString("observaciones"));
+            e.setControl(rs.getString("control"));
+            e.setEstadoPintura(rs.getString("estadoPintura"));
+            e.setImagen(rs.getString("imagen"));
+        }
+
+        return e;
     }
 
     public ArrayList<Equipo> listarEquipos() throws SQLException {
@@ -130,6 +168,26 @@ public class Equipo {
         return this.listaDeEquipos;
     }
 
+    /**
+     *
+     * @param idEquipo retorna null Si la consulta no es exitosa,si es exitosa
+     * retorna un objeto con los datos de la busqueda
+     * @return
+     * @throws java.sql.SQLException
+     */
+    public Equipo obtenerEquipo(String idEquipo) throws SQLException {
+
+        ResultSet datosE = buscarEquipo(idEquipo);
+        Equipo e = llenarDatosObjetoEquipo(datosE);
+        return e;
+    }
+
+    public ResultSet buscarEquipo(String busqueda) {
+        ConexionBD conexion = new ConexionBD();
+        ResultSet datosE = conexion.consultarBD("select * from Equipos where idEquipos= '" + busqueda + "'");
+        return datosE;
+    }
+
     public int getIdEquipos() {
         return idEquipos;
     }
@@ -154,7 +212,6 @@ public class Equipo {
         this.codigo = codigo;
     }
 
-    
     public String getTipoEquipo() {
         return tipoEquipo;
     }
@@ -179,7 +236,7 @@ public class Equipo {
         this.modelo = modelo;
     }
 
-    public String getUbicación() {
+    public String getUbicacion() {
         return ubicacion;
     }
 
