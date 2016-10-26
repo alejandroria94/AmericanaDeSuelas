@@ -21,7 +21,7 @@ public class Equipo {
     private String tipoEquipo;
     private String marca;
     private String modelo;
-    private String ubicación;
+    private String ubicacion;
     private String estado;
     private String serie;
     private String peso;
@@ -75,11 +75,12 @@ public class Equipo {
     public boolean guardarEquipo() {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
-        if (conexion.setAutoCommitBD(false)) {
-            boolean inserto = conexion.insertarBD("INSERT INTO Equipos(nombre, tipoEquipo, marca, modelo, ubicacion, estado, serie, peso, altura, largo, ancho, potencia, tipoPotencia, frecuencia, alimentación, ambienteCorrosivo, tiempoDeFuncionamiento, horasDeUso, funciones, caracteristicasEspecificas, observaciones, control, estadoPintura, imagen,codigo) "
-                    + " VALUES ( '" + this.nombre + "','" + this.tipoEquipo + "','" + this.marca + "','" + this.modelo + "','" + this.ubicación + "','" + this.estado + "','" + this.serie + "','" + this.peso + "','" + this.altura + "','" + this.largo + "','"
+        String sentencia="INSERT INTO Equipos(nombre, tipoEquipo, marca, modelo, ubicacion, estado, serie, peso, altura, largo, ancho, potencia, tipoPotencia, frecuencia, alimentacion, ambienteCorrosivo, tiempoDeFuncionamiento, horasDeUso, funciones, caracteristicasEspecificas, observaciones, control, estadoPintura, imagen,codigo) "
+                    + " VALUES ( '" + this.nombre + "','" + this.tipoEquipo + "','" + this.marca + "','" + this.modelo + "','" + this.ubicacion + "','" + this.estado + "','" + this.serie + "','" + this.peso + "','" + this.altura + "','" + this.largo + "','"
                     + this.ancho + "','" + this.potencia + "','" + this.tipoPotencia + "','" + this.frecuencia + "','" + this.alimentacion + "','" + this.ambienteCorrosivo + "','" + this.tiempoDeFuncionamiento + "','" + this.horasDeUso + "','" + this.funciones + "','"
-                    + this.caracteristicasEspecificas + "','" + this.observaciones + "','" + this.control + "','" + this.estadoPintura + "','" + this.imagen + "','"+ this.codigo + "');  ");
+                    + this.caracteristicasEspecificas + "','" + this.observaciones + "','" + this.control + "','" + this.estadoPintura + "','" + this.imagen + "','"+ this.codigo + "');  ";
+        if (conexion.setAutoCommitBD(false)) {
+            boolean inserto = conexion.insertarBD(sentencia);
             if (inserto) {
                 conexion.commitBD();
                 exito = true;
@@ -100,11 +101,11 @@ public class Equipo {
             e = new Equipo();
             e.setIdEquipos(Integer.parseInt(rs.getString("idEquipos")));
             e.setNombre(rs.getString("nombre"));
-            e.setNombre(rs.getString("codigo"));
+            e.setCodigo(rs.getString("codigo"));
             e.setTipoEquipo(rs.getString("tipoEquipo"));
             e.setMarca(rs.getString("marca"));
             e.setModelo(rs.getString("modelo"));
-            e.setUbicación(rs.getString("ubicacion"));
+            e.setUbicacion(rs.getString("ubicacion"));
             e.setEstado(rs.getString("estado"));
             e.setSerie(rs.getString("serie"));
             e.setPeso(rs.getString("peso"));
@@ -115,7 +116,7 @@ public class Equipo {
             e.setTipoPotencia(rs.getString("tipoPotencia"));
             e.setFrecuencia(rs.getString("frecuencia"));
             e.setAlimentacion(rs.getString("alimentacion"));
-            e.setAmbienteCorrosivo(Boolean.parseBoolean(rs.getString("ambienteCorrosivo")));
+            e.setAmbienteCorrosivo(rs.getBoolean("ambienteCorrosivo"));
             e.setTiempoDeFuncionamiento(rs.getFloat("tiempoDeFuncionamiento"));
             e.setHorasDeUso(rs.getFloat("horasDeUso"));
             e.setFunciones(rs.getString("funciones"));
@@ -179,11 +180,11 @@ public class Equipo {
     }
 
     public String getUbicación() {
-        return ubicación;
+        return ubicacion;
     }
 
-    public void setUbicación(String ubicación) {
-        this.ubicación = ubicación;
+    public void setUbicacion(String ubicación) {
+        this.ubicacion = ubicación;
     }
 
     public String getEstado() {
@@ -272,9 +273,9 @@ public class Equipo {
 
     public void setAmbienteCorrosivo(boolean abienteCorrosivo) {
         if (abienteCorrosivo) {
-            this.ambienteCorrosivo = 0;
-        } else {
             this.ambienteCorrosivo = 1;
+        } else {
+            this.ambienteCorrosivo = 0;
         }
     }
 
