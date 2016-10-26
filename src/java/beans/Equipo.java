@@ -8,8 +8,6 @@ package beans;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -177,14 +175,14 @@ public class Equipo {
      */
     public Equipo obtenerEquipo(String idEquipo) throws SQLException {
 
-        ResultSet datosE = buscarEquipo(idEquipo);
+        ResultSet datosE = buscarEquipo("idEquipos", idEquipo);
         Equipo e = llenarDatosObjetoEquipo(datosE);
         return e;
     }
 
-    public ResultSet buscarEquipo(String busqueda) {
+    public ResultSet buscarEquipo(String parametro, String busqueda) {
         ConexionBD conexion = new ConexionBD();
-        ResultSet datosE = conexion.consultarBD("select * from Equipos where idEquipos= '" + busqueda + "'");
+        ResultSet datosE = conexion.consultarBD("select * from Equipos where " + parametro + "='" + busqueda + "'");
         return datosE;
     }
 
