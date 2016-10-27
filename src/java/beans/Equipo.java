@@ -46,10 +46,11 @@ public class Equipo {
 
     public Equipo() {
 //        this.nombre = "";
+//        this.codigo = "";
 //        this.tipoEquipo = "";
 //        this.marca = "";
 //        this.modelo = "";
-//        this.ubicación = "";
+//        this.ubicacion = "";
 //        this.estado = "";
 //        this.serie = "";
 //        this.peso = "";
@@ -82,6 +83,57 @@ public class Equipo {
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
             if (inserto) {
+                conexion.commitBD();
+                exito = true;
+            } else {
+                conexion.rollbackBD();
+            }
+        }
+        return exito;
+    }
+
+    public boolean actualizarrEquipo(String idEquipos, String nombre, String tipoEquipo, String marca, String modelo, String ubicacion, String estado, String serie,
+            String peso, String altura, String largo, String ancho, String potencia, String tipoPotencia, String frecuencia,
+            String alimentacion, boolean ambienteCorrosivo, float tiempoDeFuncionamiento, float horasDeUso, String funciones, String caracteristicasEspecificas,
+            String observaciones, String control, String estadoPintura, String imagen, String codigo) {
+        boolean exito = false;
+        ConexionBD conexion = new ConexionBD();
+        if (conexion.setAutoCommitBD(false)) {
+            //UPDATE table_name
+            //SET column1=value1,column2=value2,...
+            //WHERE some_column=some_value;
+            int ambienteCorrosivo1 = 0;
+            if (ambienteCorrosivo) {
+                ambienteCorrosivo1 = 1;
+            }
+            String sql2 = "UPDATE `Equipos` SET nombre='" + nombre + "',tipoEquipo='" + tipoEquipo + "',marca='" + marca
+                    + "',modelo='" + modelo + "',ubicacion='" + ubicacion + "',estado='" + estado + "',serie='" + serie
+                    + "',peso='" + peso + "',altura='" + altura + "',largo='" + largo + "',ancho='" + ancho
+                    + "',potencia='" + potencia + "',tipoPotencia='" + tipoPotencia + "',frecuencia='" + frecuencia + "',alimentacion='" + alimentacion
+                    + "',ambienteCorrosivo='" + ambienteCorrosivo1 + "',tiempoDeFuncionamiento='" + tiempoDeFuncionamiento + "',horasDeUso='" + horasDeUso + "',funciones='" + funciones
+                    + "',caracteristicasEspecificas='" + caracteristicasEspecificas + "',observaciones='" + observaciones + "',control='" + control + "',estadoPintura='" + estadoPintura
+                    + "',imagen='" + imagen + "',codigo='" + codigo
+                    + "' WHERE `idEquipos`='" + idEquipos + "'";
+            boolean borro2 = conexion.actualizarBD(sql2);
+            if (borro2) {
+                conexion.commitBD();
+                exito = true;
+            } else {
+                conexion.rollbackBD();
+            }
+        }
+        return exito;
+    }
+
+    public boolean borrarEquipo(String idEquipos) {
+        boolean exito = false;
+        ConexionBD conexion = new ConexionBD();
+        if (conexion.setAutoCommitBD(false)) {
+//            String sql = "DELETE FROM `comentarios` WHERE `NoIdent`='"+NoIdent+"'";
+//            boolean borro = conexion.borrarBD(sql);
+            String sql2 = "DELETE FROM `Equipos` WHERE `idEquipos`='" + idEquipos + "'";
+            boolean borro2 = conexion.borrarBD(sql2);
+            if (borro2) {
                 conexion.commitBD();
                 exito = true;
             } else {
@@ -174,12 +226,19 @@ public class Equipo {
      * @throws java.sql.SQLException
      */
     public Equipo obtenerEquipo(String idEquipo) throws SQLException {
-
         ResultSet datosE = buscarEquipo("idEquipos", idEquipo);
         Equipo e = llenarDatosObjetoEquipo(datosE);
         return e;
     }
 
+    /**
+     *
+     * @param parametro
+     * @param busqueda recibe una columna para busqueda en la tabla (Parametro)
+     * y un valor de busqueda (busqueda) retorna un objeto ResultSet con los
+     * datos de la consulta
+     * @return
+     */
     public ResultSet buscarEquipo(String parametro, String busqueda) {
         ConexionBD conexion = new ConexionBD();
         ResultSet datosE = conexion.consultarBD("select * from Equipos where " + parametro + "='" + busqueda + "'");
@@ -238,8 +297,8 @@ public class Equipo {
         return ubicacion;
     }
 
-    public void setUbicacion(String ubicación) {
-        this.ubicacion = ubicación;
+    public void setUbicacion(String ubicacion) {
+        this.ubicacion = ubicacion;
     }
 
     public String getEstado() {

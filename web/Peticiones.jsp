@@ -78,7 +78,7 @@
             e.setTipoEquipo(tipo);
             e.setMarca(marca);
             e.setModelo(modelo);
-            e.setUbicación(ubicacion);
+            e.setUbicacion(ubicacion);
             e.setEstado(estado);
             e.setSerie(serie);
             e.setPeso(peso);
