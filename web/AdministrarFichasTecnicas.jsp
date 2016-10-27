@@ -69,10 +69,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <%
-                                Equipo e = new Equipo();
-                                List<Equipo> lista = e.listarEquipos();
-                                for(Equipo eq: lista){
+                                <%  Equipo e = new Equipo();
+                                    List<Equipo> lista = e.listarEquipos();
+                                    for (Equipo eq : lista) {
                                 %>
                                 <tr>
                                     <td class="id" data-id="<%=eq.getIdEquipos()%>"><%=eq.getCodigo()%></td>
@@ -86,15 +85,15 @@
                                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp;&nbsp;<span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Ver</a></li>
-                                                <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Editar</a></li>
-                                                <li style="font-size: 20px"><a href="#"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Elimiar</a></li>
-                                                <li style="font-size: 20px" class="tiempoosio"><a href="#"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Tiempo de ocio</a></li>
+                                                <li style="font-size: 20px" class="ver"><a href="#"><span class="glyphicon glyphicon-eye-open " aria-hidden="true"></span> Ver</a></li>
+                                                <li style="font-size: 20px" class="editar"><a href="#"><span class="glyphicon glyphicon-edit " aria-hidden="true"></span> Editar</a></li>
+                                                <li style="font-size: 20px" class="eliminar"><a href="#"><span class="glyphicon glyphicon-remove " aria-hidden="true"></span> Elimiar</a></li>
+                                                <li style="font-size: 20px" class="tiempoocio"><a href="#"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Tiempo de ocio</a></li>
                                             </ul>
                                         </div>
                                     </td>
                                 </tr>
-                             <%}%>
+                                <%}%>
                             </tbody>
                         </table>
                     </div>
@@ -106,8 +105,8 @@
             </button>
         </div>
 
-        <!-- Modal tiempo de osio -->
-        <div class="modal fade" id="tiempoosio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <!-- Modal tiempo de ocio -->
+        <div class="modal fade" id="tiempoocio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <!--                    <div class="modal-header">
@@ -116,59 +115,72 @@
                                         </div>-->
                     <div class="modal-body">
                         <fieldset>
-                                <legend class="text-primary text-center"><strong>Tiempo de Ocio</strong></legend>
-                        <div class="row">
-                            <div class="form-group col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-                                <label for="solicita">Tiempo</label>
-                                <input type="number" class="form-control" id="solicita" placeholder="Tiempo en horas">
+                            <legend class="text-primary text-center"><strong>Tiempo de Ocio</strong></legend>
+                            <div class="row">
+                                <div class="form-group col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
+                                    <label for="solicita">Tiempo</label>
+                                    <input type="number" class="form-control" id="solicita" placeholder="Tiempo en horas">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            
+                            <div class="row">
                                 <div class="funkyradio-danger col-lg-3 funkyradio col-md-3 col-sm-3 ">
-                                    <input type="radio" name="radio" id="radio1" />
-                                    <label  for="radio1"><strong>Emergencia</strong></label>
+                                    <input type="radio" name="radio" id="emergencia" />
+                                    <label  for="emergencia"><strong>Emergencia</strong></label>
                                 </div>
                                 <div class="funkyradio-success col-lg-3 funkyradio col-md-3 col-sm-3">
-                                    <input type="radio" name="radio" id="radio2" checked/>
-                                    <label  for="radio2"><strong>Preventivo</strong></label>
+                                    <input type="radio" name="radio" id="preventivo" checked/>
+                                    <label  for="preventivo"><strong>Preventivo</strong></label>
                                 </div>
                                 <div class="funkyradio-primary col-lg-3 funkyradio col-md-3 col-sm-3">
-                                    <input type="radio" name="radio" id="radio3" />
-                                    <label  for="radio3"><strong>Correctivo</strong></label>
+                                    <input type="radio" name="radio" id="correctivo" />
+                                    <label  for="correctivo"><strong>Correctivo</strong></label>
                                 </div>
                                 <div class="funkyradio-warning col-lg-3 funkyradio col-md-3 col-sm-3">
-                                    <input type="radio" name="radio" id="radio4" />
-                                    <label  for="radio4"><strong>Correctivo</strong></label>
+                                    <input type="radio" name="radio" id="otro" />
+                                    <label  for="otro"><strong>Otro</strong></label>
                                 </div>
-                        </div>
+                            </div>
                         </fieldset>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary">Guardar</button>
+                        <button type="button" class="guardarocio btn btn-primary">Guardar</button>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <script src="js/jquery-3.1.1.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script>
 
             var app = {
-                _Id:"",
+                _Id: "",
+                _url: "Peticiones.jsp",
                 init: function () {
+                    app.ver();
+                    app.editar();
+                    app.eliminar();
+                    $('.guardarocio').off('click').on('click', function () {
+                        var emergencia = $('#emergencia').is(":checked");
+                        var preventivo = $('#preventivo').is(":checked");
+                        var correctivo = $('#correctivo').is(":checked");
+                        var otro = $('#otro').is(":checked");
+                        app.aalert("hola" + app._Id);
+                        $('#tiempoocio').modal('hide');
+                    });
                     $('.agregarmaquina').off('click').on('click', function () {
                         app.popup("FichaTecnica.jsp", 680, 1280);
                     });
-                    $('.tiempoosio').off('click').on('click', function () {
+                    $('.tiempoocio').off('click').on('click', function () {
                         app._Id = $(this).parents('tr').find('.id').data('id');
-                      $('#tiempoosio').modal();
+                        $('#tiempoocio').modal('show');
                     });
+
                     $('.volver').off('click').on('click', function () {
                         document.location.href = "inicio.jsp";
                     });
+
                 },
                 popup: function (URL, alto, ancho) {
                     var posicion_x;
@@ -176,6 +188,63 @@
                     posicion_x = (screen.width / 2) - (ancho / 2);
                     posicion_y = 0;
                     window.open(URL, 'popup', 'width=' + 100 % +', height=' + 100 % +', resizable=no, menubar=no, scrollbars=no, status=no, location=no, toolbar=0, left=' + posicion_x + ', top=' + posicion_y + '');
+                },
+                ver: function () {
+                    $('.ver').off('click').on('click', function () {
+                        var id = $(this).parents('tr').find('.id').data('id');
+                        app.popup("VerFichaTecnica.jsp?Id=" + id + "", 680, 1280);
+                    });
+                },
+                editar: function () {
+                    $('.editar').off('click').on('click', function () {
+                        var id = $(this).parents('tr').find('.id').data('id');
+                        app.popup("EditarFichaTecnica.jsp?Id=" + id + "", 680, 1280);
+                    });
+                },
+                eliminar: function () {
+                    $('.eliminar').off('click').on('click', function () {
+                        var id = $(this).parents('tr').find('.id').data('id');
+                        swal({title: "Esta seguro de continuar!",
+                            type: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#449d44",
+                            confirmButtonText: "Aceptar",
+                            cancelButtonColor: "#c9302c",
+                            cancelButtonText: "Cancelar",
+                            closeOnConfirm: true,
+                            closeOnCancel: true},
+                                function (isConfirm) {
+                                    if (isConfirm)
+                                    {
+                                        var params = {
+                                            proceso: "eliminar",
+                                            Id: id
+                                        };
+                                        $.ajax({
+                                            url: app._url,
+                                            data: params,
+                                            type: 'POST',
+                                            success: function (data, textStatus, jqXHR) {
+                                                if (data.ok === true) {
+                                                    if (data[params.proceso] === true) {
+                                                        app.aalert("Se ha eliminado con exito!")
+                                                    } else {
+                                                        app.aalert('Lo sentimos no se ha podido guardar');
+                                                    }
+                                                } else {
+                                                    alert(data.errorMsg);
+                                                }
+                                            }
+                                        });
+
+                                    } else {
+                                        swal("Hurray", "Account is not removed!", "error");
+                                    }
+                                });
+                    });
+                },
+                aalert: function (msg) {
+                    swal(msg);
                 }
             };
             $(document).ready(function () {

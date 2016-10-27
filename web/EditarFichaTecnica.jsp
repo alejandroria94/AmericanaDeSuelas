@@ -4,6 +4,7 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="beans.Equipo"%>
 <%@page import="beans.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,7 +24,8 @@
             if (u == null) {
                 out.print("<h1>Debes <strong><a href='index.jsp'>INICIAR SESION</a></strong> para acceder a este servicio</h1>");
             } else {
-                
+                String Id = "" + request.getParameter("Id");
+                Equipo equ = new Equipo().obtenerEquipo(Id);
         %>
         <style>
             .border{
@@ -54,27 +56,27 @@
                             <div class="row">
                                 <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                     <label for="nombre">Nombre:</label>
-                                    <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                                    <input type="text" class="form-control" id="nombre" placeholder="Nombre"  value="<%=equ.getNombre()%>" >
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="codigo">Codigo:</label>
-                                    <input type="text" class="form-control" id="codigo" placeholder="Codigo">
+                                    <input type="text" class="form-control" id="codigo" placeholder="Codigo"value="<%=equ.getCodigo()%>" >
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="tipo">Tipo:</label>
-                                    <input type="text" class="form-control" id="tipomaquina" placeholder="Tipo">
+                                    <input type="text" class="form-control" id="tipomaquina" placeholder="Tipo"value="<%=equ.getTipoEquipo()%>" >
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="ubicacion">Ubicación:</label>
-                                    <input type="text" class="form-control" id="ubicacion" placeholder="Ubicación">
+                                    <input type="text" class="form-control" id="ubicacion" placeholder="Ubicación"value="<%=equ.getUbicacion()%>" >
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="estado">Estado:</label>
-                                    <input type="text" class="form-control" id="estado" placeholder="Estado">
+                                    <input type="text" class="form-control" id="estado" placeholder="Estado"value="<%=equ.getEstado()%>" >
                                 </div>
                             </div>
                         </fieldset>
@@ -83,19 +85,20 @@
                         <fieldset>
                             <legend class="text-primary"><strong>Datos Del Fabricante</strong></legend>
                             <div class="row">
-                                <div class="form-group col-lg-6 col-md-6 col-sm-6">
-                                    <label for="marca">Marca:</label>
-                                    <input type="text" class="form-control" id="marca" placeholder="Marca">
-                                </div>
-                                <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                
+                                <div class="form-group col-lg-12 col-md-12 col-sm-12">
                                     <label for="modelo">Modelo:</label>
-                                    <input type="text" class="form-control" id="modelo" placeholder="Modelo">
+                                    <input type="text" class="form-control" id="modelo" placeholder="Modelo"value="<%=equ.getModelo()%>" >
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
+                                    <label for="marca">Marca:</label>
+                                    <input type="text" class="form-control" id="marca" placeholder="Marca"value="<%=equ.getMarca()%>" >
+                                </div>
+                                <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="serie">Serie:</label>
-                                    <input type="text" class="form-control" id="serie" placeholder="Serie">
+                                    <input type="text" class="form-control" id="serie" placeholder="Serie"value="<%=equ.getSerie()%>" >
                                 </div>
                             </div>
                         </fieldset>
@@ -104,7 +107,9 @@
                         <fieldset>
                             <legend class="text-primary"><strong>Imagen</strong></legend>
                             <div class=" col-lg-12 col-md-12 col-sm-12 fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%;height: 180px;"></div>
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 100%;height: 180px;">
+                                    <img src="<%=equ.getImagen()%>">
+                                </div>
                                 <div>
                                     <span class="btn btn-default btn-file"><span class="fileinput-new">Seleccionar</span><span class="fileinput-exists">Cambiar</span><input type="file" name="..."></span>
                                     <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Quitar</a>
@@ -120,21 +125,21 @@
                             <div class="row">
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="peso">Peso:</label>
-                                    <input type="text" class="form-control" id="peso" placeholder="Peso">
+                                    <input type="text" class="form-control" id="peso" placeholder="Peso"value="<%=equ.getPeso()%>" >
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="altura">Altura:</label>
-                                    <input type="text" class="form-control" id="altura" placeholder="Altura">
+                                    <input type="text" class="form-control" id="altura" placeholder="Altura"value="<%=equ.getAltura()%>" >
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="largo">Largo:</label>
-                                    <input type="text" class="form-control" id="largo" placeholder="Largo">
+                                    <input type="text" class="form-control" id="largo" placeholder="Largo"value="<%=equ.getLargo()%>" >
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="ancho">Ancho:</label>
-                                    <input type="text" class="form-control" id="ancho" placeholder="Ancho">
+                                    <input type="text" class="form-control" id="ancho" placeholder="Ancho"value="<%=equ.getAncho()%>" >
                                 </div>
                             </div>
                         </fieldset>
@@ -145,25 +150,25 @@
                             <div class="row">
                                 <div class="form-group col-lg-4 col-md-4 col-sm-4">
                                     <label for="potencia">Potencia:</label>
-                                    <input type="text" class="form-control" id="potencia" placeholder="Potencia">
+                                    <input type="text" class="form-control" id="potencia" placeholder="Potencia"value="<%=equ.getPotencia()%>" >
                                 </div>
                                 <div class="form-group col-lg-4 col-md-4 col-sm-4">
                                     <label for="tipo">Tipo:</label>
-                                    <input type="text" class="form-control" id="tipopotencia" placeholder="Tipo">
+                                    <input type="text" class="form-control" id="tipopotencia" placeholder="Tipo"value="<%=equ.getTipoPotencia()%>" >
                                 </div>
                                 <div class="form-group col-lg-4 col-md-4 col-sm-4">
                                     <label for="control">Control:</label>
-                                    <input type="text" class="form-control" id="control" placeholder="Control">
+                                    <input type="text" class="form-control" id="control" placeholder="Control"value="<%=equ.getControl()%>" >
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="frecuencia">Frecuencia:</label>
-                                    <input type="text" class="form-control" id="frecuencia" placeholder="Frecuencia">
+                                    <input type="text" class="form-control" id="frecuencia" placeholder="Frecuencia"value="<%=equ.getFrecuencia()%>" >
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="alimentacion">Alimentacion:</label>
-                                    <input type="text" class="form-control" id="alimentacion" placeholder="Alimentacion">
+                                    <input type="text" class="form-control" id="alimentacion" placeholder="Alimentacion"value="<%=equ.getAlimentacion()%>" >
                                 </div>
                             </div>
                         </fieldset>
@@ -176,25 +181,24 @@
                             <div class="row">
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="codigo">Tiempo Funcionamiento:</label>
-                                    <input type="number" class="form-control" id="tiempofuncionamiento" placeholder="">
+                                    <input type="number" class="form-control" id="tiempofuncionamiento" placeholder=""value="<%=equ.getTiempoDeFuncionamiento()%>" >
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="tipo">Horas de Uso:</label>
-                                    <input type="number" class="form-control" id="horasuso" placeholder="">
+                                    <input type="number" class="form-control" id="horasuso" placeholder=""value="<%=equ.getHorasDeUso()%>" >
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="ambientecorrosivo">Ambiente Corrosivo:</label>
                                     <select id="ambientecorrosivo" class="form-control">
-                                        <option></option>
-                                        <option value="No">NO</option>
-                                        <option value="Si">SI</option>
+                                        <option value="No" <%if(!equ.getAmbienteCorrosivo()){%>selected<%}%>>NO</option>
+                                        <option value="Si"<%if(equ.getAmbienteCorrosivo()){%>selected<%}%>>SI</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-lg-6 col-md-6 col-sm-6">
                                     <label for="estadopintura">Estado de Pintura:</label>
-                                    <input type="text" class="form-control" id="estadopintura" placeholder="">
+                                    <input type="text" class="form-control" id="estadopintura" placeholder=""value="<%=equ.getEstadoPintura()%>" >
                                 </div>
                             </div>
                         </fieldset>
@@ -206,7 +210,7 @@
                                     <legend class="text-primary"><strong>Funciones</strong></legend>
                                     <div class="row">
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                                            <textarea  class="form-control"id="funciones"  name="funciones" value="" style="width: 100%;" ></textarea>
+                                            <textarea  class="form-control"id="funciones"  name="funciones" value="" style="width: 100%;"  ><%=equ.getFunciones()%></textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -218,7 +222,7 @@
                                     <legend class="text-primary"><strong>Caracteristicas Especificas</strong></legend>
                                     <div class="row">
                                         <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                                            <textarea  class="form-control"id="carateristicasespecificas"  name="carateristicasespecificas" value="" style="width: 100%;" ></textarea>
+                                            <textarea  class="form-control"id="carateristicasespecificas"  name="carateristicasespecificas" value=""   style="width: 100%;" ><%=equ.getCaracteristicasEspecificas()%></textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -233,7 +237,7 @@
                             <legend class="text-primary"><strong>Observaciones</strong></legend>
                             <div class="row">
                                 <div class="form-group col-lg-12 col-md-12 col-sm-12">
-                                    <textarea  class="form-control"id="observaciones"  name="observaciones" value="" style="width: 100%; height: 80px" ></textarea>
+                                    <textarea  class="form-control"id="observaciones"  name="observaciones" value="" style="width: 100%; height: 80px" ><%=equ.getObservaciones()%></textarea>
                                 </div>
                             </div>
                         </fieldset>
@@ -259,10 +263,13 @@
         <script src="js/jasny-bootstrap.min.js"></script>
         <script src="js/select2.min.js"></script>
         <script>
-
+             var Id = '<%=Id%>';
             var app = {
                 _url: "Peticiones.jsp",
                 init: function () {
+                   $('.cancelar').off('click').on('click', function (){
+                        window.close();
+                    });
                     $('#ambientecorrosivo').select2({
                         placeholder: 'Selecciona...'
                     });
@@ -313,7 +320,8 @@
                         var carateristicasespecificas = $('#carateristicasespecificas').val();
                         var observaciones = $('#observaciones').val();
                         var params = {
-                            proceso: "guardar",
+                            proceso: "editar",
+                            id:Id,
                             nombre: nombre,
                             codigo: codigo,
                             tipo: tipo,
@@ -363,6 +371,7 @@
                 aalert: function (msg) {
                     swal(msg);
                 },
+                
                 validar: function () {
                     var nombre = $('#nombre').val();
                     var codigo = $('#codigo').val();
@@ -382,13 +391,9 @@
                     var control = $('#control').val();
                     var frecuencia = $('#frecuencia').val();
                     var alimentacion = $('#alimentacion').val();
-                    var tiempofuncionamiento = $('#tiempofuncionamiento').val();
-                    var horasuso = $('#horasuso').val();
-                    var ambientecorrosivo = $('#ambientecorrosivo').select2('val');
                     var estadopintura = $('#estadopintura').val();
                     var funciones = $('#funciones').val();
                     var caracteristicasespecificas = $('#carateristicasespecificas').val();
-                    var observaciones = $('#observaciones').val();
                     if (!/\w/gi.test(nombre)) {
                         alert("Debe digitar el nombre de la maquina");
                         return false;
