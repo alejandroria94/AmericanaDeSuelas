@@ -295,8 +295,8 @@
                         var ubicacion = $('#ubicacion').val();
                         var estado = $('#estado').val();
                         var marca = $('#marca').val();
-                        var modelo = $('#nombre').val();
-                        var serie = $('#modelo').val();
+                        var modelo = $('#modelo').val();
+                        var serie = $('#serie').val();
                         var imagen = $('.fileinput').find('img').attr('src');
                         var peso = $('#peso').val();
                         var altura = $('#altura').val();
@@ -356,7 +356,9 @@
                                 success: function (data, textStatus, jqXHR) {
                                     if (data.ok === true) {
                                         if (data[params.proceso] === true) {
-                                            app.aalert('Maquina registrada con exito!!');
+                                            app.aalert('Maquina Actualizado con exito!!');
+                                            window.close();
+                                            window.opener.location.reload();
                                         } else {
                                             app.aalert('Lo sentimos no se ha podido guardar');
                                         }
