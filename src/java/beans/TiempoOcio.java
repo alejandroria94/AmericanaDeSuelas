@@ -9,11 +9,17 @@ package beans;
  *
  * @author Fido
  */
-class TiempoOcio {
+public class TiempoOcio {
+
     private int dia;
     private int mes;
     private int anno;
     private float tiempo;
+    private float oEE;
+
+    public TiempoOcio() {
+        this.oEE = 100;
+    }
 
     public int getDia() {
         return dia;
@@ -46,10 +52,17 @@ class TiempoOcio {
     public void setTiempo(float tiempo) {
         this.tiempo = tiempo;
     }
+
     public void sumarTiempo(float tiempo) {
         this.tiempo += tiempo;
     }
-    
-    
-    
+
+    public float getoEE() {
+        return oEE;
+    }
+
+    public void setoEE(float oEE) {
+        this.oEE = oEE;
+    }
+
 }

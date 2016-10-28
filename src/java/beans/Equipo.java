@@ -296,17 +296,20 @@ public class Equipo {
         }
         return exito;
     }
-/**
- * 
- * @param idEquipo
- * @param mes
- * @param anno
- * @return lista de horas ocio por dias para un mes del año 
- * @throws SQLException 
- */
+
+    /**
+     *
+     * @param idEquipo
+     * @param mes
+     * @param anno
+     * @return lista de horas ocio por dias para un mes del año
+     * @throws SQLException
+     */
     public ArrayList<TiempoOcio> listaMes(String idEquipo, String mes, String anno) throws SQLException {
         YearMonth ym;
         ym = YearMonth.of(Integer.parseInt(anno), Integer.parseInt(mes));
+        Equipo e = new Equipo().obtenerEquipo(idEquipo);
+        float tiempoFuncionamiento = e.getTiempoDeFuncionamiento();
         int diasDelmes = ym.lengthOfMonth();
 //        System.out.println(mesActual + "mes");
 //        System.out.println(annoActual + "año");
@@ -324,28 +327,36 @@ public class Equipo {
         if (!listaTiemposDeOcioEnDb.isEmpty()) {
             for (TiempoOcio t : listaTiemposDeOcio) {
                 for (TiempoOcio tDb : listaTiemposDeOcioEnDb) {
-
                     if (t.getDia() == tDb.getDia()) {
                         t.sumarTiempo(tDb.getTiempo());
                     }
 
                 }
-
+            }
+            //calcular OEE
+            for (TiempoOcio t : listaTiemposDeOcio) {
+                t.setoEE(calcularOEE(tiempoFuncionamiento, t.getTiempo()));
+               // System.out.println(t.getoEE());
             }
         }
         return listaTiemposDeOcio;
     }
-/**
- * 
- * @param idEquipo
- * @param anno
- * @return lista de horas ocio por meses para un año particular
- * @throws SQLException 
- */
+
+    /**
+     *
+     * @param idEquipo
+     * @param anno
+     * @return lista de horas ocio por meses para un año particular
+     * @throws SQLException
+     */
     public ArrayList<TiempoOcio> listaAnno(String idEquipo, String anno) throws SQLException {
         TiempoOcio tO;
         ArrayList<TiempoOcio> listaTiemposDeOcio = new ArrayList<>();
         ArrayList<TiempoOcio> listaTiemposDeOcioEnDb = listaMesEnDb(idEquipo, anno);
+        YearMonth ym;
+
+        Equipo e = new Equipo().obtenerEquipo(idEquipo);
+        float tiempoFuncionamiento = e.getTiempoDeFuncionamiento();
         for (int i = 0; i < 12; i++) {
             tO = new TiempoOcio();
             tO.setMes(i + 1);
@@ -362,8 +373,17 @@ public class Equipo {
                     }
 
                 }
-
             }
+        }
+        //calcular OEE
+        int mes = 1;
+        int diasDelmes;
+        for (TiempoOcio t : listaTiemposDeOcio) {
+            ym = YearMonth.of(Integer.parseInt(anno), mes);
+            diasDelmes = ym.lengthOfMonth();
+            mes++;
+            t.setoEE(calcularOEE(tiempoFuncionamiento*diasDelmes, t.getTiempo()));
+            //System.out.println(t.getoEE());
         }
         return listaTiemposDeOcio;
     }
@@ -402,8 +422,10 @@ public class Equipo {
         return listaTiemposDeOcio;
     }
 
-    public void indicadorOEEMes() {
-
+    public float calcularOEE(float tiempoFuncionamiento, float tiempoDeOcio) {
+        float oEE;
+        oEE = ((tiempoFuncionamiento - tiempoDeOcio) / tiempoFuncionamiento) * 100;
+        return oEE;
     }
 
     public int getIdEquipos() {
