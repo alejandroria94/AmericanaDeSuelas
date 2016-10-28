@@ -7,8 +7,8 @@ package beans;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 /**
  *
@@ -295,6 +295,111 @@ public class Equipo {
             }
         }
         return exito;
+    }
+/**
+ * 
+ * @param idEquipo
+ * @param mes
+ * @param anno
+ * @return lista de horas ocio por dias para un mes del año 
+ * @throws SQLException 
+ */
+    public ArrayList<TiempoOcio> listaMes(String idEquipo, String mes, String anno) throws SQLException {
+        YearMonth ym;
+        ym = YearMonth.of(Integer.parseInt(anno), Integer.parseInt(mes));
+        int diasDelmes = ym.lengthOfMonth();
+//        System.out.println(mesActual + "mes");
+//        System.out.println(annoActual + "año");
+        TiempoOcio tO;
+        ArrayList<TiempoOcio> listaTiemposDeOcio = new ArrayList<>();
+        ArrayList<TiempoOcio> listaTiemposDeOcioEnDb = listaDiaEnDb(idEquipo, mes, anno);
+        for (int i = 0; i < diasDelmes; i++) {
+            tO = new TiempoOcio();
+            tO.setDia(i + 1);
+            tO.setMes(Integer.parseInt(mes));
+            tO.setAnno(Integer.parseInt(anno));
+            tO.setTiempo(0);
+            listaTiemposDeOcio.add(tO);
+        }
+        if (!listaTiemposDeOcioEnDb.isEmpty()) {
+            for (TiempoOcio t : listaTiemposDeOcio) {
+                for (TiempoOcio tDb : listaTiemposDeOcioEnDb) {
+
+                    if (t.getDia() == tDb.getDia()) {
+                        t.sumarTiempo(tDb.getTiempo());
+                    }
+
+                }
+
+            }
+        }
+        return listaTiemposDeOcio;
+    }
+/**
+ * 
+ * @param idEquipo
+ * @param anno
+ * @return lista de horas ocio por meses para un año particular
+ * @throws SQLException 
+ */
+    public ArrayList<TiempoOcio> listaAnno(String idEquipo, String anno) throws SQLException {
+        TiempoOcio tO;
+        ArrayList<TiempoOcio> listaTiemposDeOcio = new ArrayList<>();
+        ArrayList<TiempoOcio> listaTiemposDeOcioEnDb = listaMesEnDb(idEquipo, anno);
+        for (int i = 0; i < 12; i++) {
+            tO = new TiempoOcio();
+            tO.setMes(i + 1);
+            tO.setAnno(Integer.parseInt(anno));
+            tO.setTiempo(0);
+            listaTiemposDeOcio.add(tO);
+        }
+        if (!listaTiemposDeOcioEnDb.isEmpty()) {
+            for (TiempoOcio t : listaTiemposDeOcio) {
+                for (TiempoOcio tDb : listaTiemposDeOcioEnDb) {
+
+                    if (t.getMes() == tDb.getMes()) {
+                        t.sumarTiempo(tDb.getTiempo());
+                    }
+
+                }
+
+            }
+        }
+        return listaTiemposDeOcio;
+    }
+
+    public ArrayList<TiempoOcio> listaDiaEnDb(String idEquipos, String mes, String anno) throws SQLException {
+        ConexionBD conexion = new ConexionBD();
+        String sql = "SELECT `tiempo`, EXTRACT(YEAR FROM `fecha`) AS anno, EXTRACT(MONTH FROM `fecha`) AS mes ,EXTRACT(DAY FROM `fecha`) AS dia FROM `tiemposocio` WHERE `Equipos_idEquipos`='" + idEquipos + "' AND MONTH(`fecha`)='" + mes + "' AND YEAR(`fecha`)='" + anno + "'";
+        ResultSet datos = conexion.consultarBD(sql);
+        TiempoOcio tO;
+        ArrayList<TiempoOcio> listaTiemposDeOcio = new ArrayList<>();
+        while (datos.next()) {
+            tO = new TiempoOcio();
+            tO.setAnno(datos.getInt("anno"));
+            tO.setMes(datos.getInt("mes"));
+            tO.setDia(datos.getInt("dia"));
+            tO.setTiempo(datos.getFloat("tiempo"));
+            listaTiemposDeOcio.add(tO);
+        }
+        return listaTiemposDeOcio;
+    }
+
+    public ArrayList<TiempoOcio> listaMesEnDb(String idEquipos, String anno) throws SQLException {
+        ConexionBD conexion = new ConexionBD();
+        String sql = "SELECT `tiempo`, EXTRACT(YEAR FROM `fecha`) AS anno, EXTRACT(MONTH FROM `fecha`) AS mes ,EXTRACT(DAY FROM `fecha`) AS dia FROM `tiemposocio` WHERE `Equipos_idEquipos`='" + idEquipos + "' AND YEAR(`fecha`)='" + anno + "'";
+        ResultSet datos = conexion.consultarBD(sql);
+        TiempoOcio tO;
+        ArrayList<TiempoOcio> listaTiemposDeOcio = new ArrayList<>();
+        while (datos.next()) {
+            tO = new TiempoOcio();
+            tO.setAnno(datos.getInt("anno"));
+            tO.setMes(datos.getInt("mes"));
+            tO.setDia(datos.getInt("dia"));
+            tO.setTiempo(datos.getFloat("tiempo"));
+            listaTiemposDeOcio.add(tO);
+        }
+        return listaTiemposDeOcio;
     }
 
     public void indicadorOEEMes() {
