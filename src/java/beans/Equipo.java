@@ -8,6 +8,7 @@ package beans;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  *
@@ -114,6 +115,32 @@ public class Equipo {
                     + "',caracteristicasEspecificas='" + caracteristicasEspecificas + "',observaciones='" + observaciones + "',control='" + control + "',estadoPintura='" + estadoPintura
                     + "',imagen='" + imagen + "',codigo='" + codigo
                     + "' WHERE `idEquipos`='" + idEquipos + "'";
+            boolean borro2 = conexion.actualizarBD(sql2);
+            if (borro2) {
+                conexion.commitBD();
+                exito = true;
+            } else {
+                conexion.rollbackBD();
+            }
+        }
+        return exito;
+    }
+
+    public boolean actualizarrEquipo() {
+        boolean exito = false;
+        ConexionBD conexion = new ConexionBD();
+        if (conexion.setAutoCommitBD(false)) {
+            //UPDATE table_name
+            //SET column1=value1,column2=value2,...
+            //WHERE some_column=some_value;
+            String sql2 = "UPDATE `Equipos` SET nombre='" + this.nombre + "',tipoEquipo='" + this.tipoEquipo + "',marca='" + this.marca
+                    + "',modelo='" + this.modelo + "',ubicacion='" + this.ubicacion + "',estado='" + this.estado + "',serie='" + this.serie
+                    + "',peso='" + this.peso + "',altura='" + this.altura + "',largo='" + this.largo + "',ancho='" + this.ancho
+                    + "',potencia='" + this.potencia + "',tipoPotencia='" + this.tipoPotencia + "',frecuencia='" + this.frecuencia + "',alimentacion='" + this.alimentacion
+                    + "',ambienteCorrosivo='" + this.ambienteCorrosivo + "',tiempoDeFuncionamiento='" + this.tiempoDeFuncionamiento + "',horasDeUso='" + this.horasDeUso + "',funciones='" + this.funciones
+                    + "',caracteristicasEspecificas='" + this.caracteristicasEspecificas + "',observaciones='" + this.observaciones + "',control='" + this.control + "',estadoPintura='" + this.estadoPintura
+                    + "',imagen='" + this.imagen + "',codigo='" + this.codigo
+                    + "' WHERE `idEquipos`='" + this.idEquipos + "'";
             boolean borro2 = conexion.actualizarBD(sql2);
             if (borro2) {
                 conexion.commitBD();
@@ -243,6 +270,35 @@ public class Equipo {
         ConexionBD conexion = new ConexionBD();
         ResultSet datosE = conexion.consultarBD("select * from Equipos where " + parametro + "='" + busqueda + "'");
         return datosE;
+    }
+
+    /**
+     *
+     * @param idEquipos
+     * @param tiempo
+     * @param tipo TPA(parada planificada) TPNP(preparacion equipo)
+     * TPOP(descanso operadores) TPD(parada de emergencia)
+     * @return
+     */
+    public boolean agregarTiempoDeOcio(String idEquipos, String tiempo, String tipo) {
+        boolean exito = false;
+        ConexionBD conexion = new ConexionBD();
+        String sentencia = "INSERT INTO tiemposocio(Equipos_idEquipos,tiempo,tipo,fecha) "
+                + " VALUES ( '" + idEquipos + "','" + tiempo + "','" + tipo + "',CURDATE());";
+        if (conexion.setAutoCommitBD(false)) {
+            boolean inserto = conexion.insertarBD(sentencia);
+            if (inserto) {
+                conexion.commitBD();
+                exito = true;
+            } else {
+                conexion.rollbackBD();
+            }
+        }
+        return exito;
+    }
+
+    public void indicadorOEEMes() {
+
     }
 
     public int getIdEquipos() {
