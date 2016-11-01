@@ -278,13 +278,14 @@ public class Equipo {
      * @param tiempo
      * @param tipo TPA(parada planificada) TPNP(preparacion equipo)
      * TPOP(descanso operadores) TPD(parada de emergencia)
+     * @param fecha
      * @return
      */
-    public boolean agregarTiempoDeOcio(String idEquipos, String tiempo, String tipo) {
+    public boolean agregarTiempoDeOcio(String idEquipos, String tiempo, String tipo, String fecha) {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
         String sentencia = "INSERT INTO tiemposocio(Equipos_idEquipos,tiempo,tipo,fecha) "
-                + " VALUES ( '" + idEquipos + "','" + tiempo + "','" + tipo + "',CURDATE());";
+                + " VALUES ( '" + idEquipos + "','" + tiempo + "','" + tipo + "','" + fecha + "');";
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
             if (inserto) {
@@ -336,7 +337,7 @@ public class Equipo {
             //calcular OEE
             for (TiempoOcio t : listaTiemposDeOcio) {
                 t.setoEE(calcularOEE(tiempoFuncionamiento, t.getTiempo()));
-               // System.out.println(t.getoEE());
+                // System.out.println(t.getoEE());
             }
         }
         return listaTiemposDeOcio;
@@ -382,7 +383,7 @@ public class Equipo {
             ym = YearMonth.of(Integer.parseInt(anno), mes);
             diasDelmes = ym.lengthOfMonth();
             mes++;
-            t.setoEE(calcularOEE(tiempoFuncionamiento*diasDelmes, t.getTiempo()));
+            t.setoEE(calcularOEE(tiempoFuncionamiento * diasDelmes, t.getTiempo()));
             //System.out.println(t.getoEE());
         }
         return listaTiemposDeOcio;
