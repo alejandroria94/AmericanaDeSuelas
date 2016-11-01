@@ -89,6 +89,7 @@
                                                 <li style="font-size: 20px" class="editar"><a href="#"><span class="glyphicon glyphicon-edit " aria-hidden="true"></span> Editar</a></li>
                                                 <li style="font-size: 20px" class="eliminar"><a href="#"><span class="glyphicon glyphicon-remove " aria-hidden="true"></span> Elimiar</a></li>
                                                 <li style="font-size: 20px" class="tiempoocio"><a href="#"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Tiempo de ocio</a></li>
+                                                <li style="font-size: 20px" class="OEE"><a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Ver OEE</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -119,25 +120,25 @@
                             <div class="row">
                                 <div class="form-group col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
                                     <label for="solicita">Tiempo</label>
-                                    <input type="number" class="form-control" id="solicita" placeholder="Tiempo en horas">
+                                    <input type="number" class="form-control" id="tiempo" placeholder="Tiempo en horas">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="funkyradio-danger col-lg-3 funkyradio col-md-3 col-sm-3 ">
-                                    <input type="radio" name="radio" id="emergencia" />
-                                    <label  for="emergencia"><strong>Emergencia</strong></label>
+                                    <input type="radio" name="radio" id="TPA" />
+                                    <label  for="TPA"><strong>Parada Planificada</strong></label>
                                 </div>
                                 <div class="funkyradio-success col-lg-3 funkyradio col-md-3 col-sm-3">
-                                    <input type="radio" name="radio" id="preventivo" checked/>
-                                    <label  for="preventivo"><strong>Preventivo</strong></label>
+                                    <input type="radio" name="radio" id="TPNP" checked/>
+                                    <label  for="TPNP"><strong>Preparacion Equipo</strong></label>
                                 </div>
                                 <div class="funkyradio-primary col-lg-3 funkyradio col-md-3 col-sm-3">
-                                    <input type="radio" name="radio" id="correctivo" />
-                                    <label  for="correctivo"><strong>Correctivo</strong></label>
+                                    <input type="radio" name="radio" id="TPOP" />
+                                    <label  for="TPOP"><strong>Descanso Operario</strong></label>
                                 </div>
                                 <div class="funkyradio-warning col-lg-3 funkyradio col-md-3 col-sm-3">
-                                    <input type="radio" name="radio" id="otro" />
-                                    <label  for="otro"><strong>Otro</strong></label>
+                                    <input type="radio" name="radio" id="TPD" />
+                                    <label  for="TPD"><strong>Parada Emergencia</strong></label>
                                 </div>
                             </div>
                         </fieldset>
@@ -162,12 +163,47 @@
                     app.editar();
                     app.eliminar();
                     $('.guardarocio').off('click').on('click', function () {
-                        var emergencia = $('#emergencia').is(":checked");
-                        var preventivo = $('#preventivo').is(":checked");
-                        var correctivo = $('#correctivo').is(":checked");
-                        var otro = $('#otro').is(":checked");
-                        app.aalert("hola" + app._Id);
-                        $('#tiempoocio').modal('hide');
+                        var TPA = $('#TPA').is(":checked");
+                        var TPNP = $('#TPNP').is(":checked");
+                        var TPOP = $('#TPOP').is(":checked");
+                        var TPD = $('#TPD').is(":checked");
+                        var tiempo = $('#tiempo').val();
+                        var tipo = "";
+                        if (TPA) {
+                            tipo = "TPA";
+                        }
+                        if (TPNP) {
+                            tipo = "TPNP";
+                        }
+                        if (TPOP) {
+                            tipo = "TPOP";
+                        }
+                        if (TPD) {
+                            tipo = "TPD";
+                        }
+                        var params = {
+                            proceso: "tiempodeocio",
+                            id: app._Id,
+                            tiempo: tiempo,
+                            tipo: tipo
+                        };
+                        $.ajax({
+                            url: app._url,
+                            data: params,
+                            type: 'POST',
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.ok === true) {
+                                    if (data[params.proceso] === true) {
+                                        $('#tiempoocio').modal('hide');
+                                        app.aalert("Guardado con exito!!");
+                                    } else {
+                                        app.aalert('Lo sentimos no se ha podido guardar');
+                                    }
+                                } else {
+                                    alert(data.errorMsg);
+                                }
+                            }
+                        });
                     });
                     $('.agregarmaquina').off('click').on('click', function () {
                         app.popup("FichaTecnica.jsp", 680, 1280);
@@ -179,6 +215,9 @@
 
                     $('.volver').off('click').on('click', function () {
                         document.location.href = "inicio.jsp";
+                    });
+                    $('.OEE').off('click').on('click', function () {
+                        document.location.href = "Indicadores.jsp";
                     });
 
                 },
@@ -228,6 +267,7 @@
                                                 if (data.ok === true) {
                                                     if (data[params.proceso] === true) {
                                                         app.aalert("Se ha eliminado con exito!")
+                                                        window.location.reload();
                                                     } else {
                                                         app.aalert('Lo sentimos no se ha podido guardar');
                                                     }

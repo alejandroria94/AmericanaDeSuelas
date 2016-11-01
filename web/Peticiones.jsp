@@ -6,7 +6,10 @@
 --%>
 
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.google.gson.Gson"%>
 <%@page import="beans.Equipo"%>
+<%@page import="beans.TiempoOcio"%>
 <%@page import="beans.Usuario"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Arrays"%>
@@ -23,8 +26,8 @@
         "guardar",
         "editar",
         "eliminar",
-        "tiempodeosio",
-    });
+        "OEE",
+        "tiempodeocio",});
 
     // Si el usuario tiene sesión válida y permisos.
     String proceso = "" + request.getParameter("proceso");
@@ -133,8 +136,10 @@
             String funciones = "" + request.getParameter("funciones");
             String caracteristicasespecificas = "" + request.getParameter("caracteristicas");
             String observaciones = "" + request.getParameter("observaciones");
+            String Id = "" + request.getParameter("id");
 
             Equipo e = new Equipo();
+            e.setIdEquipos(Integer.parseInt(Id));
             e.setCodigo(codigo);
             e.setNombre(nombre);
             e.setTipoEquipo(tipo);
@@ -160,11 +165,50 @@
             e.setControl(control);
             e.setEstadoPintura(estadopintura);
             e.setImagen(imagen);
-        } else if (proceso.equals("tiempodeosio")) {
-            
-        } else if (proceso.equals("eliminar")) {
+            if (e.actualizarrEquipo()) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("tiempodeocio")) {
+            String Id = "" + request.getParameter("id");
+            String Tiempo = "" + request.getParameter("tiempo");
+            String Tipo = "" + request.getParameter("tipo");
 
-        } else if (proceso.equals("actalizafactura")) {
+            Equipo e = new Equipo();
+            if (e.agregarTiempoDeOcio(Id, Tiempo, Tipo)) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+
+        } else if (proceso.equals("eliminar")) {
+            String Id = "" + request.getParameter("Id");
+
+            Equipo e = new Equipo();
+            if (e.borrarEquipo(Id)) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("OEE")) {
+            String Id = "" + request.getParameter("id");
+            String Mes = "" + request.getParameter("mes");
+            String Anno = "" + request.getParameter("anno");
+            Equipo e = new Equipo();
+            List<TiempoOcio> mes = e.listaMes(Id, Mes, Anno);
+            List<TiempoOcio> anno = e.listaAnno(Id, Anno);
+            List<Float> tiempomes = new ArrayList<>();
+            List<Float> tiempoanno = new ArrayList<>();
+            for (TiempoOcio to : anno) {
+                tiempoanno.add(to.getoEE());
+            }
+            for (TiempoOcio to : mes) {
+                tiempomes.add(to.getoEE());
+            }
+            respuesta += ",\"" + proceso + "\": true";
+            respuesta = respuesta + ",\"Mes\":" + new Gson().toJson(tiempomes);
+            respuesta = respuesta + ",\"ANNO\":" + new Gson().toJson(tiempoanno);
         } else if (proceso.equals("devolucion")) {
 
         }
