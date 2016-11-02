@@ -82,7 +82,33 @@ public class Repuesto {
         return this.listaRepuestos;
     }
 
+    public boolean actualizarRepuesto() {
+        boolean exito = false;
+        ConexionBD conexion = new ConexionBD();
+        if (conexion.setAutoCommitBD(false)) {
+            //UPDATE table_name
+            //SET column1=value1,column2=value2,...
+            //WHERE some_column=some_value;
+            String sql2 = "UPDATE `repuestos` SET nombre='" + this.nombre + "',cantidad='" + this.cantidad + "',minimo='" + this.minimo + "',precio='" + this.precio+ "',descripcion='" + this.descripcion+"',codigo='" + this.codigo+
+                    "' WHERE `idRepuestos`='" + this.idRepuestos + "'";
+            boolean borro2 = conexion.actualizarBD(sql2);
+            if (borro2) {
+                conexion.commitBD();
+                exito = true;
+            } else {
+                conexion.rollbackBD();
+            }
+        }
+        return exito;
+    }
 
+  public void descontarCantidad(int descuento){
+      this.cantidad-=descuento;
+  
+  }
+  public void aumentarCantidad(int aumento){
+      this.cantidad+=aumento;  
+  }
   
 
     public int getIdRepuestos() {
