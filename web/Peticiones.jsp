@@ -6,6 +6,8 @@
 --%>
 
 
+<%@page import="beans.Repuesto"%>
+<%@page import="beans.Herramienta"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="beans.Equipo"%>
@@ -27,7 +29,11 @@
         "editar",
         "eliminar",
         "OEE",
-        "tiempodeocio",});
+        "tiempodeocio",
+        "guardaherramineta",
+        "eliminarherramienta",
+        "guardarepuesto",
+        "eliminarrepuesto",});
 
     // Si el usuario tiene sesión válida y permisos.
     String proceso = "" + request.getParameter("proceso");
@@ -174,9 +180,10 @@
             String Id = "" + request.getParameter("id");
             String Tiempo = "" + request.getParameter("tiempo");
             String Tipo = "" + request.getParameter("tipo");
+            String Fecha = "" + request.getParameter("fecha");
 
             Equipo e = new Equipo();
-            if (e.agregarTiempoDeOcio(Id, Tiempo, Tipo)) {
+            if (e.agregarTiempoDeOcio(Id, Tiempo, Tipo, Fecha)) {
                 respuesta += ",\"" + proceso + "\": true";
             } else {
                 respuesta += ",\"" + proceso + "\": false";
@@ -209,7 +216,57 @@
             respuesta += ",\"" + proceso + "\": true";
             respuesta = respuesta + ",\"Mes\":" + new Gson().toJson(tiempomes);
             respuesta = respuesta + ",\"ANNO\":" + new Gson().toJson(tiempoanno);
-        } else if (proceso.equals("devolucion")) {
+        } else if (proceso.equals("guardaherramineta")) {
+            String Codigo = "" + request.getParameter("codigo");
+            String Nombre = "" + request.getParameter("nombre");
+            String Cantidad = "" + request.getParameter("cantidad");
+            String Descripcion = "" + request.getParameter("descripcion");
+            Herramienta h = new Herramienta();
+            h.setCodigo(Codigo);
+            h.setNombre(Nombre);
+            h.setCantidad(Integer.parseInt(Cantidad));
+            h.setDescripcion(Descripcion);
+            if (h.guardarHerramienta()) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+
+        } else if (proceso.equals("eliminarherramienta")) {
+            String Id = "" + request.getParameter("id");
+
+            Herramienta h = new Herramienta();
+            if (h.borrarHerramienta(Id)) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("guardarepuesto")) {
+            String Codigo = "" + request.getParameter("codigo");
+            String Nombre = "" + request.getParameter("nombre");
+            String Cantidad = "" + request.getParameter("cantidad");
+            String Precio = "" + request.getParameter("precio");
+            String Minimo = "" + request.getParameter("minimo");
+            String Descripcion = "" + request.getParameter("descripcion");
+            Repuesto r = new Repuesto();
+            r.setNombre(Nombre);
+            r.setCantidad(Integer.parseInt(Cantidad));
+            r.setDescripcion(Descripcion);
+            r.setPrecio(Float.parseFloat(Precio));
+            r.setMinimo(Integer.parseInt(Minimo));
+            r.setCodigo(Codigo);
+            if (r.guardarRepuesto()) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("")) {
+
+        } else if (proceso.equals("")) {
+
+        } else if (proceso.equals("")) {
+
+        } else if (proceso.equals("")) {
 
         }
 

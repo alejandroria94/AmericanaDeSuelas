@@ -17,6 +17,7 @@
         <title>Fichas Tecnicas</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-radio.css" rel="stylesheet">
+        <link href="css/jquery.datetimepicker.css" rel="stylesheet">
     </head>
     <body>
         <%
@@ -89,7 +90,6 @@
                                                 <li style="font-size: 20px" class="editar"><a href="#"><span class="glyphicon glyphicon-edit " aria-hidden="true"></span> Editar</a></li>
                                                 <li style="font-size: 20px" class="eliminar"><a href="#"><span class="glyphicon glyphicon-remove " aria-hidden="true"></span> Elimiar</a></li>
                                                 <li style="font-size: 20px" class="tiempoocio"><a href="#"><span class="glyphicon glyphicon-alert" aria-hidden="true"></span> Tiempo de ocio</a></li>
-                                                <li style="font-size: 20px" class="OEE"><a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Ver OEE</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -118,8 +118,12 @@
                         <fieldset>
                             <legend class="text-primary text-center"><strong>Tiempo de Ocio</strong></legend>
                             <div class="row">
-                                <div class="form-group col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4">
-                                    <label for="solicita">Tiempo</label>
+                                <div class="form-group col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2">
+                                    <label for="fechaTO">Fecha</label>
+                                    <input type="text" class="form-control" id="fechaTO" placeholder="Fecha del suceso">
+                                </div>
+                                <div class="form-group col-lg-4  col-md-4 col-sm-4">
+                                    <label for="tiempo">Tiempo</label>
                                     <input type="number" class="form-control" id="tiempo" placeholder="Tiempo en horas">
                                 </div>
                             </div>
@@ -153,6 +157,7 @@
 
         <script src="js/jquery-3.1.1.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.datetimepicker.full.js"></script>
         <script>
 
             var app = {
@@ -162,12 +167,17 @@
                     app.ver();
                     app.editar();
                     app.eliminar();
+                    $('#fechaTO').datetimepicker({
+                        timepicker: false,
+                        format: 'Y/m/d'
+                    });
                     $('.guardarocio').off('click').on('click', function () {
                         var TPA = $('#TPA').is(":checked");
                         var TPNP = $('#TPNP').is(":checked");
                         var TPOP = $('#TPOP').is(":checked");
                         var TPD = $('#TPD').is(":checked");
                         var tiempo = $('#tiempo').val();
+                        var fecha = $('#fechaTO').val();
                         var tipo = "";
                         if (TPA) {
                             tipo = "TPA";
@@ -185,7 +195,8 @@
                             proceso: "tiempodeocio",
                             id: app._Id,
                             tiempo: tiempo,
-                            tipo: tipo
+                            tipo: tipo,
+                            fecha: fecha
                         };
                         $.ajax({
                             url: app._url,

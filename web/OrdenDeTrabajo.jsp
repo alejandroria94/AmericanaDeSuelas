@@ -4,6 +4,10 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="beans.Equipo"%>
+<%@page import="com.google.gson.Gson"%>
+<%@page import="java.util.List"%>
+<%@page import="beans.Repuesto"%>
 <%@page import="beans.Usuario"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,7 +22,6 @@
         <link href="css/jquery.datetimepicker.css" rel="stylesheet">
         <link href="css/bootstrap-radio.css" rel="stylesheet">
         <link href="css/bootstrap-checkbox.css" rel="stylesheet">
-        <link href="css/select2.min.css" rel="stylesheet">
     </head>
     <body>
         <%
@@ -97,22 +100,24 @@
                     </div>
                 </div>
                 <div class="row">
+                    <%  Equipo e = new Equipo();
+                        List<Equipo> listaeq = e.listarEquipos();
+
+                    %>
                     <div class="col-lg-5 col-lg-offset-1 form-group col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
                         <label  for="select-equipos"><strong>Equipo:</strong></label>
                         <select id="select2-equipos" class="form-control">
                             <option></option>
-                            <option value="requirements">Requirements</option>
-                            <option value="design">Design</option>
-                            <option value="construction">Construction</option>
-                            <option value="testing">Testing</option>
-                            <option value="debugging">Debugging</option>
-                            <option value="deployment">Deployment</option>
-                            <option value="maintenance">Maintenance</option>
+                            <% for (Equipo eq : listaeq) {
+                            %>
+                            <option value="<%=eq.getIdEquipos()%>//<%=eq.getNombre()%>//<%=eq.getCodigo()%>"><%=eq.getNombre()%></option>
+                            <% }
+                            %>
                         </select>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5">
-                        <label for="fechainicio">Codigo:</label>
-                        <input type="text" class="form-control" id="fechainicio" placeholder="">
+                        <label for="codigo">Codigo:</label>
+                        <input type="text" class="form-control" id="codigo" placeholder="" readonly>
                     </div>
                 </div>
                 <div class="row">
@@ -177,11 +182,10 @@
                     <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
                         <table class="table-bordered table-responsive table table-hover">
                             <thead class="bg-primary">
-                            <th style="width: 40%">TAREA</th>
-                            <th>DURACION TAREA</th>
-                            <th>MATERIALES</th>
-                            <th>CANTIDAD</th>
-                            <th>COSTO</th>
+                            <th style="width: 35%">TAREA</th>
+                            <th  style="width: 15%">DURACION TAREA</th>
+                            <th>MATERIALES/CANTIDAD</th>
+                            <th style="width: 10%">COSTO</th>
                             </thead>
                             <tbody>
                                 <tr>
@@ -197,10 +201,27 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
-                                    </td>
-                                    <td>
-                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                        <% Repuesto r = new Repuesto();
+                                            List<Repuesto> lista = r.listarRepuestos();
+                                        %>
+                                        <div class="row otrosrepuestos">
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <select id="select2-equipos" class="form-control">
+                                                    <option></option>
+                                                    <% for (Repuesto re : lista) {
+                                                    %>
+                                                    <option value="<%=re.getIdRepuestos()%>//<%=re.getNombre()%>//<%=re.getPrecio()%>"><%=re.getNombre()%></option>
+                                                    <% }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <input type="number" class="form-control" id="cantidad" placeholder="cantidad">
+                                            </div>
+                                        </div>
+                                        <button type="button" class="masrepuestos btn btn-success pull-right">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        </button>
                                     </td>
                                     <td>
                                         <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
@@ -219,10 +240,24 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
-                                    </td>
-                                    <td>
-                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                        <div class="row otrosrepuestos">
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <select id="select2-equipos" class="form-control">
+                                                    <option></option>
+                                                    <% for (Repuesto re : lista) {
+                                                    %>
+                                                    <option value="<%=re.getIdRepuestos()%>//<%=re.getNombre()%>//<%=re.getPrecio()%>"><%=re.getNombre()%></option>
+                                                    <% }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <input type="number" class="form-control" id="cantidad" placeholder="cantidad">
+                                            </div>
+                                        </div>
+                                        <button type="button" class="masrepuestos btn btn-success pull-right">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        </button>
                                     </td>
                                     <td>
                                         <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
@@ -241,10 +276,24 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
-                                    </td>
-                                    <td>
-                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                        <div class="row otrosrepuestos">
+                                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                                <select id="select2-equipos" class="form-control">
+                                                    <option></option>
+                                                    <% for (Repuesto re : lista) {
+                                                    %>
+                                                    <option value="<%=re.getIdRepuestos()%>//<%=re.getNombre()%>//<%=re.getPrecio()%>"><%=re.getNombre()%></option>
+                                                    <% }
+                                                    %>
+                                                </select>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                                <input type="number" class="form-control" id="cantidad" placeholder="cantidad">
+                                            </div>
+                                        </div>
+                                        <button type="button" class="masrepuestos btn btn-success pull-right">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        </button>
                                     </td>
                                     <td>
                                         <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
@@ -267,32 +316,68 @@
                 <br><br>
 
             </div>
+            <script type="text/template" id="select-repuestos">
+
+                <div class="row otrosrepuestos">
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                <select id="select2-equipos" class="form-control">
+                <option></option>
+                <#_.each(repuestos,function(e,i){#>
+                <option value="<#=e.idRepuestos#>//<#=e.precio#>"><#=e.nombre#></option>
+                <#});#>
+                </select>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4">
+                <input type="number" class="form-control" id="cantidad" placeholder="cantidad">
+                </div>
+                </div>
+
+
+            </script>
+            <%
+                String repsuetos = new Gson().toJson(lista);
+            %>
         </div><%-- fin container fluid --%>
         <script src="js/jquery-3.1.1.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jasny-bootstrap.min.js"></script>
         <script src="js/jquery.datetimepicker.full.js"></script>
-        <script src="js/select2.min.js"></script>
+        <script src="js/underscore-1.8.min.js"></script>
         <script>
-            $('#fechafinal').datetimepicker({
-                timepicker: false,
-                format: 'd/m/Y'
-            });
-            $('#fechainicio').datetimepicker({
-                timepicker: false,
-                format: 'd/m/Y'
-            });
-            $('.fechafinal-durtar').datetimepicker({
-                timepicker: false,
-                format: 'd/m/Y'
-            });
-            $('.fechainicio-durtar').datetimepicker({
-                timepicker: false,
-                format: 'd/m/Y'
-            });
-            $('#select2-equipos').select2({
-                placeholder: 'Selecciona...'
-            });
+var repsuetos = <%=repsuetos%>;
+var app = {
+    _plantillaRepuestos: _.template($('#select-repuestos').html().replace(/\n/gi, "")),
+    init: function () {
+        $('#fechafinal').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+        $('#fechainicio').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+        $('.fechafinal-durtar').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+        $('.fechainicio-durtar').datetimepicker({
+            timepicker: false,
+            format: 'd/m/Y'
+        });
+        $('.masrepuestos').off('click').on('click', function () {
+            var ultimo = $(this).parents('td').find('.otrosrepuestos').last();
+            $(ultimo).after(app._plantillaRepuestos({repuestos: repsuetos}));
+        });
+        $('#select2-equipos').on('change', function () {
+            var datos = $(this).val().split("//");
+            $('#codigo').val(datos[2]);
+        });
+    }
+};
+$(document).ready(function () {
+    app.init();
+});
+
         </script>
         <%}%>
     </body>
