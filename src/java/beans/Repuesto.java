@@ -22,14 +22,15 @@ public class Repuesto {
   private float precio;
   private String descripcion;
   private ArrayList<Repuesto> listaRepuestos;
+  private String codigo;
   
   
    // para repuestos 
     public boolean guardarRepuesto() {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
-        String sentencia = "INSERT INTO repuestos(nombre,cantidad,minimo,precio,descripcion) "
-                + " VALUES ( '" + this.nombre + "','" + this.cantidad + "','" + this.minimo + "','" +this.precio + "','"+this.descripcion+"');";
+        String sentencia = "INSERT INTO repuestos(nombre,cantidad,minimo,precio,descripcion,codigo) "
+                + " VALUES ( '" + this.nombre + "','" + this.cantidad + "','" + this.minimo + "','" +this.precio + "','"+this.descripcion+"','"+this.codigo+"');";
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
             if (inserto) {
@@ -75,6 +76,7 @@ public class Repuesto {
             r.setMinimo(rs.getInt("minimo"));
             r.setPrecio(rs.getFloat("precio"));
             r.setDescripcion(rs.getString("descripcion"));
+            r.setCodigo(rs.getString("codigo"));
             listaRepuestos.add(r);
         }
         return this.listaRepuestos;
@@ -149,6 +151,15 @@ public class Repuesto {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+    
   
     
   
