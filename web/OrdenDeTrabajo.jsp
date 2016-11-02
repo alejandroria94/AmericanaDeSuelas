@@ -210,13 +210,13 @@
                                                     <option></option>
                                                     <% for (Repuesto re : lista) {
                                                     %>
-                                                    <option value="<%=re.getIdRepuestos()%>//<%=re.getNombre()%>//<%=re.getPrecio()%>"><%=re.getNombre()%></option>
+                                                    <option value="<%=re.getIdRepuestos()%>//<%=re.getNombre()%>//<%=re.getPrecio()%>//<%=re.getCantidad()%>"><%=re.getNombre()%></option>
                                                     <% }
                                                     %>
                                                 </select>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
-                                                <input type="number" class="form-control" id="cantidad" placeholder="cantidad">
+                                                <input type="number" class="form-control cantidad" id="cantidad" placeholder="cantidad">
                                             </div>
                                         </div>
                                         <button type="button" class="masrepuestos btn btn-success pull-right">
@@ -224,7 +224,7 @@
                                         </button>
                                     </td>
                                     <td>
-                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                        <input type="number" class="form-control" id="costo" placeholder="costo">
                                     </td>
                                 </tr>
                                 <tr>
@@ -246,13 +246,13 @@
                                                     <option></option>
                                                     <% for (Repuesto re : lista) {
                                                     %>
-                                                    <option value="<%=re.getIdRepuestos()%>//<%=re.getNombre()%>//<%=re.getPrecio()%>"><%=re.getNombre()%></option>
+                                                    <option value="<%=re.getIdRepuestos()%>//<%=re.getNombre()%>//<%=re.getPrecio()%>//<%=re.getCantidad()%>"><%=re.getNombre()%></option>
                                                     <% }
                                                     %>
                                                 </select>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
-                                                <input type="number" class="form-control" id="cantidad" placeholder="cantidad">
+                                                <input type="number" class="form-control cantidad" id="cantidad" placeholder="cantidad">
                                             </div>
                                         </div>
                                         <button type="button" class="masrepuestos btn btn-success pull-right">
@@ -260,7 +260,7 @@
                                         </button>
                                     </td>
                                     <td>
-                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                        <input type="number" class="form-control" id="costo" placeholder="costo">
                                     </td>
                                 </tr>
                                 <tr>
@@ -282,13 +282,13 @@
                                                     <option></option>
                                                     <% for (Repuesto re : lista) {
                                                     %>
-                                                    <option value="<%=re.getIdRepuestos()%>//<%=re.getNombre()%>//<%=re.getPrecio()%>"><%=re.getNombre()%></option>
+                                                    <option value="<%=re.getIdRepuestos()%>//<%=re.getNombre()%>//<%=re.getPrecio()%>//<%=re.getCantidad()%>"><%=re.getNombre()%></option>
                                                     <% }
                                                     %>
                                                 </select>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4">
-                                                <input type="number" class="form-control" id="cantidad" placeholder="cantidad">
+                                                <input type="number" class="form-control cantidad" id="cantidad" placeholder="cantidad">
                                             </div>
                                         </div>
                                         <button type="button" class="masrepuestos btn btn-success pull-right">
@@ -296,7 +296,7 @@
                                         </button>
                                     </td>
                                     <td>
-                                        <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
+                                        <input type="number" class="form-control" id="costo" placeholder="costo">
                                     </td>
                                 </tr>
                             </tbody>
@@ -323,12 +323,12 @@
                 <select id="select2-equipos" class="form-control">
                 <option></option>
                 <#_.each(repuestos,function(e,i){#>
-                <option value="<#=e.idRepuestos#>//<#=e.precio#>"><#=e.nombre#></option>
+                <option value="<#=e.idRepuestos#>//<#=e.nombre#>//<#=e.precio#>//<#=e.cantidad#>"><#=e.nombre#></option>
                 <#});#>
                 </select>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-4">
-                <input type="number" class="form-control" id="cantidad" placeholder="cantidad">
+                <input type="number" class="form-control cantidad" id="cantidad" placeholder="cantidad">
                 </div>
                 </div>
 
@@ -344,39 +344,65 @@
         <script src="js/jquery.datetimepicker.full.js"></script>
         <script src="js/underscore-1.8.min.js"></script>
         <script>
-var repsuetos = <%=repsuetos%>;
-var app = {
-    _plantillaRepuestos: _.template($('#select-repuestos').html().replace(/\n/gi, "")),
-    init: function () {
-        $('#fechafinal').datetimepicker({
-            timepicker: false,
-            format: 'd/m/Y'
-        });
-        $('#fechainicio').datetimepicker({
-            timepicker: false,
-            format: 'd/m/Y'
-        });
-        $('.fechafinal-durtar').datetimepicker({
-            timepicker: false,
-            format: 'd/m/Y'
-        });
-        $('.fechainicio-durtar').datetimepicker({
-            timepicker: false,
-            format: 'd/m/Y'
-        });
-        $('.masrepuestos').off('click').on('click', function () {
-            var ultimo = $(this).parents('td').find('.otrosrepuestos').last();
-            $(ultimo).after(app._plantillaRepuestos({repuestos: repsuetos}));
-        });
-        $('#select2-equipos').on('change', function () {
-            var datos = $(this).val().split("//");
-            $('#codigo').val(datos[2]);
-        });
-    }
-};
-$(document).ready(function () {
-    app.init();
-});
+            var repsuetos = <%=repsuetos%>;
+            var app = {
+                _plantillaRepuestos: _.template($('#select-repuestos').html().replace(/\n/gi, "")),
+                init: function () {
+                    app.costo();
+                    $('#fechafinal').datetimepicker({
+                        timepicker: false,
+                        format: 'd/m/Y'
+                    });
+                    $('#fechainicio').datetimepicker({
+                        timepicker: false,
+                        format: 'd/m/Y'
+                    });
+                    $('.fechafinal-durtar').datetimepicker({
+                        timepicker: false,
+                        format: 'd/m/Y'
+                    });
+                    $('.fechainicio-durtar').datetimepicker({
+                        timepicker: false,
+                        format: 'd/m/Y'
+                    });
+                    $('.masrepuestos').off('click').on('click', function () {
+                        var ultimo = $(this).parents('td').find('.otrosrepuestos').last();
+                        $(ultimo).after(app._plantillaRepuestos({repuestos: repsuetos}));
+
+                        app.costo();
+                    });
+                    $('#select2-equipos').on('change', function () {
+                        var datos = $(this).val().split("//");
+                        $('#codigo').val(datos[2]);
+                    });
+
+                },
+                costo: function () {
+                    $('.cantidad').off('change').on('change', function () {
+                        var datos = $(this).parents('td').find('#select2-equipos').last().val().split("//");
+                        var precio = datos[2];
+                        var stock= datos[3];
+                        var cantidad = $(this).val();
+                        if(parseInt(cantidad)>parseInt(stock)){
+                            app.aalert("Solo existen "+stock+" Unidaddes");
+                        }
+                        var costo = precio * cantidad;
+                        $(this).parents('td').find('.otrosrepuestos').last().attr('costo', costo);
+                        var valor = 0;
+                        $(this).parents('td').find('.otrosrepuestos').each(function (indice, elemento) {
+                            var temp=elemento.getAttribute('costo');
+                           valor = valor + parseInt(temp); 
+                        });
+                        $(this).parents('tr').find('#costo').val(valor);
+                    });
+                },
+                aalert: function (msg) {
+                    swal(msg);
+                }
+            };
+            $(document).ready(function () {
+                app.init();
+            });
 
         </script>
         <%}%>
