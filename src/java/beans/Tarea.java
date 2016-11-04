@@ -9,7 +9,7 @@ package beans;
  *
  * @author Fido
  */
-class Tarea {
+public class Tarea {
 
     private int idTareas;
     private String fechaInicio;

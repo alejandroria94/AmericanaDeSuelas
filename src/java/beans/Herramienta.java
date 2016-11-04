@@ -26,7 +26,7 @@ public class Herramienta {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
         String sentencia = "INSERT INTO Herramientas( nombre, descripcion, cantidad,codigo) "
-                + " VALUES ( '" + this.nombre + "','" + this.descripcion + "','" + this.cantidad + "','"+this.codigo+"');";
+                + " VALUES ( '" + this.nombre + "','" + this.descripcion + "','" + this.cantidad + "','" + this.codigo + "');";
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
             if (inserto) {
@@ -46,7 +46,7 @@ public class Herramienta {
             //UPDATE table_name
             //SET column1=value1,column2=value2,...
             //WHERE some_column=some_value;
-            String sql2 = "UPDATE `Herramientas` SET nombre='" + this.nombre + "',descripcion='" + this.descripcion + "',cantidad='" + this.cantidad + "',codigo='" + this.codigo+ "' WHERE `idherramientas`='" + this.idherramientas + "'";
+            String sql2 = "UPDATE `Herramientas` SET nombre='" + this.nombre + "',descripcion='" + this.descripcion + "',cantidad='" + this.cantidad + "',codigo='" + this.codigo + "' WHERE `idherramientas`='" + this.idherramientas + "'";
             boolean borro2 = conexion.actualizarBD(sql2);
             if (borro2) {
                 conexion.commitBD();
@@ -84,7 +84,7 @@ public class Herramienta {
         ResultSet rs = conexion.consultarBD(sql);
         while (rs.next()) {
             h = new Herramienta();
-        
+
             h.setIdherramientas(rs.getInt("idherramientas"));
             h.setNombre(rs.getString("nombre"));
             h.setDescripcion(rs.getString("descripcion"));

@@ -81,8 +81,6 @@ public class ConexionBD {
         return true;
     }
 
-  
-
     public boolean borrarBD(String sentencia) {
         try {
             stmt = con.createStatement();

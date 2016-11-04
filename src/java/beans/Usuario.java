@@ -22,8 +22,6 @@ public class Usuario {
     public Usuario() {
     }
 
-   
-
     public String getLogin() {
         return login;
     }
@@ -48,7 +46,7 @@ public class Usuario {
         if (datos.next()) {
             this.login = datos.getString(2);
             this.pass = datos.getString(3);
-             rs = true;
+            rs = true;
         }
         return rs;
     }

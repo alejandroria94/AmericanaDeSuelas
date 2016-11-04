@@ -14,23 +14,23 @@ import java.util.ArrayList;
  * @author Fido
  */
 public class Repuesto {
-  private int idRepuestos;
-  private int Equipos_idEquipos;
-  private String nombre;
-  private int cantidad;
-  private int minimo;
-  private float precio;
-  private String descripcion;
-  private ArrayList<Repuesto> listaRepuestos;
-  private String codigo;
-  
-  
-   // para repuestos 
+
+    private int idRepuestos;
+    private int Equipos_idEquipos;
+    private String nombre;
+    private int cantidad;
+    private int minimo;
+    private float precio;
+    private String descripcion;
+    private ArrayList<Repuesto> listaRepuestos;
+    private String codigo;
+
+    // para repuestos 
     public boolean guardarRepuesto() {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
         String sentencia = "INSERT INTO repuestos(nombre,cantidad,minimo,precio,descripcion,codigo) "
-                + " VALUES ( '" + this.nombre + "','" + this.cantidad + "','" + this.minimo + "','" +this.precio + "','"+this.descripcion+"','"+this.codigo+"');";
+                + " VALUES ( '" + this.nombre + "','" + this.cantidad + "','" + this.minimo + "','" + this.precio + "','" + this.descripcion + "','" + this.codigo + "');";
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
             if (inserto) {
@@ -89,8 +89,8 @@ public class Repuesto {
             //UPDATE table_name
             //SET column1=value1,column2=value2,...
             //WHERE some_column=some_value;
-            String sql2 = "UPDATE `repuestos` SET nombre='" + this.nombre + "',cantidad='" + this.cantidad + "',minimo='" + this.minimo + "',precio='" + this.precio+ "',descripcion='" + this.descripcion+"',codigo='" + this.codigo+
-                    "' WHERE `idRepuestos`='" + this.idRepuestos + "'";
+            String sql2 = "UPDATE `repuestos` SET nombre='" + this.nombre + "',cantidad='" + this.cantidad + "',minimo='" + this.minimo + "',precio='" + this.precio + "',descripcion='" + this.descripcion + "',codigo='" + this.codigo
+                    + "' WHERE `idRepuestos`='" + this.idRepuestos + "'";
             boolean borro2 = conexion.actualizarBD(sql2);
             if (borro2) {
                 conexion.commitBD();
@@ -102,14 +102,14 @@ public class Repuesto {
         return exito;
     }
 
-  public void descontarCantidad(int descuento){
-      this.cantidad-=descuento;
-  
-  }
-  public void aumentarCantidad(int aumento){
-      this.cantidad+=aumento;  
-  }
-  
+    public void descontarCantidad(int descuento) {
+        this.cantidad -= descuento;
+
+    }
+
+    public void aumentarCantidad(int aumento) {
+        this.cantidad += aumento;
+    }
 
     public int getIdRepuestos() {
         return idRepuestos;
@@ -151,8 +151,6 @@ public class Repuesto {
         this.minimo = minimo;
     }
 
-  
-
     public ArrayList<Repuesto> getListaRepuestos() {
         return listaRepuestos;
     }
@@ -169,7 +167,6 @@ public class Repuesto {
         this.precio = precio;
     }
 
-    
     public String getDescripcion() {
         return descripcion;
     }
@@ -185,8 +182,5 @@ public class Repuesto {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-    
-  
-    
-  
+
 }

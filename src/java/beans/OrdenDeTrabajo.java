@@ -13,7 +13,7 @@ import javax.naming.spi.DirStateFactory;
  *
  * @author Fido
  */
-class OrdenDeTrabajo {
+public class OrdenDeTrabajo {
 
     private int idOrdenesDeTrabajo;
     private int Equipos_idEquipos;
@@ -31,15 +31,15 @@ class OrdenDeTrabajo {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
         String sentencia = "INSERT INTO OrdenesDeTrabajo(Equipos_idEquipos, solicitante, tipoMantenimiento, dnElectrico, dnElectronico, dnMecanico, diagnostico, fechaInicio, fechaFin,codigo) "
-                + " VALUES ( '" + idEquipos + "','" + this.solicitante + "','" + this.tipoMantenimiento + "','" + this.dnElectrico + "','" + this.dnElectronico + "','" + this.dnMecanico + "','" + this.diagnostico + "','" + this.fechaInicio + "','" + this.fechaFin + "','"+this.codigo+"');";
+                + " VALUES ( '" + idEquipos + "','" + this.solicitante + "','" + this.tipoMantenimiento + "','" + this.dnElectrico + "','" + this.dnElectronico + "','" + this.dnMecanico + "','" + this.diagnostico + "','" + this.fechaInicio + "','" + this.fechaFin + "','" + this.codigo + "');";
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
             if (inserto) {
                 conexion.commitBD();
                 exito = true;
-                ResultSet rs=conexion.consultarBD("SELECT LAST_INSERT_ID() AS idOT;");
+                ResultSet rs = conexion.consultarBD("SELECT LAST_INSERT_ID() AS idOT;");
                 rs.next();
-                idOrdenesDeTrabajo=rs.getInt("idOT");
+                idOrdenesDeTrabajo = rs.getInt("idOT");
             } else {
                 conexion.rollbackBD();
             }
@@ -165,7 +165,5 @@ class OrdenDeTrabajo {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
-    
-    
 
 }
