@@ -59,30 +59,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 fondo" style="width: 100%; height: 100%">
-                    <!--                                        <div class="cajamenu">
-                                                                <div class="row">
-                                                                    <div class="col-lg-10 col-lg-offset-1">
-                                                                        <button type="button" class="btn btn-lg btn-danger" style="width: 100%">
-                                                                            Iniciar Sesion
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-lg-10 col-lg-offset-1">
-                                                                        <button type="button" class="btn btn-lg btn-primary" style="width: 100%">
-                                                                            Iniciar Sesion
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-lg-10 col-lg-offset-1">
-                                                                        <button type="button" class="btn btn-lg btn-success" style="width: 100%">
-                                                                            Iniciar Sesion
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>-->
-
                     <div class="horizontal">
 
                         <div class="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1" style="border: 2px solid #0044cc; padding: 10px; border-radius: 5px;background: rgba(255,255,255,0.8)">
@@ -111,10 +87,8 @@
                                 <ul class="dropdown-menu" style="font-size: 25px">
                                     <li><a href="#">Proveedores</a></li>
                                     <li><a href="#">Producción</a></li>
-                                    <li class="repuestos"><a href="#">Repuestos</a></li>
-                                    <li class="herramientas"><a href="">Herramientas</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Informes</a></li>
+                                    <li><a href="AdministrarRepuestos.jsp">Repuestos</a></li>
+                                    <li><a href="AdministrarHerramientas.jsp">Herramientas</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -156,9 +130,6 @@
                     });
                     $('.alarma').off('click').on('click', function () {
                         app.popup("Alertas.jsp", 650, 1300);
-                    });
-                    $('.herramientas').off('click').on('click', function () {
-                        app.popup("Herramientas.jsp", 500, 900);
                     });
                     $('.repuestos').off('click').on('click', function () {
                         app.popup("Repuestos.jsp", 500, 900);

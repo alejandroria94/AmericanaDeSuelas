@@ -46,17 +46,25 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1">
+                    <div class="form-group col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-2 col-sm-offset-1">
                        <label for="codigo">Codigo:</label>
                         <input type="text" class="form-control" id="codigo" placeholder="">
                     </div>
-                    <div class="form-group col-lg-4 col-md-4 col-sm-4 ">
-                       <label for="codigo">Nombre:</label>
-                        <input type="text" class="form-control" id="codigo" placeholder="">
+                    <div class="form-group col-lg-2 col-md-2 col-sm-2 ">
+                       <label for="nombre">Nombre:</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="">
                     </div>
                     <div class="form-group col-lg-2 col-md-2 col-sm-2 ">
                        <label for="precio">Precio:</label>
                         <input type="number" class="form-control" id="precio" placeholder="">
+                    </div>
+                    <div class="form-group col-lg-2 col-md-2 col-sm-2 ">
+                       <label for="cantidad">Cantidad:</label>
+                        <input type="number" class="form-control" id="cantidad" placeholder="">
+                    </div>
+                    <div class="form-group col-lg-2 col-md-2 col-sm-2 ">
+                       <label for="minimo">Minimo:</label>
+                        <input type="number" class="form-control" id="minimo" placeholder="minimo posible en stock">
                     </div>
                 </div>
                 <div class="row">
@@ -67,10 +75,10 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-lg-offset-8 col-md-3 col-md-offset-8 col-sm-3 col-sm-offset-8">
-                        <button type="button" class="btn  btn-default col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
+                        <button type="button" class="cancelar btn  btn-default col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
                             Cancelar
                         </button>
-                        <button type="button" class="btn  btn-success col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
+                        <button type="button" class="guardar btn  btn-success col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
                             Guardar
                         </button>
                     </div>
@@ -85,7 +93,13 @@
         <script>
 
             var app = {
+                _url: "Peticiones.jsp",
                 init: function () {
+                     $('.cancelar').off('click').on('click', function () {
+                        window.close();
+                    });
+                    
+                    app.guardar();
                 },
                 popup: function (URL, alto, ancho) {
                     var posicion_x;
@@ -93,6 +107,71 @@
                     posicion_x = (screen.width / 2) - (ancho / 2);
                     posicion_y = 0;
                     window.open(URL, 'popup', 'width=' + ancho + ', height=' + alto + ', resizable=no, menubar=no, scrollbars=no, status=no, location=no, toolbar=0, left=' + posicion_x + ', top=' + posicion_y + '');
+                },
+                 guardar: function () {
+                    $('.guardar').off('click').on('click', function () {
+                        var codigo = $('#codigo').val();
+                        var nombre = $('#nombre').val();
+                        var cantidad = $('#cantidad').val();
+                        var precio = $('#precio').val();
+                        var minimo = $('#minimo').val();
+                        var descripcion = $('#descripcion').val();
+                        var params = {
+                            proceso: "guardarepuesto",
+                            codigo: codigo,
+                            nombre: nombre,
+                            cantidad: cantidad,
+                            precio: precio,
+                            minimo:minimo,
+                            descripcion: descripcion
+                        };
+                        if (app.validar()) {
+                            $.ajax({
+                                url: app._url,
+                                data: params,
+                                type: 'POST',
+                                success: function (data, textStatus, jqXHR) {
+                                    if (data.ok === true) {
+                                        if (data[params.proceso] === true) {
+                                            app.aalert('Guardo');
+                                            $('#codigo').val("");
+                                            $('#nombre').val("");
+                                            $('#cantidad').val("");
+                                            $('#repusto').val("");
+                                            $('#minimo').val("");
+                                            $('#descripcion').val("");
+                                            window.opener.location.reload();
+                                        } else {
+                                            app.aalert('Lo sentimos no se ha podido guardar');
+                                        }
+                                    } else {
+                                        alert(data.errorMsg);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                },
+                aalert: function (msg) {
+                    swal(msg);
+                },
+                validar: function () {
+                    var codigo = $('#codigo').val();
+                    var nombre = $('#nombre').val();
+                    var cantidad = $('#cantidad').val();
+                    if (!/\w/gi.test(codigo)) {
+                        app.aalert("Debe digitar el nombre ");
+                        return false;
+                    }
+                    if (!/\w/gi.test(nombre)) {
+                        app.aalert("Debe digitar el codigo de la maquina");
+                        return false;
+                    }
+                    if (!/\w/gi.test(cantidad)) {
+                        app.aalert("Debe digitar la cantidad");
+                        return false;
+                    }
+                    return true;
                 }
             };
             $(document).ready(function () {
