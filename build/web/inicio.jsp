@@ -25,9 +25,9 @@
             String logeo = "" + request.getParameter("logeo");
             Usuario u = (Usuario) session.getAttribute("usr");
             if (logeo.equals("true")) {
-               
+
             }
-            if (u==null) {
+            if (u == null) {
                 out.print("<h1>Debes <strong><a href='index.jsp'>INICIAR SESION</a></strong> para acceder a este servicio</h1>");
             } else {
         %>
@@ -54,6 +54,7 @@
                 margin-top: 25%;
                 font-size: 45px;
             }
+           
         </style>
 
         <div class="container-fluid">
@@ -68,7 +69,17 @@
                                 </button>
                                 <ul class="dropdown-menu" style="font-size: 25px">
                                     <li><a href="AdministrarFichasTecnicas.jsp">Máquina</a></li>
-                                    <li><a href="Indicadores.jsp">Indicador de Gestión</a></li>
+                                    <li class="verindicadores"><a href="#">Indicadores de Gestión</a>
+                                        <div class="indicadores" hidden>
+                                            <ul style="font-size: 25px; list-style: none;">
+                                                <li><a href="#">Indicador OEE</a></li>
+                                                <li><a href="#">Disponiblilidad</a></li>
+                                                <li><a href="#">Confiabilidad</a></li>
+                                                <li><a href="#">Accidentabilidad</a></li>
+                                                <li><a href="#">Mantenibilidad</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
                                     <li><a href="#">Tiempo de Operación</a></li>
                                     <li class="ordentrabajo"><a href="#">Orden de Trabajo</a></li>
                                     <li role="separator" class="divider"></li>
@@ -106,6 +117,7 @@
             var app = {
                 init: function () {
                     app.nobackbutton();
+                    
                     $('.salir').off('click').on('click', function () {
                         swal({title: "Esta seguro de continuar?",
                             type: "warning",
@@ -122,6 +134,14 @@
                                     }
                                 });
                     });
+                    $('.verindicadores').mouseover( function (){
+                        $('.indicadores').slideDown(1000);
+                    });
+//                    $('.verindicadores').mouseout( function (){
+//                        $('.indicadores').slideUp(1000);
+//                    });
+                       
+                    
                     $('.fichatecnica').off('click').on('click', function () {
                         app.abrir("index.jsp");
                     });

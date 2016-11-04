@@ -83,16 +83,16 @@
                             <legend class="text-primary"><strong>Tipo de Mantenimiento</strong></legend>
                             <div class="row">
                                 <div class="funkyradio-danger col-lg-4 funkyradio col-md-4 col-sm-4 ">
-                                    <input type="radio" name="radio" id="radio1" />
-                                    <label  for="radio1"><strong>Emergencia</strong></label>
+                                    <input type="radio" name="radio" id="emergencia" />
+                                    <label  for="emergencia"><strong>Emergencia</strong></label>
                                 </div>
                                 <div class="funkyradio-success col-lg-4 funkyradio col-md-4 col-sm-4">
-                                    <input type="radio" name="radio" id="radio2" checked/>
-                                    <label  for="radio2"><strong>Preventivo</strong></label>
+                                    <input type="radio" name="radio" id="preventivo" checked/>
+                                    <label  for="preventivo"><strong>Preventivo</strong></label>
                                 </div>
                                 <div class="funkyradio-primary col-lg-4 funkyradio col-md-4 col-sm-4">
-                                    <input type="radio" name="radio" id="radio3" />
-                                    <label  for="radio3"><strong>Correctivo</strong></label>
+                                    <input type="radio" name="radio" id="correctivo" />
+                                    <label  for="correctivo"><strong>correctivo</strong></label>
                                 </div>
                             </div>
                         </fieldset>
@@ -188,7 +188,7 @@
                             <th style="width: 10%">COSTO</th>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr class="tarea">
                                     <td>
                                         <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
                                     </td>
@@ -227,7 +227,7 @@
                                         <input type="number" class="form-control" id="costo" placeholder="costo">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="tarea">
                                     <td>
                                         <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
                                     </td>
@@ -263,7 +263,7 @@
                                         <input type="number" class="form-control" id="costo" placeholder="costo">
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="tarea">
                                     <td>
                                         <textarea  class="form-control"id="diagnostico"  name="diagnostico" value="" style="width: 100%; height: 80px" ></textarea>
                                     </td>
@@ -305,10 +305,10 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-3 col-lg-offset-8 col-md-3 col-md-offset-8 col-sm-3 col-sm-offset-8">
-                        <button type="button" class="btn  btn-default col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
+                        <button type="button" class=" cancelar btn btn-default col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
                             Cancelar
                         </button>
-                        <button type="button" class="btn  btn-success col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
+                        <button type="button" class="guardar btn btn-success col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
                             Guardar
                         </button>
                     </div>
@@ -347,23 +347,25 @@
             var repsuetos = <%=repsuetos%>;
             var app = {
                 _plantillaRepuestos: _.template($('#select-repuestos').html().replace(/\n/gi, "")),
+                _url: "Peticiones.jsp",
                 init: function () {
                     app.costo();
+                    app.guardar();
                     $('#fechafinal').datetimepicker({
                         timepicker: false,
-                        format: 'd/m/Y'
+                        format: 'Y-m-d'
                     });
                     $('#fechainicio').datetimepicker({
                         timepicker: false,
-                        format: 'd/m/Y'
+                        format: 'Y-m-d'
                     });
                     $('.fechafinal-durtar').datetimepicker({
                         timepicker: false,
-                        format: 'd/m/Y'
+                        format: 'Y-m-d'
                     });
                     $('.fechainicio-durtar').datetimepicker({
                         timepicker: false,
-                        format: 'd/m/Y'
+                        format: 'Y-m-d'
                     });
                     $('.masrepuestos').off('click').on('click', function () {
                         var ultimo = $(this).parents('td').find('.otrosrepuestos').last();
@@ -381,23 +383,105 @@
                     $('.cantidad').off('change').on('change', function () {
                         var datos = $(this).parents('td').find('#select2-equipos').last().val().split("//");
                         var precio = datos[2];
-                        var stock= datos[3];
+                        var stock = datos[3];
                         var cantidad = $(this).val();
-                        if(parseInt(cantidad)>parseInt(stock)){
-                            app.aalert("Solo existen "+stock+" Unidaddes");
+                        if (parseInt(cantidad) > parseInt(stock)) {
+                            app.aalert("Solo existen " + stock + " Unidaddes");
                         }
                         var costo = precio * cantidad;
                         $(this).parents('td').find('.otrosrepuestos').last().attr('costo', costo);
                         var valor = 0;
                         $(this).parents('td').find('.otrosrepuestos').each(function (indice, elemento) {
-                            var temp=elemento.getAttribute('costo');
-                           valor = valor + parseInt(temp); 
+                            var temp = elemento.getAttribute('costo');
+                            valor = valor + parseInt(temp);
                         });
                         $(this).parents('tr').find('#costo').val(valor);
                     });
                 },
                 aalert: function (msg) {
                     swal(msg);
+                },
+                guardar: function () {
+                    $('.guardar').off('click').on('click', function () {
+                        var ordtrabajo = $('#ordtrabajo').val();
+                        var solicita = $('#solicita').val();
+                        var fechainicio = $('#fechainicio').val();
+                        var fechafinal = $('#fechafinal').val();
+                        var emergencia = $('#emergencia').is(":checked");
+                        var preventivo = $('#preventivo').is(":checked");
+                        var correctivo = $('#correctivo').is(":checked");
+                        var mantenimiento = "";
+                        if (emergencia) {
+                            mantenimiento = "Emergencia";
+                        }
+                        if (preventivo) {
+                            mantenimiento = "Preventivo";
+                        }
+                        if (correctivo) {
+                            mantenimiento = "Correctivo";
+                        }
+                        var equipo = $('#select2-equipos').val().split('//');
+                        var idequipo = equipo[0];
+                        var electrico = $('#electrico').is(":checked");
+                        var mecanico = $('#mecanico').is(":checked");
+                        var electronico = $('#electronico').is(":checked");
+                        var diagnostico = $('#diagnostico').val();
+                        var tareas = [];
+                        $('.tarea').each(function (indice, elemento) {
+                            if ($(elemento).find('textarea').val() !== "") {
+                                var obj = {};
+                                obj.tarea = $(elemento).find('textarea').val();
+                                obj.fechainicio = $(elemento).find('#fechainicio-durtar').val();
+                                obj.fechafinal = $(elemento).find('#fechafinal-durtar').val();
+                                obj.costo = $(elemento).find('#costo').val();
+                                var materiales = [];
+                                $(elemento).find('.otrosrepuestos').each(function (indice, element) {
+                                    var obj2 = {};
+                                    var mat = $(element).find('#select2-equipos').val().split('//');
+                                    obj2.nombre = mat[1];
+                                    obj2.id = mat[0];
+                                    obj2.cantidad = $(element).find('#cantidad').val();
+                                    materiales.push(obj2);
+                                });
+                                obj.materiales = materiales;
+                                tareas.push(obj);
+                            }
+                        });
+                       var tareas2= JSON.stringify(tareas);
+//                       var tareas2= JSON.stringify(tareas).replace('},{', '}-*-{').split('-*-');
+                        var params = {
+                            proceso: "guardarot",
+                            ordtrabajo: ordtrabajo,
+                            solicita: solicita,
+                            fechainicio: fechafinal,
+                            fechafinal: fechainicio,
+                            mantenimiento: mantenimiento,
+                            idequipo:idequipo,
+                            electrico: electrico,
+                            electronico: electronico,
+                            mecanico: mecanico,
+                            diagnostico: diagnostico,
+                            tareas: tareas2
+                            
+                        };
+                        $.ajax({
+                            url: app._url,
+                            data: params,
+                            type: 'POST',
+                            success: function (data, textStatus, jqXHR) {
+                                if (data.ok === true) {
+                                    if (data[params.proceso] === true) {
+                                        alert('Guardo');
+                                    } else {
+                                        alert('Lo sentimos no se ha podido guardar');
+                                    }
+                                } else {
+                                    alert(data.errorMsg);
+                                }
+                            }
+                        });
+
+                    });
                 }
             };
             $(document).ready(function () {

@@ -429,6 +429,82 @@ public class Equipo {
         return oEE;
     }
 
+    //inidcadores mantenibilidad disponibilidad accidentabilidad confiablidad
+    /**
+     *
+     * @param idEquipo
+     * @param mes
+     * @param anno
+     * @param indicador
+     * @return lista de indicador por dias para un mes del año
+     * @throws SQLException
+     */
+    public ArrayList<Indicador> listaMesIndicador(String idEquipo, String mes, String anno, String indicador) throws SQLException {
+        YearMonth ym;
+        ym = YearMonth.of(Integer.parseInt(anno), Integer.parseInt(mes));
+        Equipo e = new Equipo().obtenerEquipo(idEquipo);
+        float tiempoFuncionamiento = e.getTiempoDeFuncionamiento();
+        int diasDelmes = ym.lengthOfMonth();
+//        System.out.println(mesActual + "mes");
+//        System.out.println(annoActual + "año");
+        Indicador in ;
+        ArrayList<Indicador> listaIndicador = new ArrayList<>();
+        // ArrayList<Indicador> listaIndicadorEnDb = listaDiaEnDb(idEquipo, mes, anno);
+        for (int i = 0; i < diasDelmes; i++) {
+            in= new Indicador();
+            listaIndicador.add(in);
+        }
+//        if (!listaIndicadorEnDb.isEmpty()) {
+//            for (TiempoOcio t : listaIndicador) {
+//                for (TiempoOcio tDb : listaIndicadorEnDb) {
+//                    if (t.getDia() == tDb.getDia()) {
+//                        t.sumarTiempo(tDb.getTiempo());
+//                    }
+//
+//                }
+//            }
+//            //calcular OEE
+//           
+//        }
+        return listaIndicador;
+    }
+
+    /**
+     *
+     * @param idEquipo
+     * @param anno
+     * @param indicador
+     * @return lista de indicador por meses para un año particular
+     * @throws SQLException
+     */
+    public ArrayList<Indicador> listaAnnoIndicador(String idEquipo, String anno, String indicador) throws SQLException {
+        Indicador in;
+        ArrayList<Indicador> listaIndicador = new ArrayList<>();
+        //ArrayList<Indicador> listaIndicadorEnDb = listaMesEnDb(idEquipo, anno);
+        YearMonth ym;
+
+        Equipo e = new Equipo().obtenerEquipo(idEquipo);
+        float tiempoFuncionamiento = e.getTiempoDeFuncionamiento();
+        for (int i = 0; i < 12; i++) {
+            in = new Indicador();
+            listaIndicador.add(in);
+        }
+//        if (!listaIndicadorEnDb.isEmpty()) {
+//            for (TiempoOcio t : listaIndicador) {
+//                for (TiempoOcio tDb : listaIndicadorEnDb) {
+//
+//                    if (t.getMes() == tDb.getMes()) {
+//                        t.sumarTiempo(tDb.getTiempo());
+//                    }
+//
+//                }
+//            }
+//        }
+       //calcular indicador
+       
+        return listaIndicador;
+    }
+
     public int getIdEquipos() {
         return idEquipos;
     }

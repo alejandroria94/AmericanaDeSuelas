@@ -6,6 +6,10 @@
 --%>
 
 
+<%@page import="beans.OrdenDeTrabajo"%>
+<%@page import="beans.Tarea"%>
+<%@page import="com.google.gson.JsonParser"%>
+<%@page import="com.google.gson.JsonArray"%>
 <%@page import="beans.Repuesto"%>
 <%@page import="beans.Herramienta"%>
 <%@page import="java.util.ArrayList"%>
@@ -33,6 +37,7 @@
         "guardaherramineta",
         "eliminarherramienta",
         "guardarepuesto",
+        "guardarot",
         "eliminarrepuesto",});
 
     // Si el usuario tiene sesión válida y permisos.
@@ -260,9 +265,63 @@
             } else {
                 respuesta += ",\"" + proceso + "\": false";
             }
-        } else if (proceso.equals("")) {
+        } else if (proceso.equals("eliminarrepuesto")) {
+            String Id = "" + request.getParameter("id");
 
-        } else if (proceso.equals("")) {
+            Repuesto r = new Repuesto();
+            if (r.borrarRepuesto(Id)) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("guardarot")) {
+            Tarea t;
+            OrdenDeTrabajo ot = new OrdenDeTrabajo();
+            String tareasOT = "" + request.getParameter("tareas");
+            String IdEquipo = "" + request.getParameter("idequipo");
+            String OdtTrabajo = "" + request.getParameter("ordtrabajo");
+            String Solicita = "" + request.getParameter("solicita");
+            String FechaInicio = "" + request.getParameter("fechainicio");
+            String FechafFinal = "" + request.getParameter("fechafinal");
+            String Mantenimiento = "" + request.getParameter("mantenimiento");
+            String Diagnostico = "" + request.getParameter("diagnostico");
+            boolean Electrico = Boolean.parseBoolean("" + request.getParameter("electrico"));
+            boolean Mecanico = Boolean.parseBoolean("" + request.getParameter("mecanico"));
+            boolean Electronico = Boolean.parseBoolean("" + request.getParameter("electronico"));
+
+            ot.setSolicitante(Solicita);
+            ot.setDiagnostico(Diagnostico);
+            ot.setFechaFin(FechafFinal);
+            ot.setFechaInicio(FechaInicio);
+            ot.setTipoMantenimiento(Mantenimiento);
+            ot.setDnElectrico(Electrico);
+            ot.setDnElectronico(Electronico);
+            ot.setDnMecanico(Mecanico);
+            ot.setCodigo(OdtTrabajo);
+
+            if (ot.guardarOT(IdEquipo)) {
+                JsonArray tareajson = new JsonParser().parse(tareasOT).getAsJsonArray();
+                for (int i = 0; i < tareajson.size(); i++) {
+                    String nombre=tareajson.get(i).getAsJsonObject().get("tarea").toString().replace("\"", "");
+                    String fechainicio=tareajson.get(i).getAsJsonObject().get("fechainicio").toString().replace("\"", "");
+                    String fechafin=tareajson.get(i).getAsJsonObject().get("fechafinal").toString().replace("\"", "");
+                    String materiales=tareajson.get(i).getAsJsonObject().get("materiales").toString();
+                    float costo=Float.parseFloat(tareajson.get(i).getAsJsonObject().get("costo").toString().replace("\"", ""));
+                    t = new Tarea();
+                    t.setNombre(nombre);
+                    t.setFechaInicio(fechainicio);
+                    t.setFechaFin(fechafin);
+                    t.setMateriales(materiales);
+                    t.setCosto(costo);
+                    if (t.guardarTarea(String.valueOf(ot.getIdOrdenesDeTrabajo()), IdEquipo)) {
+                        respuesta += ",\"" + proceso + "\": true";
+                    } else {
+                        respuesta += ",\"" + proceso + "\": false";
+                    }
+                }
+            }else{
+                 respuesta += ",\"" + proceso + "\": false";
+            }
 
         } else if (proceso.equals("")) {
 
