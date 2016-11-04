@@ -482,7 +482,6 @@ public class Equipo {
         ArrayList<Indicador> listaIndicador = new ArrayList<>();
         //ArrayList<Indicador> listaIndicadorEnDb = listaMesEnDb(idEquipo, anno);
         YearMonth ym;
-
         Equipo e = new Equipo().obtenerEquipo(idEquipo);
         float tiempoFuncionamiento = e.getTiempoDeFuncionamiento();
         for (int i = 0; i < 12; i++) {
