@@ -148,13 +148,13 @@
                             }
                         },
                         title: {
-                            text: 'Disponibilidad'
+                            text: 'Indicador OEE'
                         },
                         subtitle: {
                             text: ''
                         },
                         tooltip: {
-                            pointFormat: '<span><strong>Dia {point.name}</strong></span>-> <strong><b style="color:red; font-size:16px;">{point.y}</b> </strong> % <br/>'
+                            pointFormat: '<span><strong>Dia {point.name}</strong></span>-> <strong><b style="color:red; font-size:16px;">{point.y}</b> </strong> % OEE <br/>'
                         },
                         xAxis: {
                             title: {
@@ -183,7 +183,7 @@
                             renderTo: 'fallasaño'
                         },
                         title: {
-                            text: 'Disponibilidad',
+                            text: 'Indicador OEE',
                             x: -20 //center
                         },
                         subtitle: {
@@ -205,7 +205,7 @@
                                 }]
                         },
                         tooltip: {
-                            valueSuffix: ' %'
+                            valueSuffix: ' % OEE'
                         }
                     });
 
@@ -221,7 +221,7 @@
                         var mes = fecha[0];
                         var año = fecha[1];
                         var params = {
-                            proceso: "disponibilidad",
+                            proceso: "OEE",
                             id: id,
                             mes: mes,
                             anno: año

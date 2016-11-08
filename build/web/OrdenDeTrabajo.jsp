@@ -349,6 +349,7 @@
                 _plantillaRepuestos: _.template($('#select-repuestos').html().replace(/\n/gi, "")),
                 _url: "Peticiones.jsp",
                 init: function () {
+                     $('.masrepuestos').css('display','none');
                     app.costo();
                     app.guardar();
                     $('#fechafinal').datetimepicker({
@@ -370,7 +371,7 @@
                     $('.masrepuestos').off('click').on('click', function () {
                         var ultimo = $(this).parents('td').find('.otrosrepuestos').last();
                         $(ultimo).after(app._plantillaRepuestos({repuestos: repsuetos}));
-
+                        $(this).css('display','none');
                         app.costo();
                     });
                     $('#select2-equipos').on('change', function () {
@@ -396,6 +397,7 @@
                             valor = valor + parseInt(temp);
                         });
                         $(this).parents('tr').find('#costo').val(valor);
+                        $(this).parents('td').find('.masrepuestos').css("display","block");
                     });
                 },
                 aalert: function (msg) {

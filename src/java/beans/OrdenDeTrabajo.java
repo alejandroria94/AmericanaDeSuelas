@@ -7,6 +7,7 @@ package beans;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -25,6 +26,42 @@ public class OrdenDeTrabajo {
     private String fechaInicio;
     private String fechaFin;
     private String codigo;
+    private ArrayList<OrdenDeTrabajo> listaDeOTs;
+    private final ArrayList<Tarea> listaTareas =new ArrayList<>();
+    
+    public ArrayList<OrdenDeTrabajo> listarOTs(String idEquipos) throws SQLException {
+        ConexionBD conexion = new ConexionBD();
+        OrdenDeTrabajo ot;
+        this.listaDeOTs = new ArrayList<>();
+        String sql = "SELECT * FROM ordenesdetrabajo WHERE `Equipos_idEquipos`='"+idEquipos+"' ";
+        ResultSet rs = conexion.consultarBD(sql);
+        ResultSet rs1;
+        Tarea t;
+        while (rs.next()) {
+            ot = new OrdenDeTrabajo();
+            ot.setCodigo(rs.getString("codigo"));
+            ot.setTipoMantenimiento(rs.getString("tipoMantenimiento"));
+            ot.setSolicitante(rs.getString("solicitante"));
+            ot.setDnElectrico(rs.getBoolean("dnElectrico"));
+            ot.setDnElectronico(rs.getBoolean("dnElectronico"));
+            ot.setDnMecanico(rs.getBoolean("dnMecanico"));
+            ot.setDiagnostico(rs.getString("diagnostico"));
+            ot.setFechaInicio(rs.getString("fechaInicio"));
+            ot.setFechaFin(rs.getString("fechaFin"));
+            ot.setIdOrdenesDeTrabajo(rs.getInt("idOrdenesDeTrabajo"));
+            rs1 = conexion.consultarBD("SELECT * FROM `tareas` WHERE `OrdenesDeTrabajo_idOrdenesDeTrabajo`='"+ot.getIdOrdenesDeTrabajo()+"' AND `OrdenesDeTrabajo_Equipos_idEquipos`='"+idEquipos+"'");
+            while (rs1.next()) {
+                t= new Tarea();
+                t.setNombre(rs1.getString("nombre"));
+                t.setCosto(rs1.getFloat("costo"));
+                t.setMateriales(rs1.getString("materiales"));
+                ot.setTarea(t);
+            }
+            
+            listaDeOTs.add(ot);
+        }
+        return this.listaDeOTs;
+    }
 
     public boolean guardarOT(String idEquipos) throws SQLException {
         boolean exito = false;
@@ -164,5 +201,9 @@ public class OrdenDeTrabajo {
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
+    public void setTarea(Tarea t) {
+        this.listaTareas.add(t);
+    }
+    
 
 }

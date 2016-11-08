@@ -17,12 +17,9 @@ import java.util.ArrayList;
 public class Demo {
 
     public static void main(String[] args) throws SQLException {
-        Proveedor p= new Proveedor();
-       for(Proveedor p1: p.listarProveedores()){
-           System.out.println(p1.getIdproveedores()+" "+p1.getNombre()+" "+p1.getTelefono()+" "+p1.getDireccion()+" "+p1.getCorreoElectronico());
-           p.borrarProveedor(Integer.toString(p1.getIdproveedores()));
-       }
-        
+        OrdenDeTrabajo ot = new OrdenDeTrabajo();
+         ArrayList<OrdenDeTrabajo>li =ot.listarOTs("19");
+         System.out.println("");
 
     }
 

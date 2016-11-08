@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -316,7 +317,7 @@ public class Equipo {
 //        System.out.println(annoActual + "año");
         TiempoOcio tO;
         ArrayList<TiempoOcio> listaTiemposDeOcio = new ArrayList<>();
-        ArrayList<TiempoOcio> listaTiemposDeOcioEnDb = listaDiaEnDb(idEquipo, mes, anno);
+        ArrayList<TiempoOcio> listaTiemposDeOcioEnDb = listaDiaEnDbOEE(idEquipo, mes, anno);
         for (int i = 0; i < diasDelmes; i++) {
             tO = new TiempoOcio();
             tO.setDia(i + 1);
@@ -353,7 +354,7 @@ public class Equipo {
     public ArrayList<TiempoOcio> listaAnno(String idEquipo, String anno) throws SQLException {
         TiempoOcio tO;
         ArrayList<TiempoOcio> listaTiemposDeOcio = new ArrayList<>();
-        ArrayList<TiempoOcio> listaTiemposDeOcioEnDb = listaMesEnDb(idEquipo, anno);
+        ArrayList<TiempoOcio> listaTiemposDeOcioEnDb = listaMesEnDbOEE(idEquipo, anno);
         YearMonth ym;
 
         Equipo e = new Equipo().obtenerEquipo(idEquipo);
@@ -389,7 +390,7 @@ public class Equipo {
         return listaTiemposDeOcio;
     }
 
-    public ArrayList<TiempoOcio> listaDiaEnDb(String idEquipos, String mes, String anno) throws SQLException {
+    public ArrayList<TiempoOcio> listaDiaEnDbOEE(String idEquipos, String mes, String anno) throws SQLException {
         ConexionBD conexion = new ConexionBD();
         String sql = "SELECT `tiempo`, EXTRACT(YEAR FROM `fecha`) AS anno, EXTRACT(MONTH FROM `fecha`) AS mes ,EXTRACT(DAY FROM `fecha`) AS dia FROM `tiemposocio` WHERE `Equipos_idEquipos`='" + idEquipos + "' AND MONTH(`fecha`)='" + mes + "' AND YEAR(`fecha`)='" + anno + "'";
         ResultSet datos = conexion.consultarBD(sql);
@@ -406,7 +407,7 @@ public class Equipo {
         return listaTiemposDeOcio;
     }
 
-    public ArrayList<TiempoOcio> listaMesEnDb(String idEquipos, String anno) throws SQLException {
+    public ArrayList<TiempoOcio> listaMesEnDbOEE(String idEquipos, String anno) throws SQLException {
         ConexionBD conexion = new ConexionBD();
         String sql = "SELECT `tiempo`, EXTRACT(YEAR FROM `fecha`) AS anno, EXTRACT(MONTH FROM `fecha`) AS mes ,EXTRACT(DAY FROM `fecha`) AS dia FROM `tiemposocio` WHERE `Equipos_idEquipos`='" + idEquipos + "' AND YEAR(`fecha`)='" + anno + "'";
         ResultSet datos = conexion.consultarBD(sql);
@@ -447,13 +448,60 @@ public class Equipo {
         int diasDelmes = ym.lengthOfMonth();
 //        System.out.println(mesActual + "mes");
 //        System.out.println(annoActual + "año");
-        Indicador in ;
+        Indicador in;
         ArrayList<Indicador> listaIndicador = new ArrayList<>();
         // ArrayList<Indicador> listaIndicadorEnDb = listaDiaEnDb(idEquipo, mes, anno);
         for (int i = 0; i < diasDelmes; i++) {
-            in= new Indicador();
+            in = new Indicador();
             listaIndicador.add(in);
         }
+
+        switch (indicador) {
+            case "mantenibilidad":
+                for (Indicador t : listaIndicador) {
+                    for (Indicador tDb : listaIndicador) {
+                        if (t.getDia() == tDb.getDia()) {
+                            t.setMantenibilidad(10);
+                        }
+
+                    }
+                }
+                break;
+
+            case "accidentabilidad":
+                for (Indicador t : listaIndicador) {
+                    for (Indicador tDb : listaIndicador) {
+                        if (t.getDia() == tDb.getDia()) {
+                            t.setAccidentabilidad(20);
+                        }
+
+                    }
+                }
+                break;
+            case "disponibilidad":
+                for (Indicador t : listaIndicador) {
+                    for (Indicador tDb : listaIndicador) {
+                        if (t.getDia() == tDb.getDia()) {
+                            t.setDisponibilidad(30);
+                        }
+
+                    }
+                }
+                break;
+            case "confiabilidad":
+                for (Indicador t : listaIndicador) {
+                    for (Indicador tDb : listaIndicador) {
+                        if (t.getDia() == tDb.getDia()) {
+                            t.setConfiabilidad(40);
+                        }
+
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+
 //        if (!listaIndicadorEnDb.isEmpty()) {
 //            for (TiempoOcio t : listaIndicador) {
 //                for (TiempoOcio tDb : listaIndicadorEnDb) {
@@ -488,6 +536,52 @@ public class Equipo {
             in = new Indicador();
             listaIndicador.add(in);
         }
+            switch (indicador) {
+            case "mantenibilidad":
+                for (Indicador t : listaIndicador) {
+                    for (Indicador tDb : listaIndicador) {
+                        if (t.getDia() == tDb.getDia()) {
+                            t.setMantenibilidad(10);
+                        }
+
+                    }
+                }
+                break;
+
+            case "accidentabilidad":
+                for (Indicador t : listaIndicador) {
+                    for (Indicador tDb : listaIndicador) {
+                        if (t.getDia() == tDb.getDia()) {
+                            t.setAccidentabilidad(20);
+                        }
+
+                    }
+                }
+                break;
+            case "disponibilidad":
+                for (Indicador t : listaIndicador) {
+                    for (Indicador tDb : listaIndicador) {
+                        if (t.getDia() == tDb.getDia()) {
+                            t.setDisponibilidad(30);
+                        }
+
+                    }
+                }
+                break;
+            case "confiabilidad":
+                for (Indicador t : listaIndicador) {
+                    for (Indicador tDb : listaIndicador) {
+                        if (t.getDia() == tDb.getDia()) {
+                            t.setConfiabilidad(40);
+                        }
+
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+        
 //        if (!listaIndicadorEnDb.isEmpty()) {
 //            for (TiempoOcio t : listaIndicador) {
 //                for (TiempoOcio tDb : listaIndicadorEnDb) {
@@ -499,8 +593,8 @@ public class Equipo {
 //                }
 //            }
 //        }
-       //calcular indicador
-       
+        //calcular indicador
+
         return listaIndicador;
     }
 

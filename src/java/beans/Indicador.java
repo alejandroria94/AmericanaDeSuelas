@@ -14,6 +14,7 @@ public class Indicador {
     float accidentabilidad;
     float disponibilidad;
     float confiabilidad;
+    int dia;
 
     public Indicador() {
         this.mantenibilidad=1;
@@ -52,6 +53,14 @@ public class Indicador {
 
     public void setConfiabilidad(float confiabilidad) {
         this.confiabilidad = confiabilidad;
+    }
+
+    public int getDia() {
+        return dia;
+    }
+
+    public void setDia(int dia) {
+        this.dia = dia;
     }
     
     
