@@ -17,9 +17,11 @@ import java.util.ArrayList;
 public class Demo {
 
     public static void main(String[] args) throws SQLException {
-        OrdenDeTrabajo ot = new OrdenDeTrabajo();
-         ArrayList<OrdenDeTrabajo>li =ot.listarOTs("19");
-         System.out.println("");
+        for (int i = 0; i < args.length; i++) {
+            System.out.println((int)Math.random()*61);
+            
+        }
+              
 
     }
 

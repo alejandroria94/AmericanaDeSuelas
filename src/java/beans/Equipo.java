@@ -461,7 +461,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setMantenibilidad(10);
+                            t.setMantenibilidad((float)(int)(Math.random()*4)+1);
                         }
 
                     }
@@ -482,7 +482,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setDisponibilidad(30);
+                            t.setDisponibilidad((float)(int)(Math.random()*5)+1);
                         }
 
                     }
@@ -492,7 +492,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setConfiabilidad(40);
+                            t.setConfiabilidad((float)(int)(Math.random()*4)+1);
                         }
 
                     }
@@ -541,7 +541,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setMantenibilidad(10);
+                            t.setMantenibilidad((float)(int)(Math.random()*30)+1);
                         }
 
                     }
@@ -562,7 +562,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setDisponibilidad(30);
+                            t.setDisponibilidad((float)(int)(Math.random()*35)+1);
                         }
 
                     }
@@ -572,7 +572,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setConfiabilidad(40);
+                            t.setConfiabilidad((float)(int)(Math.random()*50)+1);
                         }
 
                     }
