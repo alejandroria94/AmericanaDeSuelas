@@ -25,13 +25,14 @@ public class Mantenimiento {
     private String actividades;
     private String frecuencia;
     private int idEquipos;
-      private ArrayList<Mantenimiento> listaMantenimientos;
+    private ArrayList<Mantenimiento> listaMantenimientos;
+    private String estado;
 
-    public boolean guardarMantenimiento( String idEquipos) {
+    public boolean guardarMantenimiento(String idEquipos) {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
-        String sentencia = "INSERT INTO mantenimiento( nombre, codigo, operario, departamento, fecha, partesDelEquipo, actividades, frecuencia, idEquipos) "
-                + " VALUES ( '" + this.nombre + "','" + this.codigo + "','" + this.operario + "','" + this.departamento + "','"+this.fecha+"','"+this.partesDelEquipo+"','"+this.actividades+"','"+this.frecuencia+"','"+idEquipos+"');";
+        String sentencia = "INSERT INTO mantenimiento( nombre, codigo, operario, departamento, fecha, partesDelEquipo, actividades, frecuencia, idEquipos,estado) "
+                + " VALUES ( '" + this.nombre + "','" + this.codigo + "','" + this.operario + "','" + this.departamento + "','" + this.fecha + "','" + this.partesDelEquipo + "','" + this.actividades + "','" + this.frecuencia + "','" + idEquipos + "','Pendiente');";
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
             if (inserto) {
@@ -43,8 +44,8 @@ public class Mantenimiento {
         }
         return exito;
     }
-    
-    public ArrayList<Mantenimiento> listarHErramientas() throws SQLException {
+
+    public ArrayList<Mantenimiento> listarMantenimientos() throws SQLException {
         ConexionBD conexion = new ConexionBD();
         Mantenimiento m;
         this.listaMantenimientos = new ArrayList<>();
@@ -62,6 +63,7 @@ public class Mantenimiento {
             m.setActividades(rs.getString("actividades"));
             m.setFrecuencia(rs.getString("frecuencia"));
             m.setIdEquipos(rs.getInt("Equipos_idEquipos"));
+            m.setEstado(rs.getString("estado"));
             listaMantenimientos.add(m);
         }
         return this.listaMantenimientos;
@@ -146,6 +148,23 @@ public class Mantenimiento {
     public void setOperario(String operario) {
         this.operario = operario;
     }
+
+    public ArrayList<Mantenimiento> getListaMantenimientos() {
+        return listaMantenimientos;
+    }
+
+    public void setListaMantenimientos(ArrayList<Mantenimiento> listaMantenimientos) {
+        this.listaMantenimientos = listaMantenimientos;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
     
 
 }
