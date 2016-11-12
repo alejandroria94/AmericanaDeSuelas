@@ -80,10 +80,11 @@
                                             </ul>
                                         </div>
                                     </li>
-                                    <li><a href="#">Tiempo de Operación</a></li>
                                     <li class="ordentrabajo"><a href="#">Orden de Trabajo</a></li>
+                                    <!--<li><a href="HojaDeVida.jsp">Hojas de Vida</a></li>-->
+                                    <li><a href="Mantenimiento.jsp">Mantenimiento</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <li><a href="#">Informes</a></li>
+                                    <!--<li><a href="#">Informes</a></li>-->
                                 </ul>
                             </div>
                             <div class="btn-group col-lg-4 col-md-4">

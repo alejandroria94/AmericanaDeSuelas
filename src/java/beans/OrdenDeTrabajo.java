@@ -204,6 +204,10 @@ public class OrdenDeTrabajo {
     public void setTarea(Tarea t) {
         this.listaTareas.add(t);
     }
+
+    public ArrayList<Tarea> getListaTareas() {
+        return listaTareas;
+    }
     
 
 }

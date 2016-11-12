@@ -69,6 +69,25 @@ public class Mantenimiento {
         return this.listaMantenimientos;
     }
 
+    public boolean actualizarEstadoMAntenimiento(String idMantenimiento, String estado) {
+        boolean exito = false;
+        ConexionBD conexion = new ConexionBD();
+        if (conexion.setAutoCommitBD(false)) {
+            //UPDATE table_name
+            //SET column1=value1,column2=value2,...
+            //WHERE some_column=some_value;
+            String sql2 = "UPDATE `mantenimiento` SET estado='" + estado + "' WHERE `idMantenimiento`='" + idMantenimiento + "'";
+            boolean borro2 = conexion.actualizarBD(sql2);
+            if (borro2) {
+                conexion.commitBD();
+                exito = true;
+            } else {
+                conexion.rollbackBD();
+            }
+        }
+        return exito;
+    }
+
     public int getIdMantenimiento() {
         return idMantenimiento;
     }
@@ -164,7 +183,5 @@ public class Mantenimiento {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    
 
 }

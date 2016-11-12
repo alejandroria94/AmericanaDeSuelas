@@ -17,10 +17,8 @@ import java.util.ArrayList;
 public class Demo {
 
     public static void main(String[] args) throws SQLException {
-        for (int i = 0; i < args.length; i++) {
-            System.out.println((int)Math.random()*61);
-            
-        }
+        Mantenimiento m = new Mantenimiento();
+        m.actualizarEstadoMAntenimiento("1", "Pendiente");
               
 
     }

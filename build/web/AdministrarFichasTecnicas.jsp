@@ -86,6 +86,7 @@
                                                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp;&nbsp;<span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
+                                                <li style="font-size: 20px" class="verhv"><a href="#"><span class="glyphicon glyphicon-eye-open " aria-hidden="true"></span> Ver Hoja de Vida</a></li>
                                                 <li style="font-size: 20px" class="ver"><a href="#"><span class="glyphicon glyphicon-eye-open " aria-hidden="true"></span> Ver</a></li>
                                                 <li style="font-size: 20px" class="editar"><a href="#"><span class="glyphicon glyphicon-edit " aria-hidden="true"></span> Editar</a></li>
                                                 <li style="font-size: 20px" class="eliminar"><a href="#"><span class="glyphicon glyphicon-remove " aria-hidden="true"></span> Elimiar</a></li>
@@ -167,6 +168,7 @@
                     app.ver();
                     app.editar();
                     app.eliminar();
+                    app.verhv();
                     $('#fechaTO').datetimepicker({
                         timepicker: false,
                         format: 'Y/m/d'
@@ -243,6 +245,12 @@
                     $('.ver').off('click').on('click', function () {
                         var id = $(this).parents('tr').find('.id').data('id');
                         app.popup("VerFichaTecnica.jsp?Id=" + id + "", 680, 1280);
+                    });
+                },
+                verhv: function () {
+                    $('.verhv').off('click').on('click', function () {
+                        var id = $(this).parents('tr').find('.id').data('id');
+                        app.popup("HojaDeVida.jsp?Id=" + id + "", 680, 1280);
                     });
                 },
                 editar: function () {

@@ -6,6 +6,7 @@
 --%>
 
 
+<%@page import="beans.Mantenimiento"%>
 <%@page import="beans.Indicador"%>
 <%@page import="beans.OrdenDeTrabajo"%>
 <%@page import="beans.Tarea"%>
@@ -43,6 +44,7 @@
         "disponibilidad",
         "confiabilidad",
         "mantenibilidad",
+        "guardarmantenimiento",
         "eliminarrepuesto",});
 
     // Si el usuario tiene sesión válida y permisos.
@@ -94,7 +96,7 @@
             String funciones = "" + request.getParameter("funciones");
             String caracteristicasespecificas = "" + request.getParameter("caracteristicas");
             String observaciones = "" + request.getParameter("observaciones");
-
+            
             Equipo e = new Equipo();
             e.setCodigo(codigo);
             e.setNombre(nombre);
@@ -400,7 +402,29 @@
             respuesta += ",\"" + proceso + "\": true";
             respuesta = respuesta + ",\"Mes\":" + new Gson().toJson(tiempomes);
             respuesta = respuesta + ",\"ANNO\":" + new Gson().toJson(tiempoanno);
-        } else if (proceso.equals("")) {
+        } else if (proceso.equals("guardarmantenimiento")) {
+             String Id = "" + request.getParameter("id");
+             String Operario = "" + request.getParameter("operario");
+             String Departamento = "" + request.getParameter("departamento");
+             String Fecha = "" + request.getParameter("fecha");
+             String Partes = "" + request.getParameter("partes");
+             String Actividades = "" + request.getParameter("actividades");
+             String Frecuencia = "" + request.getParameter("frecuencia");
+             Mantenimiento m = new Mantenimiento();
+             m.setActividades(Actividades);
+             m.setDepartamento(Departamento);
+             m.setOperario(Operario);
+             m.setFecha(Fecha);
+             m.setFrecuencia(Frecuencia);
+             m.setPartesDelEquipo(Partes);
+             if(m.guardarMantenimiento(Id)){
+                  respuesta += ",\"" + proceso + "\": true";
+             }else{
+                  respuesta += ",\"" + proceso + "\": false";
+             }
+             
+        }
+         else if (proceso.equals("")) {
 
         }
 

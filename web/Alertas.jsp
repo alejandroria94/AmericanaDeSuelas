@@ -80,25 +80,25 @@
                         events: [
                             {
                                 title: 'Actividad de Matenimiento',
-                                start: '2016-10-08',
+                                start: '2016-11-08',
                                 backgroundColor: "#f0ad4e",
                                 borderColor: "#f0ad4e"
                             },
                             {
                                 title: 'Actividad de Matenimiento',
-                                start: '2016-10-02',
+                                start: '2016-11-02',
                                 backgroundColor: "#5cb85c",
                                 borderColor: "#5cb85c"
                             },
                             {
                                 title: 'Actividad de Matenimiento',
-                                start: '2016-10-05',
+                                start: '2016-11-05',
                                 backgroundColor: "#d9534f",
                                 borderColor: "#d9534f"
                             },
                             {
                                 title: 'Actividad de Matenimiento',
-                                start: '2016-10-19',
+                                start: '2016-11-19',
                                 backgroundColor: "#f0ad4e",
                                 borderColor: "#f0ad4e"
                             }],
