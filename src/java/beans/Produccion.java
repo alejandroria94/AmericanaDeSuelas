@@ -19,15 +19,12 @@ public class Produccion {
     private String nombre;
     private String imagen;
     private String descripcion;
-   private ArrayList<Produccion> listaProduccion;
+    private ArrayList<Produccion> listaProduccion;
 
-    
-    
-    
     public boolean guardarProduccion() {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
-        String sentencia = "INSERT INTO produccion( nombre, imagen, descripción) "
+        String sentencia = "INSERT INTO produccion( nombre, imagen, descripcion) "
                 + " VALUES ( '" + this.nombre + "','" + this.imagen + "','" + this.descripcion + "');";
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
@@ -41,7 +38,7 @@ public class Produccion {
         return exito;
     }
 
-      public boolean borrarProduccion(String idproduccion) {
+    public boolean borrarProduccion(String idproduccion) {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
         if (conexion.setAutoCommitBD(false)) {
@@ -58,8 +55,34 @@ public class Produccion {
         }
         return exito;
     }
-      
-      public ArrayList<Produccion> listarProduccion() throws SQLException {
+
+    public Produccion obtenerProduccion(String idproduccion) throws SQLException {
+        ResultSet datosE = buscarProduccion("idproduccion", idproduccion);
+        Produccion p = llenarDatosObjetoEquipo(datosE);
+        return p;
+    }
+
+    public Produccion llenarDatosObjetoEquipo(ResultSet rs) throws SQLException {
+        Produccion p = null;
+
+        if (rs.next()) {
+            p = new Produccion();
+            p.setIdproduccion(Integer.parseInt(rs.getString("idproduccion")));
+            p.setNombre(rs.getString("nombre"));
+            p.setImagen(rs.getString("imagen"));
+            p.setDescripcion(rs.getString("descripcion"));
+        }
+
+        return p;
+    }
+
+    public ResultSet buscarProduccion(String parametro, String busqueda) {
+        ConexionBD conexion = new ConexionBD();
+        ResultSet datosE = conexion.consultarBD("select * from produccion where " + parametro + "='" + busqueda + "'");
+        return datosE;
+    }
+
+    public ArrayList<Produccion> listarProduccion() throws SQLException {
         ConexionBD conexion = new ConexionBD();
         Produccion p;
         this.listaProduccion = new ArrayList<>();
@@ -68,7 +91,7 @@ public class Produccion {
         while (rs.next()) {
             p = new Produccion();
 
-            p.setIdproduccion(rs.getInt("idherramientas"));
+            p.setIdproduccion(rs.getInt("idproduccion"));
             p.setNombre(rs.getString("nombre"));
             p.setImagen(rs.getString("imagen"));
             p.setDescripcion(rs.getString("descripcion"));
@@ -76,7 +99,7 @@ public class Produccion {
         }
         return this.listaProduccion;
     }
-    
+
     public int getIdproduccion() {
         return idproduccion;
     }
@@ -108,7 +131,5 @@ public class Produccion {
     public void setDescripcion(String descripción) {
         this.descripcion = descripción;
     }
-    
-    
-    
+
 }

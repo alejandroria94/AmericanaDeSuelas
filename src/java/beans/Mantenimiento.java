@@ -31,7 +31,7 @@ public class Mantenimiento {
     public boolean guardarMantenimiento(String idEquipos) {
         boolean exito = false;
         ConexionBD conexion = new ConexionBD();
-        String sentencia = "INSERT INTO mantenimiento( nombre, codigo, operario, departamento, fecha, partesDelEquipo, actividades, frecuencia, idEquipos,estado) "
+        String sentencia = "INSERT INTO mantenimiento( nombre, codigo, operario, departamento, fecha, partesDelEquipo, actividades, frecuencia, Equipos_idEquipos,estado) "
                 + " VALUES ( '" + this.nombre + "','" + this.codigo + "','" + this.operario + "','" + this.departamento + "','" + this.fecha + "','" + this.partesDelEquipo + "','" + this.actividades + "','" + this.frecuencia + "','" + idEquipos + "','Pendiente');";
         if (conexion.setAutoCommitBD(false)) {
             boolean inserto = conexion.insertarBD(sentencia);
@@ -56,6 +56,7 @@ public class Mantenimiento {
 
             m.setIdMantenimiento(rs.getInt("idMantenimiento"));
             m.setNombre(rs.getString("nombre"));
+            m.setCodigo(rs.getString("codigo"));
             m.setOperario(rs.getString("operario"));
             m.setDepartamento(rs.getString("departamento"));
             m.setFecha(rs.getString("fecha"));
