@@ -70,6 +70,7 @@
                                     <th>Parte Equipo</th>
                                     <th>Actividad</th>
                                     <th>Estado</th>
+                                    <th style="width: 80px">Orden de Trabajo</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,8 +79,8 @@
                                     for (Mantenimiento ma : lista) {
                                 %>
                                 <tr>
-                                    <td class="id" data-id="<%=ma.getIdMantenimiento()%>"><%=ma.getCodigo()%></td>
-                                    <td><%=ma.getFecha()%></td>
+                                    <td class="id" data-id="<%=ma.getIdMantenimiento()%>" data-ideq="<%=ma.getIdEquipos()%>" ><%=ma.getCodigo()%></td>
+                                    <td class="fecha" data-fecha="<%=ma.getFecha()%>"><%=ma.getFecha()%></td>
                                     <td><%=ma.getNombre()%></td>
                                     <td><%=ma.getPartesDelEquipo()%></td>
                                     <td><%=ma.getActividades()%></td>
@@ -99,7 +100,11 @@
                                             <option value="Vencido">Vencido</option>
                                             <%}%>
                                         </select>
-
+                                    </td>
+                                    <td>
+                                         <button type="button" class="btn btn-success pull-right odtbj">
+                                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                                        </button>
                                     </td>
                                 </tr>
                                 <%}%>
@@ -131,13 +136,14 @@
                         document.location.href = "inicio.jsp";
                     });
                     app.estado();
+                    app.ordenTrabajo();
                 },
                 popup: function (URL, alto, ancho) {
                     var posicion_x;
                     var posicion_y;
                     posicion_x = (screen.width / 2) - (ancho / 2);
                     posicion_y = 0;
-                    window.open(URL, 'popup', 'width=' + 100 % +', height=' + 100 % +', resizable=no, menubar=no, scrollbars=no, status=no, location=no, toolbar=0, left=' + posicion_x + ', top=' + posicion_y + '');
+                    window.open(URL, 'popup', 'width=' + 100 % +', height=' + 100 % +', resizable=no, menubar=no, scrollbars=no, status=no, location=no, toolbar=0');
                 },
                 aalert: function (msg) {
                     swal(msg);
@@ -167,6 +173,13 @@
                                 }
                             }
                         });
+                    });
+                },
+                ordenTrabajo: function (){
+                    $('.odtbj').off('click').on('click', function (){
+                         var id = $(this).parents('tr').find('.id').data('ideq');
+                         var fecha = $(this).parents('tr').find('.fecha').data('fecha');
+                         app.popup("GeneraOrdenDeTrabajo.jsp?Id=" + id + "&&Fecha=" + fecha+"", 800, 1000);
                     });
                 }
             };

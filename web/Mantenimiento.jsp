@@ -18,14 +18,6 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
         <link href="css/jquery.datetimepicker.css" rel="stylesheet">
-        <%
-//            String casa = "" + request.getParameter("casa");
-//            out.println(casa);
-//            Usuario u = (Usuario) session.getAttribute("usr");
-//            out.println(u.getLogin());
-//            out.println(u.getPass());
-
-        %>
     </head>
     <body>
         <%             Usuario u = (Usuario) session.getAttribute("usr");
@@ -104,10 +96,10 @@
                                         <input type="text" class="form-control" id="fecha" placeholder="Fecha">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="partes" placeholder="Parte equipo">
+                                        <textarea  class="form-control"id="partes"  name="descripcion" value="" style="width: 100%; height: 80px" ></textarea>
                                     </td>
                                     <td >
-                                        <input type="text" class="form-control" id="actividades" placeholder="Actividades">
+                                        <textarea  class="form-control"id="actividades"  name="descripcion" value="" style="width: 100%; height: 80px" ></textarea>
                                     </td>
                                     <td >
                                         <input type="text" class="form-control" id="frecuencia" placeholder="Frecuencia">
@@ -153,7 +145,7 @@
                         var datos = $('#select2-equipos').val().split("//");
                         $('#codigo').val(datos[2]);
                     });
-                     $('.cancelar').off('click').on('click', function () {
+                    $('.cancelar').off('click').on('click', function () {
                         window.close();
                     });
                 },
@@ -185,8 +177,8 @@
                             fecha: fecha,
                             partes: partes,
                             actividades: actividades,
-                            codigo:codigo,
-                            nombre:nombre
+                            codigo: codigo,
+                            nombre: nombre
                         };
                         $.ajax({
                             url: app._url,

@@ -29,7 +29,9 @@
             if (u == null) {
                 out.print("<h1>Debes <strong><a href='index.jsp'>INICIAR SESION</a></strong> para acceder a este servicio</h1>");
             } else {
-
+                 String Id = "" + request.getParameter("Id");
+                 String Fecha = "" + request.getParameter("Fecha");
+                 Equipo eq = new Equipo().obtenerEquipo(Id);
         %>
         <style>
             .border{
@@ -66,7 +68,7 @@
                     </div>
                     <div class="form-group col-lg-2 col-md-2 col-sm-2">
                         <label for="fechainicio">Fecha de Inicio:</label>
-                        <input type="text" class="form-control" id="fechainicio" placeholder="">
+                        <input type="text" class="form-control" id="fechainicio" placeholder="" value="<%=Fecha%>">
                     </div>
                     <div class="form-group col-lg-2 col-md-2 col-sm-2">
                         <label for="fechafinal">Fecha de Finalizacion:</label>
@@ -97,24 +99,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <%  Equipo e = new Equipo();
-                        List<Equipo> listaeq = e.listarEquipos();
-
-                    %>
+                   
                     <div class="col-lg-5 col-lg-offset-1 form-group col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
                         <label  for="select-equipos"><strong>Equipo:</strong></label>
                         <select id="select2-equipos" class="form-control">
-                            <option></option>
-                            <% for (Equipo eq : listaeq) {
-                            %>
-                            <option value="<%=eq.getIdEquipos()%>//<%=eq.getNombre()%>//<%=eq.getCodigo()%>"><%=eq.getNombre()%></option>
-                            <% }
-                            %>
+                            <option  value="<%=eq.getIdEquipos()%>//<%=eq.getNombre()%>//<%=eq.getCodigo()%>"><%=eq.getNombre()%></option>
                         </select>
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-5">
                         <label for="codigo">Codigo:</label>
-                        <input type="text" class="form-control" id="codigo" placeholder="" readonly>
+                        <input type="text" class="form-control" id="codigo" placeholder="" value="<%=eq.getIdEquipos()%>" readonly>
                     </div>
                 </div>
                 <div class="row">
@@ -134,7 +128,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="form-group col-lg-4">
+                                <div class="form-group col-lg-4 col-md-4 col-sm-4">
                                     <input type="checkbox" name="mecanico" id="mecanico" autocomplete="off" />
                                     <div class="btn-group" style="width:  100%">
                                         <label for="mecanico" class="btn btn-success col-lg-2 col-md-2 col-sm-2">
