@@ -464,9 +464,9 @@
                             success: function (data, textStatus, jqXHR) {
                                 if (data.ok === true) {
                                     if (data[params.proceso] === true) {
-                                        alert('Guardo');
+                                        app.aalert('Guardo');
                                     } else {
-                                        alert('Lo sentimos no se ha podido guardar');
+                                        app.aalert('Lo sentimos no se ha podido guardar');
                                     }
                                 } else {
                                     alert(data.errorMsg);
