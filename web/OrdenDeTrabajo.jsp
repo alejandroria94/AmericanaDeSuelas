@@ -346,6 +346,9 @@
                 _plantillaRepuestos: _.template($('#select-repuestos').html().replace(/\n/gi, "")),
                 _url: "Peticiones.jsp",
                 init: function () {
+                     $('.cancelar').off('click').on('click', function () {
+                        window.close();
+                    });
                      $('.masrepuestos').css('display','none');
                     app.costo();
                     app.guardar();
