@@ -18,14 +18,6 @@
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/jasny-bootstrap.min.css" rel="stylesheet">
         <link href="css/jquery.datetimepicker.css" rel="stylesheet">
-        <%
-//            String casa = "" + request.getParameter("casa");
-//            out.println(casa);
-//            Usuario u = (Usuario) session.getAttribute("usr");
-//            out.println(u.getLogin());
-//            out.println(u.getPass());
-
-        %>
     </head>
     <body>
         <%             Usuario u = (Usuario) session.getAttribute("usr");
@@ -65,8 +57,8 @@
                         <table class="table table-bordered table-condensed table-striped">
                             <thead>
                                 <tr>
-                                    <th colspan="3" class="bg-info">Nombre</th>
-                                    <td colspan="3">
+                                    <th  class="bg-info">Maquina</th>
+                                    <td >
                                         <select id="select2-equipos" class="form-control">
                                             <option></option>
                                             <% for (Equipo eq : lista) {
@@ -76,40 +68,40 @@
                                             %>
                                         </select>
                                     </td>
-                                    <th style="width: 20%" class="bg-info">Codigo</th>
-                                    <td >
+                                    <th  class="bg-info">Codigo</th>
+                                    <td  >
                                         <input type="text" class="form-control" id="codigo" placeholder="Codigo">
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th colspan="3" class="bg-info"> Operario</th>
-                                    <td colspan="3">
+                                    <th  class="bg-info"> Operario</th>
+                                    <td >
                                         <input type="text" class="form-control" id="operario" placeholder="Operario">
                                     </td>
-                                    <th class="bg-info">Departamento</th>
-                                    <td> 
+                                    <th class="bg-info" >Departamento</th>
+                                    <td > 
                                         <input type="text" class="form-control" id="departamento" placeholder="Departamento">
                                     </td>
                                 </tr>
                                 <tr class="bg-info">
-                                    <th style="width: 100px;" colspan="2">Fecha</th>
-                                    <th style="width: 300px" colspan="2">Parte del Equipo</th>
-                                    <th colspan="2">Actividades</th>
-                                    <th colspan="2">Frecuencia</th>
+                                    <th >Fecha</th>
+                                    <th  >Parte del Equipo</th>
+                                    <th >Actividades</th>
+                                    <th >Frecuencia</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td colspan="2">
+                                    <td >
                                         <input type="text" class="form-control" id="fecha" placeholder="Fecha">
                                     </td>
-                                    <td colspan="2">
-                                        <input type="text" class="form-control" id="partes" placeholder="Parte equipo">
+                                    <td>
+                                        <textarea  class="form-control"id="partes"  name="descripcion" value="" style="width: 100%; height: 80px" ></textarea>
                                     </td>
-                                    <td colspan="2">
-                                        <input type="text" class="form-control" id="actividades" placeholder="Actividades">
+                                    <td >
+                                        <textarea  class="form-control"id="actividades"  name="descripcion" value="" style="width: 100%; height: 80px" ></textarea>
                                     </td>
-                                    <td colspan="2">
+                                    <td >
                                         <input type="text" class="form-control" id="frecuencia" placeholder="Frecuencia">
                                     </td>
                                 </tr>
@@ -153,6 +145,9 @@
                         var datos = $('#select2-equipos').val().split("//");
                         $('#codigo').val(datos[2]);
                     });
+                    $('.cancelar').off('click').on('click', function () {
+                        window.close();
+                    });
                 },
                 popup: function (URL, alto, ancho) {
                     var posicion_x;
@@ -166,6 +161,8 @@
                         var datos = $('#select2-equipos').val().split("//");
                         var id = datos[0];
                         var operario = $('#operario').val();
+                        var nombre = datos[1];
+                        var codigo = $('#codigo').val();
                         var frecuencia = $('#frecuencia').val();
                         var departamento = $('#departamento').val();
                         var fecha = $('#fecha').val();
@@ -179,7 +176,9 @@
                             departamento: departamento,
                             fecha: fecha,
                             partes: partes,
-                            actividades: actividades
+                            actividades: actividades,
+                            codigo: codigo,
+                            nombre: nombre
                         };
                         $.ajax({
                             url: app._url,
@@ -189,6 +188,8 @@
                                 if (data.ok === true) {
                                     if (data[params.proceso] === true) {
                                         app.aalert("Guardo");
+                                        window.opener.location.reload();
+                                        window.close();
                                     } else {
                                         app.aalert('Lo sentimos no se ha podido guardar');
                                     }

@@ -57,7 +57,7 @@
                         <table class="table table-bordered table-condensed table-striped">
                             <thead>
                                 <tr>
-                                    <th  class="bg-info">Nombre</th>
+                                    <th  class="bg-info">Maquina</th>
                                     <td >
                                         <select id="select2-equipos" class="form-control">
                                             <option></option>

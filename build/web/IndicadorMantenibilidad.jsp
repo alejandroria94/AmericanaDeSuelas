@@ -154,7 +154,7 @@
                             text: ''
                         },
                         tooltip: {
-                            pointFormat: '<span><strong>Dia {point.name}</strong></span>-> <strong><b style="color:red; font-size:16px;">{point.y}</b> </strong> Tiempo promedio de reparación <br/>'
+                            pointFormat: '<span><strong>Dia {point.name}</strong></span>-> <strong><b style="color:red; font-size:16px;">{point.y}</b> </strong>h Tiempo promedio de reparación <br/>'
                         },
                         xAxis: {
                             title: {
@@ -205,7 +205,7 @@
                                 }]
                         },
                         tooltip: {
-                            valueSuffix: ' Tiempo promedio de reparación'
+                            valueSuffix: 'h Tiempo promedio de reparación'
                         }
                     });
 

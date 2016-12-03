@@ -10,17 +10,21 @@ package beans;
  * @author Fido
  */
 public class Indicador {
+
     float mantenibilidad;
     float accidentabilidad;
     float disponibilidad;
     float confiabilidad;
-    int dia;
+    private int dia;
+    private int mes;
+    private int anno;
+    int numeroFallas=0;
 
     public Indicador() {
-        this.mantenibilidad=1;
-        this.accidentabilidad=2;
-        this.disponibilidad=3;
-        this.confiabilidad=4;
+        this.mantenibilidad = 1;
+        this.accidentabilidad = 2;
+        this.disponibilidad = 3;
+        this.confiabilidad = 4;
     }
 
     public float getMantenibilidad() {
@@ -62,10 +66,32 @@ public class Indicador {
     public void setDia(int dia) {
         this.dia = dia;
     }
-    
-    
-    
-    
-    
-    
+
+    public int getMes() {
+        return mes;
+    }
+
+    public void setMes(int mes) {
+        this.mes = mes;
+    }
+
+    public int getAnno() {
+        return anno;
+    }
+
+    public void setAnno(int anno) {
+        this.anno = anno;
+    }
+    public void sumarFalla(int falla) {
+        this.numeroFallas += falla;
+    }
+
+    public int getNumeroFallas() {
+        return numeroFallas;
+    }
+
+    public void setNumeroFallas(int numeroFallas) {
+        this.numeroFallas = numeroFallas;
+    }
+     
 }

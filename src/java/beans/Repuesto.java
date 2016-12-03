@@ -101,6 +101,22 @@ public class Repuesto {
         }
         return exito;
     }
+    public boolean actualizarCantidadRepuesto() {
+        boolean exito = false;
+        ConexionBD conexion = new ConexionBD();
+        if (conexion.setAutoCommitBD(false)) {
+            String sql2 = "UPDATE `repuestos` SET cantidad='" + this.cantidad 
+                    + "' WHERE `idRepuestos`='" + this.idRepuestos + "'";
+            boolean borro2 = conexion.actualizarBD(sql2);
+            if (borro2) {
+                conexion.commitBD();
+                exito = true;
+            } else {
+                conexion.rollbackBD();
+            }
+        }
+        return exito;
+    }
 
     public void descontarCantidad(int descuento) {
         this.cantidad -= descuento;

@@ -4,7 +4,7 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
-<%@page import="beans.Repuesto"%>
+<%@page import="beans.Proveedor"%>
 <%@page import="beans.Herramienta"%>
 <%@page import="java.util.List"%>
 <%@page import="beans.Equipo"%>
@@ -16,19 +16,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Repuestos</title>
+        <title>Proveedores</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/bootstrap-radio.css" rel="stylesheet">
         <link href="css/jquery.datetimepicker.css" rel="stylesheet">
-        <style>
-            .rojoSemaforo{
-                background: #ff6e5a;
-            }
-            .verdeSemaforo{
-                background: #8fdf82;
-            }
-
-        </style>
     </head>
     <body>
         <%
@@ -54,14 +45,14 @@
                 <div class="row">
                     <div class="col-lg-10 col-lg-offset-1">
                         <h1 class="text-info bg-primary text-center">
-                            Repuestos
+                            Proveedores
                             <img src="images/logotipo3.png" class="imagen"/>
                         </h1>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-10 col-lg-offset-1">
-                        <button type="button" class="btn btn-danger pull-right agregarrepuesto">
+                        <button type="button" class="btn btn-danger pull-right agregarproveedor">
                             Agregar <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         </button>
                         <br><br>
@@ -69,48 +60,35 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-10 col-lg-offset-1">
-                        <table class="table table-bordered  table-condensed table-responsive">
+                        <table class="table table-bordered table-striped table-condensed table-responsive">
                             <thead class="bg-info" style="font-size: 15px">
                                 <tr>
                                     <th style="width: 180px">Codigo</th>
                                     <th>Nombre</th>
-                                    <th>Descripción</th>
-                                    <th>Cantidad</th>
-                                    <th>Minimo</th>
-                                    <th>Precio</th>
+                                    <th>Telefono</th>
+                                    <th>Direccion</th>
+                                    <th>Correo</th>
                                     <th style="width: 80px">Eliminar</th>
-                                    <th style="width: 80px">Agregar</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <%  Repuesto r = new Repuesto();
-                                    List<Repuesto> lista = r.listarRepuestos();
-                                    for (Repuesto re : lista) {
-                                       
+                                <%                                    Proveedor p = new Proveedor();
+                                    List<Proveedor> lista = p.listarProveedores();
+                                    for (Proveedor pp : lista) {
                                 %>
-                                <tr  <%if(re.getCantidad()<re.getMinimo()){%>class="rojoSemaforo"<%}else{%>class="verdeSemaforo"<%}%>>
-                                    <td class="id" data-id="<%=re.getIdRepuestos()%>"><%=re.getCodigo()%></td>
-                                    <td><%=re.getNombre()%></td>
-                                    <td><%=re.getDescripcion()%></td>
-                                    <td class="cant" data-cantidad="<%=re.getCantidad()%>"><%=re.getCantidad()%></td>
-                                    <td><%=re.getMinimo()%></td>
-                                    <td><%=re.getPrecio()%></td>
+                                <tr>
+                                    <td class="id" data-id="<%=pp.getIdproveedores()%>"><%=pp.getIdproveedores()%></td>
+                                    <td><%=pp.getNombre()%></td>
+                                    <td><%=pp.getTelefono()%></td>
+                                    <td><%=pp.getDireccion()%></td>
+                                    <td><%=pp.getCorreoElectronico()%></td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-danger pull-right eliminar">
                                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                         </button>
                                     </td>
-                                    <td class="text-center">
-                                        <button type="button" class="btn btn-success pull-right sumarepuesto">
-                                            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-                                        </button>
-                                    </td>
                                 </tr>
-                                
-                                
-                                <%
-                                        }
-                                    %>
+                                <%}%>
                             </tbody>
                         </table>
                     </div>
@@ -120,78 +98,24 @@
             <button type="button" class="btn btn-lg btn-warning volver pull-right" style="font-size: 40px;  margin-top: 30px; margin-right: 30px; padding: 20px">
                 Volver
             </button>
-
-
-            <!-- Modal tiempo de ocio -->
-            <div class="modal fade" id="sumarepuesto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-sm" role="document">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <fieldset>
-                                <legend class="text-primary text-center"><strong>Repuestos</strong></legend>
-                                <div class="row">
-                                    <div class="form-group col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-                                        <label for="numerorepuestos">Numero de repuestos</label>
-                                        <input type="number" class="form-control" id="numerorepuestos" placeholder="Numero de repuestos">
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="repuestosuma btn btn-primary">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
+
+
+
         <script src="js/jquery-3.1.1.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.datetimepicker.full.js"></script>
         <script>
 
             var app = {
                 _url: "Peticiones.jsp",
-                _Id: "",
-                _CantResp: "",
                 init: function () {
                     app.eliminar();
-                    $('.agregarrepuesto').off('click').on('click', function () {
-                        app.popup("Repuestos.jsp", 500, 1100);
+                    $('.agregarproveedor').off('click').on('click', function () {
+                        app.popup("Proveedores.jsp", 500, 300);
                     });
                     $('.volver').off('click').on('click', function () {
                         document.location.href = "inicio.jsp";
-                    });
-                    $('.repuestosuma').off('click').on('click', function () {
-                        var numero = $('#numerorepuestos').val();
-                        var total = parseInt(app._CantResp) + parseInt(numero);
-                        var params = {
-                            proceso: "repuestosuma",
-                            id: app._Id,
-                            total: total
-                        };
-                        $.ajax({
-                            url: app._url,
-                            data: params,
-                            type: 'POST',
-                            success: function (data, textStatus, jqXHR) {
-                                if (data.ok === true) {
-                                    if (data[params.proceso] === true) {
-                                        $('#sumarepuesto').modal('hide');
-                                        app.aalert("Guardado con exito!!");
-                                        window.location.reload();
-                                    } else {
-                                        app.aalert('Lo sentimos no se ha podido guardar');
-                                    }
-                                } else {
-                                    alert(data.errorMsg);
-                                }
-                            }
-                        });
-                    });
-                    $('.sumarepuesto').off('click').on('click', function () {
-                        app._Id = $(this).parents('tr').find('.id').data('id');
-                        app._CantResp = $(this).parents('tr').find('.cant').data('cantidad');
-                        $('#sumarepuesto').modal('show');
                     });
                 },
                 popup: function (URL, alto, ancho) {
@@ -220,7 +144,7 @@
                                     if (isConfirm)
                                     {
                                         var params = {
-                                            proceso: "eliminarrepuesto",
+                                            proceso: "eliminarproveedor",
                                             id: id
                                         };
                                         $.ajax({

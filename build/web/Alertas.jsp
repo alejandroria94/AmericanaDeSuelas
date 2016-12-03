@@ -4,6 +4,10 @@
     Author     : Sammy Guergachi <sguergachi at gmail.com>
 --%>
 
+<%@page import="com.google.gson.JsonObject"%>
+<%@page import="com.google.gson.JsonArray"%>
+<%@page import="java.util.List"%>
+<%@page import="beans.Mantenimiento"%>
 <%@page import="beans.Usuario"%>
 <!DOCTYPE html>
 <html>
@@ -62,12 +66,37 @@
             </div>
             <hr><hr>
         </div>
+        <%            Mantenimiento m = new Mantenimiento();
+            List<Mantenimiento> lista = m.listarMantenimientos();
+            JsonArray mantenimientos = new JsonArray();
+            JsonObject jo;
+            for (Mantenimiento ma : lista) {
+                jo = new JsonObject();
+                jo.addProperty("id", ma.getIdEquipos());
+                jo.addProperty("title", ma.getActividades());
+                jo.addProperty("start", ma.getFecha());
+                jo.addProperty("descripcion", ma.getNombre()+"--"+ma.getActividades());
+                if (ma.getEstado().equals("Pendiente")) {
+                    jo.addProperty("backgroundColor", "#f0ad4e");
+                    jo.addProperty("borderColor", "#f0ad4e");
+                }
+                if (ma.getEstado().equals("Realizado")) {
+                    jo.addProperty("backgroundColor", "#5cb85c");
+                    jo.addProperty("borderColor", "#5cb85c");
+                }
+                if (ma.getEstado().equals("Vencido")) {
+                    jo.addProperty("backgroundColor", "#d9534f");
+                    jo.addProperty("borderColor", "#d9534f");
+                }
+                mantenimientos.add(jo);
+            }
+        %>
         <script src="Fullcalendar/moment.min.js"></script>
         <script src="js/jquery-3.1.1.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="Fullcalendar/fullcalendar.js"></script>
         <script>
-
+            var Mantenimientos = <%=mantenimientos%>;
             var alertas = {
                 init: function () {
 
@@ -77,34 +106,10 @@
                             center: 'title',
                             right: 'month,basicWeek,basicDay'
                         },
-                        events: [
-                            {
-                                title: 'Actividad de Matenimiento',
-                                start: '2016-11-08',
-                                backgroundColor: "#f0ad4e",
-                                borderColor: "#f0ad4e"
-                            },
-                            {
-                                title: 'Actividad de Matenimiento',
-                                start: '2016-11-02',
-                                backgroundColor: "#5cb85c",
-                                borderColor: "#5cb85c"
-                            },
-                            {
-                                title: 'Actividad de Matenimiento',
-                                start: '2016-11-05',
-                                backgroundColor: "#d9534f",
-                                borderColor: "#d9534f"
-                            },
-                            {
-                                title: 'Actividad de Matenimiento',
-                                start: '2016-11-19',
-                                backgroundColor: "#f0ad4e",
-                                borderColor: "#f0ad4e"
-                            }],
+                        events: Mantenimientos,
                         eventRender: function (calEvent, element) {
                             $(element).off('click').on('click', function () {
-                                alertas.aalert(calEvent.title);
+                                alertas.aalert(calEvent.descripcion);
                             });
                         }
 

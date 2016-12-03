@@ -73,9 +73,9 @@
                                         <div class="indicadores" hidden>
                                             <ul style="font-size: 25px; list-style: none;">
                                                 <li><a href="IndicadorOEE.jsp">Indicador OEE</a></li>
-                                                <li><a href="IndicadorDisponibilidad.jsp">Disponiblilidad</a></li>
-                                                <li><a href="IndicadorConfiabilidad.jsp">Confiabilidad</a></li>
-                                                <li><a href="IndicadorAccidentabilidad.jsp">Accidentabilidad</a></li>
+<!--                                                <li><a href="IndicadorDisponibilidad.jsp">Disponiblilidad</a></li>
+                                                <li><a href="IndicadorConfiabilidad.jsp">Confiabilidad</a></li>-->
+<!--                                                <li><a href="IndicadorAccidentabilidad.jsp">Accidentabilidad</a></li>-->
                                                 <li><a href="IndicadorMantenibilidad.jsp">Mantenibilidad</a></li>
                                             </ul>
                                         </div>

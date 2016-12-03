@@ -73,18 +73,16 @@
                                         <div class="indicadores" hidden>
                                             <ul style="font-size: 25px; list-style: none;">
                                                 <li><a href="IndicadorOEE.jsp">Indicador OEE</a></li>
-                                                <li><a href="IndicadorDisponibilidad.jsp">Disponiblilidad</a></li>
-                                                <li><a href="IndicadorConfiabilidad.jsp">Confiabilidad</a></li>
-                                                <li><a href="IndicadorAccidentabilidad.jsp">Accidentabilidad</a></li>
+<!--                                                <li><a href="IndicadorDisponibilidad.jsp">Disponiblilidad</a></li>
+                                                <li><a href="IndicadorConfiabilidad.jsp">Confiabilidad</a></li>-->
+<!--                                                <li><a href="IndicadorAccidentabilidad.jsp">Accidentabilidad</a></li>-->
                                                 <li><a href="IndicadorMantenibilidad.jsp">Mantenibilidad</a></li>
                                             </ul>
                                         </div>
                                     </li>
                                     <li class="ordentrabajo"><a href="#">Orden de Trabajo</a></li>
-                                    <!--<li><a href="HojaDeVida.jsp">Hojas de Vida</a></li>-->
-                                    <li><a href="Mantenimiento.jsp">Mantenimiento</a></li>
+                                    <li><a href="AdministrarMantenimientos.jsp">Mantenimiento</a></li>
                                     <li role="separator" class="divider"></li>
-                                    <!--<li><a href="#">Informes</a></li>-->
                                 </ul>
                             </div>
                             <div class="btn-group col-lg-4 col-md-4">
@@ -97,8 +95,8 @@
                                     Almacen <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" style="font-size: 25px">
-                                    <li><a href="#">Proveedores</a></li>
-                                    <li><a href="#">Producción</a></li>
+                                    <li><a href="AdministrarProveedores.jsp">Proveedores</a></li>
+                                    <li><a href="AdministrarProduccion.jsp">Producción</a></li>
                                     <li><a href="AdministrarRepuestos.jsp">Repuestos</a></li>
                                     <li><a href="AdministrarHerramientas.jsp">Herramientas</a></li>
                                 </ul>

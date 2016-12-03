@@ -52,6 +52,7 @@
         "confiabilidad",
         "mantenibilidad",
         "guardarmantenimiento",
+        "repuestosuma",
         "eliminarrepuesto",});
 
     // Si el usuario tiene sesión válida y permisos.
@@ -489,8 +490,18 @@
             } else {
                 respuesta += ",\"" + proceso + "\": false";
             }
-        } else if (proceso.equals("")) {
-
+        } else if (proceso.equals("repuestosuma")) {
+             String Total = "" + request.getParameter("total");
+             String Id = "" + request.getParameter("id");
+              Repuesto r = new Repuesto();
+              r.setIdRepuestos(Integer.parseInt(Id));
+              r.setCantidad(Integer.parseInt(Total));
+              if(r.actualizarCantidadRepuesto()){
+                  respuesta += ",\"" + proceso + "\": true";
+              }else{
+                  respuesta += ",\"" + proceso + "\": false";
+              }
+              
         }
 
         // ------------------------------------------------------------------------------------- //

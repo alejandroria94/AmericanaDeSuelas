@@ -47,24 +47,25 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1">
-                         <label for="nombre">Nombre:</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="">
-                    </div>
-                    <div class="form-group col-lg-4 col-md-4 col-sm-4 ">
                         <label for="nombre">Nombre:</label>
                         <input type="text" class="form-control" id="nombre" placeholder="">
                     </div>
-                    <div class="form-group col-lg-2 col-md-2 col-sm-2 ">
-                        <label for="cantidad">Cantidad:</label>
-                        <input type="number" class="form-control" id="cantidad" placeholder="">
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 ">
+                        <label for="direccion">Direccion:</label>
+                        <input type="text" class="form-control" id="direccion" placeholder="">
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
-                        <label for="descripcion">Descripcion:</label>
-                        <textarea  class="form-control"id="descripcion"  name="descripcion" value="" style="width: 100%; height: 80px" ></textarea>
+                    <div class="form-group col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-4 col-sm-offset-1">
+                        <label for="telefono">Telefono:</label>
+                        <input type="text" class="form-control" id="telefono" placeholder="">
+                    </div>
+                    <div class="form-group col-lg-4 col-md-4 col-sm-4 ">
+                        <label for="correo">Correo:</label>
+                        <input type="text" class="form-control" id="correo" placeholder="">
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-lg-3 col-lg-offset-8 col-md-3 col-md-offset-8 col-sm-3 col-sm-offset-8">
                         <button type="button" class="cancelar btn  btn-default col-lg-5 col-lg-offset-1 col-md-5 col-md-offset-1 col-sm-5 col-sm-offset-1">
@@ -101,16 +102,16 @@
                 },
                 guardar: function () {
                     $('.guardar').off('click').on('click', function () {
-                        var codigo = $('#codigo').val();
+                        var direccion = $('#direccion').val();
                         var nombre = $('#nombre').val();
-                        var cantidad = $('#cantidad').val();
-                        var descripcion = $('#descripcion').val();
+                        var telefono = $('#telefono').val();
+                        var correo = $('#correo').val();
                         var params = {
-                            proceso: "guardaherramineta",
-                            codigo: codigo,
+                            proceso: "guardaproveedor",
                             nombre: nombre,
-                            cantidad: cantidad,
-                            descripcion: descripcion
+                            direccion: direccion,
+                            telefono: telefono,
+                            correo: correo
                         };
                         if (app.validar()) {
                             $.ajax({
@@ -121,10 +122,10 @@
                                     if (data.ok === true) {
                                         if (data[params.proceso] === true) {
                                             app.aalert('Guardo');
-                                            $('#codigo').val("");
+                                            $('#direccion').val("");
                                             $('#nombre').val("");
-                                            $('#cantidad').val("");
-                                            $('#descripcion').val("");
+                                            $('#telefono').val("");
+                                            $('#correo').val("");
                                             window.opener.location.reload();
                                         } else {
                                             app.aalert('Lo sentimos no se ha podido guardar');
@@ -141,10 +142,9 @@
                     swal(msg);
                 },
                 validar: function () {
-                    var codigo = $('#codigo').val();
+                    var direccion = $('#direccion').val();
                     var nombre = $('#nombre').val();
-                    var cantidad = $('#cantidad').val();
-                    if (!/\w/gi.test(codigo)) {
+                    if (!/\w/gi.test(direccion)) {
                         app.aalert("Debe digitar el nombre ");
                         return false;
                     }
@@ -152,10 +152,7 @@
                         app.aalert("Debe digitar el codigo de la maquina");
                         return false;
                     }
-                    if (!/\w/gi.test(cantidad)) {
-                        app.aalert("Debe digitar la cantidad");
-                        return false;
-                    }
+                    
                     return true;
                 }
             };

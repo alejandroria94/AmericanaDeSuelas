@@ -6,6 +6,8 @@
 --%>
 
 
+<%@page import="beans.Produccion"%>
+<%@page import="beans.Proveedor"%>
 <%@page import="beans.Mantenimiento"%>
 <%@page import="beans.Indicador"%>
 <%@page import="beans.OrdenDeTrabajo"%>
@@ -38,13 +40,19 @@
         "tiempodeocio",
         "guardaherramineta",
         "eliminarherramienta",
+        "guardaproduccion",
+        "eliminarproveedor",
+        "eliminarproducto",
         "guardarepuesto",
         "guardarot",
+        "guardaproveedor",
         "accidentabilidad",
+        "estadomantenimiento",
         "disponibilidad",
         "confiabilidad",
         "mantenibilidad",
         "guardarmantenimiento",
+        "repuestosuma",
         "eliminarrepuesto",});
 
     // Si el usuario tiene sesión válida y permisos.
@@ -96,7 +104,7 @@
             String funciones = "" + request.getParameter("funciones");
             String caracteristicasespecificas = "" + request.getParameter("caracteristicas");
             String observaciones = "" + request.getParameter("observaciones");
-            
+
             Equipo e = new Equipo();
             e.setCodigo(codigo);
             e.setNombre(nombre);
@@ -403,29 +411,97 @@
             respuesta = respuesta + ",\"Mes\":" + new Gson().toJson(tiempomes);
             respuesta = respuesta + ",\"ANNO\":" + new Gson().toJson(tiempoanno);
         } else if (proceso.equals("guardarmantenimiento")) {
-             String Id = "" + request.getParameter("id");
-             String Operario = "" + request.getParameter("operario");
-             String Departamento = "" + request.getParameter("departamento");
-             String Fecha = "" + request.getParameter("fecha");
-             String Partes = "" + request.getParameter("partes");
-             String Actividades = "" + request.getParameter("actividades");
-             String Frecuencia = "" + request.getParameter("frecuencia");
-             Mantenimiento m = new Mantenimiento();
-             m.setActividades(Actividades);
-             m.setDepartamento(Departamento);
-             m.setOperario(Operario);
-             m.setFecha(Fecha);
-             m.setFrecuencia(Frecuencia);
-             m.setPartesDelEquipo(Partes);
-             if(m.guardarMantenimiento(Id)){
-                  respuesta += ",\"" + proceso + "\": true";
-             }else{
-                  respuesta += ",\"" + proceso + "\": false";
-             }
-             
-        }
-         else if (proceso.equals("")) {
+            String Id = "" + request.getParameter("id");
+            String Nombre = "" + request.getParameter("nombre");
+            String Codigo = "" + request.getParameter("codigo");
+            String Operario = "" + request.getParameter("operario");
+            String Departamento = "" + request.getParameter("departamento");
+            String Fecha = "" + request.getParameter("fecha");
+            String Partes = "" + request.getParameter("partes");
+            String Actividades = "" + request.getParameter("actividades");
+            String Frecuencia = "" + request.getParameter("frecuencia");
+            Mantenimiento m = new Mantenimiento();
+            m.setNombre(Nombre);
+            m.setCodigo(Codigo);
+            m.setActividades(Actividades);
+            m.setDepartamento(Departamento);
+            m.setOperario(Operario);
+            m.setFecha(Fecha);
+            m.setFrecuencia(Frecuencia);
+            m.setPartesDelEquipo(Partes);
+            if (m.guardarMantenimiento(Id)) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
 
+        } else if (proceso.equals("guardaproveedor")) {
+            String Nombre = "" + request.getParameter("nombre");
+            String Direccion = "" + request.getParameter("direccion");
+            String Telefono = "" + request.getParameter("telefono");
+            String Correo = "" + request.getParameter("correo");
+            Proveedor p = new Proveedor();
+            p.setCorreoElectronico(Correo);
+            p.setDireccion(Direccion);
+            p.setNombre(Nombre);
+            p.setTelefono(Telefono);
+            if (p.guardarProveedor()) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("eliminarproveedor")) {
+            String Id = "" + request.getParameter("id");
+
+            Proveedor p = new Proveedor();
+            if (p.borrarProveedor(Id)) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("guardaproduccion")) {
+            String Nombre = "" + request.getParameter("nombre");
+            String Imagen = "" + request.getParameter("imagen");
+            String Descripcion = "" + request.getParameter("descripcion");
+            Produccion p = new Produccion();
+            p.setNombre(Nombre);
+            p.setImagen(Imagen);
+            p.setDescripcion(Descripcion);
+
+            if (p.guardarProduccion()) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("eliminarproducto")) {
+            String Id = "" + request.getParameter("id");
+            Produccion p = new Produccion();
+            if (p.borrarProduccion(Id)) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("estadomantenimiento")) {
+            String Id = "" + request.getParameter("id");
+            String Estado = "" + request.getParameter("estado");
+            Mantenimiento m = new Mantenimiento();
+            if (m.actualizarEstadoMAntenimiento(Id, Estado)) {
+                respuesta += ",\"" + proceso + "\": true";
+            } else {
+                respuesta += ",\"" + proceso + "\": false";
+            }
+        } else if (proceso.equals("repuestosuma")) {
+             String Total = "" + request.getParameter("total");
+             String Id = "" + request.getParameter("id");
+              Repuesto r = new Repuesto();
+              r.setIdRepuestos(Integer.parseInt(Id));
+              r.setCantidad(Integer.parseInt(Total));
+              if(r.actualizarCantidadRepuesto()){
+                  respuesta += ",\"" + proceso + "\": true";
+              }else{
+                  respuesta += ",\"" + proceso + "\": false";
+              }
+              
         }
 
         // ------------------------------------------------------------------------------------- //

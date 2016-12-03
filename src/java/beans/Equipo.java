@@ -441,6 +441,8 @@ public class Equipo {
      * @throws SQLException
      */
     public ArrayList<Indicador> listaMesIndicador(String idEquipo, String mes, String anno, String indicador) throws SQLException {
+        ConexionBD conexion = new ConexionBD();
+        ResultSet datos;
         YearMonth ym;
         ym = YearMonth.of(Integer.parseInt(anno), Integer.parseInt(mes));
         Equipo e = new Equipo().obtenerEquipo(idEquipo);
@@ -450,20 +452,37 @@ public class Equipo {
 //        System.out.println(annoActual + "año");
         Indicador in;
         ArrayList<Indicador> listaIndicador = new ArrayList<>();
+        ArrayList<Indicador> listaIndicadorDB = new ArrayList<>();
         // ArrayList<Indicador> listaIndicadorEnDb = listaDiaEnDb(idEquipo, mes, anno);
         for (int i = 0; i < diasDelmes; i++) {
             in = new Indicador();
+            in.setDia(i + 1);
             listaIndicador.add(in);
+            listaIndicadorDB.add(in);
         }
 
         switch (indicador) {
             case "mantenibilidad":
-                for (Indicador t : listaIndicador) {
-                    for (Indicador tDb : listaIndicador) {
-                        if (t.getDia() == tDb.getDia()) {
-                            t.setMantenibilidad((float)(int)(Math.random()*4)+1);
+                String sql = "SELECT EXTRACT(YEAR FROM `fechaInicio`) AS anno, EXTRACT(MONTH FROM `fechaInicio`) AS mes ,EXTRACT(DAY FROM `fechaInicio`) AS dia FROM `ordenesdetrabajo` "
+                        + "WHERE `Equipos_idEquipos`='" + idEquipo + "' AND YEAR(`fechaInicio`)='" + anno + "' AND MONTH(`fechaInicio`)='" + mes + "'";
+                datos = conexion.consultarBD(sql);
+                while (datos.next()) {
+                    for (Indicador tDb : listaIndicadorDB) {
+                        if (tDb.getDia() == datos.getInt("dia")) {
+                            tDb.sumarFalla(1);
                         }
+                    }
+                }
 
+                for (Indicador t : listaIndicador) {
+                    for (Indicador tDb : listaIndicadorDB) {
+                        if (t.getDia() == tDb.getDia()) {
+                            if (tDb.getNumeroFallas() != 0) {
+                                t.setMantenibilidad(tiempoFuncionamiento / (tDb.getNumeroFallas()));
+                            } else {
+                                t.setMantenibilidad(tiempoFuncionamiento);
+                            }
+                        }
                     }
                 }
                 break;
@@ -482,7 +501,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setDisponibilidad((float)(int)(Math.random()*5)+1);
+                            t.setDisponibilidad((float) (int) (Math.random() * 5) + 1);
                         }
 
                     }
@@ -492,7 +511,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setConfiabilidad((float)(int)(Math.random()*4)+1);
+                            t.setConfiabilidad((float) (int) (Math.random() * 4) + 1);
                         }
 
                     }
@@ -528,20 +547,45 @@ public class Equipo {
     public ArrayList<Indicador> listaAnnoIndicador(String idEquipo, String anno, String indicador) throws SQLException {
         Indicador in;
         ArrayList<Indicador> listaIndicador = new ArrayList<>();
+        ArrayList<Indicador> listaIndicadorDB = new ArrayList<>();
+        ConexionBD conexion = new ConexionBD();
+        ResultSet datos;
         //ArrayList<Indicador> listaIndicadorEnDb = listaMesEnDb(idEquipo, anno);
         YearMonth ym;
+        int diasDelmes;
         Equipo e = new Equipo().obtenerEquipo(idEquipo);
         float tiempoFuncionamiento = e.getTiempoDeFuncionamiento();
         for (int i = 0; i < 12; i++) {
             in = new Indicador();
+            in.setMes(i + 1);
             listaIndicador.add(in);
+            listaIndicadorDB.add(in);
         }
-            switch (indicador) {
+        switch (indicador) {
             case "mantenibilidad":
+                String sql = "SELECT EXTRACT(YEAR FROM `fechaInicio`) AS anno, EXTRACT(MONTH FROM `fechaInicio`) AS mes ,EXTRACT(DAY FROM `fechaInicio`) AS dia FROM `ordenesdetrabajo` "
+                        + "WHERE `Equipos_idEquipos`='" + idEquipo + "' AND YEAR(`fechaInicio`)='" + anno + "'";
+                datos = conexion.consultarBD(sql);
+
+                while (datos.next()) {
+                    for (Indicador tDb : listaIndicadorDB) {
+                        if (tDb.getMes() == datos.getInt("mes")) {
+                            tDb.sumarFalla(1);
+                        }
+                    }
+                }
+
                 for (Indicador t : listaIndicador) {
+                    ym = YearMonth.of(Integer.parseInt(anno), t.getMes());
+                    diasDelmes = ym.lengthOfMonth();
                     for (Indicador tDb : listaIndicador) {
-                        if (t.getDia() == tDb.getDia()) {
-                            t.setMantenibilidad((float)(int)(Math.random()*30)+1);
+                        if (t.getMes() == tDb.getMes()) {
+                            if (tDb.getNumeroFallas()!=0) {
+                                t.setMantenibilidad((tiempoFuncionamiento * diasDelmes) / (tDb.getNumeroFallas()));
+                            } else {
+                                t.setMantenibilidad((tiempoFuncionamiento * diasDelmes));
+                            }
+
                         }
 
                     }
@@ -562,7 +606,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setDisponibilidad((float)(int)(Math.random()*35)+1);
+                            t.setDisponibilidad((float) (int) (Math.random() * 35) + 1);
                         }
 
                     }
@@ -572,7 +616,7 @@ public class Equipo {
                 for (Indicador t : listaIndicador) {
                     for (Indicador tDb : listaIndicador) {
                         if (t.getDia() == tDb.getDia()) {
-                            t.setConfiabilidad((float)(int)(Math.random()*50)+1);
+                            t.setConfiabilidad((float) (int) (Math.random() * 50) + 1);
                         }
 
                     }
@@ -581,7 +625,7 @@ public class Equipo {
             default:
                 break;
         }
-        
+
 //        if (!listaIndicadorEnDb.isEmpty()) {
 //            for (TiempoOcio t : listaIndicador) {
 //                for (TiempoOcio tDb : listaIndicadorEnDb) {
@@ -594,7 +638,6 @@ public class Equipo {
 //            }
 //        }
         //calcular indicador
-
         return listaIndicador;
     }
 
