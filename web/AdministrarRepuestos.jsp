@@ -163,7 +163,7 @@
                     });
                     $('.repuestosuma').off('click').on('click', function () {
                         var numero = $('#numerorepuestos').val();
-                        var total = parseInt(app._CantResp) + parseInt(numero);
+                        var total= parseInt(app._CantResp)+ parseInt(numero);
                         var params = {
                             proceso: "repuestosuma",
                             id: app._Id,
